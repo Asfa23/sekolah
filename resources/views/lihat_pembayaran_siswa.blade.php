@@ -55,6 +55,12 @@
         <main class="w-3/4 p-8">
             <h1 class="text-5xl font-bold mb-6">Data Pembayaran Siswa</h1>
 
+            @if(session('success'))
+                <div style="color: green;">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <table class="w-full border border-collapse mb-8">
                 <thead>
                     <tr>
@@ -75,9 +81,9 @@
                         <td class="border p-2 text-center">{{ $pembayaran->KATEGORI }}</td>
                         <td class="border p-2 text-center">{{ $pembayaran->TANGGAL_PEMBAYARAN }}</td>
                         <td class="border p-2 text-center">
-                            <a href="{{ url('/edit/'.$pembayaran->ID_PEMBAYARAN) }}"
+                            <a href="{{ url('/edit_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
                                 class="text-white bg-blue-500 hover:bg-blue-600 p-1 px-2 rounded-lg transition-colors duration-300">Edit</a>
-                            <a href="{{ url('/delete/'.$pembayaran->ID_PEMBAYARAN) }}"
+                            <a href="{{ url('/delete_confirmation/'.$pembayaran->ID_PEMBAYARAN) }}"
                                 class="text-white bg-red-500 hover:bg-red-600 p-1 px-2 rounded-lg ml-2 transition-colors duration-300">Delete</a>
                         </td>                            
                     </tr>                    

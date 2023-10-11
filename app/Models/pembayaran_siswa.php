@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pembayaran_Siswa extends Model
 {
-    // protected $primaryKey = 'ID_PEMBAYARAN';
+    protected $primaryKey = 'ID_PEMBAYARAN';
     public $timestamps = false;
 
     protected $fillable = [
@@ -16,5 +16,5 @@ class Pembayaran_Siswa extends Model
         'TANGGAL_PEMBAYARAN',
         'KATEGORI'
     ];
-    protected $table = 'pembayaran_siswa'; 
+    protected $table = 'pembayaran_siswa';
 }
