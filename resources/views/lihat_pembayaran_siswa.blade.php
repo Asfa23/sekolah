@@ -56,12 +56,6 @@
             <h1 class="text-5xl font-bold mb-6">Data Pembayaran Siswa</h1>
             <div class="bg-white rounded shadow-md p-6">
 
-            @if(session('success'))
-                <div style="color: green;">
-                    {{ session('success') }}
-                </div>
-            @endif
-
             <table class="w-full border border-collapse mb-8">
                 <thead>
                     <tr>
@@ -95,6 +89,14 @@
             <a href="{{ url('/pembayaran') }}"
                 class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:bg-green-600">Tambah Pembayaran</a>
             </div>
+
+            @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4" role="alert">
+            <strong class="font-bold">Sukses!</strong>
+            <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+            @endif
+
         </main>
     </div>
 </body>
