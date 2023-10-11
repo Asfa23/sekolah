@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PembayaranSiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/pembayaran', [BookingController::class, 'viewPembayaran']);
+Route::get('/pembayaran', [PembayaranSiswaController::class, 'viewPembayaran']);
+Route::post('/postPembayaran', [PembayaranSiswaController::class, 'submitPembayaran']);
+

@@ -16,4 +16,5 @@ class Pembayaran_Siswa extends Model
         'TANGGAL_PEMBAYARAN',
         'KATEGORI'
     ];
+    protected $table = 'pembayaran_siswa'; 
 }
