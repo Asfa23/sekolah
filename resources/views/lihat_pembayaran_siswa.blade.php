@@ -52,8 +52,9 @@
     </aside>
 
         <!-- Main Content -->
-        <main class="w-3/4 p-8">
+        <main class="w-3/4 p-8"> 
             <h1 class="text-5xl font-bold mb-6">Data Pembayaran Siswa</h1>
+            <div class="bg-white rounded shadow-md p-6">
 
             @if(session('success'))
                 <div style="color: green;">
@@ -93,6 +94,7 @@
 
             <a href="{{ url('/pembayaran') }}"
                 class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:bg-green-600">Tambah Pembayaran</a>
+            </div>
         </main>
     </div>
 </body>
