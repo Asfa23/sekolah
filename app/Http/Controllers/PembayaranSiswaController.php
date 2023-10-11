@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pembayaran_Siswa;
 use Illuminate\Http\Request;
+use DB;
 
 class PembayaranSiswaController extends Controller
 {
@@ -38,4 +39,12 @@ class PembayaranSiswaController extends Controller
     {
         return view('tampilan_pembayaran');
     }
+
+    public function lihatPembayaranSiswa()
+    {
+        $pembayaranSiswa = DB::table('pembayaran_siswa')->get();
+
+        return view('lihat_pembayaran_siswa', ['pembayaranSiswa' => $pembayaranSiswa]);
+    }
+    
 }

@@ -21,3 +21,9 @@ Route::get('/', function () {
 Route::get('/pembayaran', [PembayaranSiswaController::class, 'viewPembayaran']);
 Route::post('/postPembayaran', [PembayaranSiswaController::class, 'submitPembayaran']);
 
+Route::get('/lihat_pembayaran_siswa', [PembayaranSiswaController::class, 'lihatPembayaranSiswa']);
+
+
+
+
+
