@@ -7,6 +7,6 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-    <h1 class="text-[20vw]">HALOO</h1>
+    <h1 class="text-[20vw] text-red-300">HALOO</h1>
 </body>
 </html>

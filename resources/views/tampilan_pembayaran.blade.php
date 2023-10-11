@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tampilan Pembayaran</title>
+    @vite('resources/css/app.css')
 </head>
 
 <body>
-    <h1>Form Pemesanan</h1>
+        <h1 class="bg-yellow-500">Form Pemesanan</h1>
 
     <form action="/postPembayaran" method="POST">
         @csrf 
