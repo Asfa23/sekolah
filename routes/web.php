@@ -39,3 +39,4 @@ Route::get('/login', [PembayaranSiswaController::class, 'viewLogin']);
 
 // Buat About
 Route::get('/about', [PembayaranSiswaController::class, 'viewAbout']);
+

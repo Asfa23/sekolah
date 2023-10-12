@@ -16,24 +16,32 @@ class PembayaranSiswaController extends Controller
             $jumlahPembayaran = $request->input('JUMLAH_PEMBAYARAN');
             $kategori = $request->input('KATEGORI');
             $tanggalPembayaran = $request->input('TANGGAL_PEMBAYARAN');
-
+    
             if ($jumlahPembayaran < 0) {
                 return response()->json(['error' => 'Jumlah pembayaran tidak boleh negatif.']);
             }
-
+    
             $pembayaran = new Pembayaran_Siswa();
             $pembayaran->ID_SISWA = $idSiswa;
             $pembayaran->JUMLAH_PEMBAYARAN = $jumlahPembayaran;
             $pembayaran->KATEGORI = $kategori;
             $pembayaran->TANGGAL_PEMBAYARAN = $tanggalPembayaran;
             $pembayaran->save();
-
-            // Beri respons berhasil kepada pengguna
-            return response()->json(['success' => 'Pembayaran berhasil disimpan.']);
+    
+            // Tambahkan pesan flash session
+            $request->session()->flash('success', 'Pembayaran berhasil disimpan.');
+    
+            // Redirect ke /pembayaran
+            return redirect('/pembayaran');
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            // Tambahkan pesan flash session untuk kesalahan
+            $request->session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+    
+            // Redirect ke /pembayaran dengan pesan kesalahan
+            return redirect('/pembayaran');
         }
     }
+    
 
     public function viewPembayaran(Request $request)
     {
