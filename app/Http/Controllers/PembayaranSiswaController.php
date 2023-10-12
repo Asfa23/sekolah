@@ -20,6 +20,12 @@ class PembayaranSiswaController extends Controller
             if ($jumlahPembayaran < 0) {
                 return response()->json(['error' => 'Jumlah pembayaran tidak boleh negatif.']);
             }
+         
+            // Validasi apakah tanggal pembayaran melebihi hari ini
+            $today = now();
+            if ($tanggalPembayaran > $today) {
+                return redirect('/pembayaran')->with('error', 'Tanggal pembayaran tidak boleh melebihi hari ini.');
+            }
     
             $pembayaran = new Pembayaran_Siswa();
             $pembayaran->ID_SISWA = $idSiswa;
@@ -34,6 +40,7 @@ class PembayaranSiswaController extends Controller
             // Redirect ke /pembayaran
             return redirect('/pembayaran');
         } catch (\Exception $e) {
+
             // Tambahkan pesan flash session untuk kesalahan
             $request->session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
     

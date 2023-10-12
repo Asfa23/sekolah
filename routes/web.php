@@ -31,12 +31,21 @@ Route::post('/update_pembayaran/{id}', [PembayaranSiswaController::class, 'updat
 
 // Buat Delete datanya
 // web.php
+// Route::get('/delete_confirmation/{id}', [PembayaranSiswaController::class, 'confirmDelete']);
+// Route::post('/delete_pembayaran/{id}', [PembayaranSiswaController::class, 'deletePembayaran']);
+
+// Use the DELETE method for the delete route
+Route::delete('/delete_pembayaran/{id}', [PembayaranSiswaController::class, 'deletePembayaran']);
+
+// Keep the GET route for delete confirmation as it is
 Route::get('/delete_confirmation/{id}', [PembayaranSiswaController::class, 'confirmDelete']);
-Route::post('/delete_pembayaran/{id}', [PembayaranSiswaController::class, 'deletePembayaran']);
+
 
 // Buat login
 Route::get('/login', [PembayaranSiswaController::class, 'viewLogin']);
 
 // Buat About
 Route::get('/about', [PembayaranSiswaController::class, 'viewAbout']);
+
+
 

@@ -67,7 +67,7 @@
         </div>
 
         <div class="mb-3">
-            <span class="font-semibold">Jumlah Pembayaran:</span> {{ $pembayaran->JUMLAH_PEMBYARAN }}
+            <span class="font-semibold">Jumlah Pembayaran:</span> {{ $pembayaran->JUMLAH_PEMBAYARAN }}
         </div>
 
         <div class="mb-3">

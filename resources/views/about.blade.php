@@ -47,9 +47,9 @@
         <!-- Main Content -->
         <main class="w-3/4 p-8 flex items-center justify-center">
             <div class="text-center">
-                <h1 class="text-6xl font-bold text-gray-900 text-center">Welcome Back, Diaz!</h1>
+                <h1 class="text-6xl font-bold text-gray-900 text-center">Selamat Datang, Diaz!</h1>
                 <p class="text-2xl text-gray-700 mt-10 text-center">
-                    Welcome to our Private School Financial Management System! We offer an efficient and transparent solution for school financial management, including tracking student payments, school income, and expenses.
+                    Selamat datang di Sistem Manajemen Keuangan Sekolah Swasta kami! Kami menawarkan solusi yang efisien dan transparan untuk pengelolaan keuangan sekolah, termasuk melacak pembayaran siswa, pendapatan sekolah, dan pengeluaran.
                 </p>
         </div>
         </main>
