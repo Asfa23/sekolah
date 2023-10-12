@@ -75,7 +75,7 @@
                         <td class="border p-2 text-center">{{ $pembayaran->JUMLAH_PEMBAYARAN }}</td>
                         <td class="border p-2 text-center">{{ $pembayaran->KATEGORI }}</td>
                         <td class="border p-2 text-center">{{ $pembayaran->TANGGAL_PEMBAYARAN }}</td>
-                        <td class="border p-2 text-center flex">
+                        <td class="border p-2 text-center">
                             <a href="{{ url('/edit_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
                                 class="text-white bg-blue-500 hover:bg-blue-600 p-1 px-2 rounded-lg transition-colors duration-300">Edit</a>
                             <a href="{{ url('/delete_confirmation/'.$pembayaran->ID_PEMBAYARAN) }}"

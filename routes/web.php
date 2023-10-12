@@ -29,17 +29,9 @@ Route::get('/lihat_pembayaran_siswa', [PembayaranSiswaController::class, 'lihatP
 Route::get('/edit_pembayaran/{id}', [PembayaranSiswaController::class, 'editPembayaran']);
 Route::post('/update_pembayaran/{id}', [PembayaranSiswaController::class, 'updatePembayaran']);
 
-// Buat Delete datanya
-// web.php
-// Route::get('/delete_confirmation/{id}', [PembayaranSiswaController::class, 'confirmDelete']);
-// Route::post('/delete_pembayaran/{id}', [PembayaranSiswaController::class, 'deletePembayaran']);
-
-// Use the DELETE method for the delete route
+// Buat Delete
 Route::delete('/delete_pembayaran/{id}', [PembayaranSiswaController::class, 'deletePembayaran']);
-
-// Keep the GET route for delete confirmation as it is
 Route::get('/delete_confirmation/{id}', [PembayaranSiswaController::class, 'confirmDelete']);
-
 
 // Buat login
 Route::get('/login', [PembayaranSiswaController::class, 'viewLogin']);

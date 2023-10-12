@@ -11,7 +11,6 @@ class PembayaranSiswaController extends Controller
     public function submitPembayaran(Request $request)
     {
         try {
-            // Ambil data input dari pengguna
             $idSiswa = $request->input('ID_SISWA');
             $jumlahPembayaran = $request->input('JUMLAH_PEMBAYARAN');
             $kategori = $request->input('KATEGORI');
@@ -20,8 +19,7 @@ class PembayaranSiswaController extends Controller
             if ($jumlahPembayaran < 0) {
                 return response()->json(['error' => 'Jumlah pembayaran tidak boleh negatif.']);
             }
-         
-            // Validasi apakah tanggal pembayaran melebihi hari ini
+        
             $today = now();
             if ($tanggalPembayaran > $today) {
                 return redirect('/pembayaran')->with('error', 'Tanggal pembayaran tidak boleh melebihi hari ini.');
@@ -34,17 +32,13 @@ class PembayaranSiswaController extends Controller
             $pembayaran->TANGGAL_PEMBAYARAN = $tanggalPembayaran;
             $pembayaran->save();
     
-            // Tambahkan pesan flash session
             $request->session()->flash('success', 'Pembayaran berhasil disimpan.');
     
-            // Redirect ke /pembayaran
             return redirect('/pembayaran');
         } catch (\Exception $e) {
 
-            // Tambahkan pesan flash session untuk kesalahan
             $request->session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
     
-            // Redirect ke /pembayaran dengan pesan kesalahan
             return redirect('/pembayaran');
         }
     }
@@ -73,15 +67,13 @@ class PembayaranSiswaController extends Controller
     {
         try {
             $pembayaran = Pembayaran_Siswa::find($id);
-    
-            // Update data
+
             $pembayaran->ID_SISWA = $request->input('ID_SISWA');
             $pembayaran->JUMLAH_PEMBAYARAN = $request->input('JUMLAH_PEMBAYARAN');
             $pembayaran->KATEGORI = $request->input('KATEGORI');
             $pembayaran->TANGGAL_PEMBAYARAN = $request->input('TANGGAL_PEMBAYARAN');
             $pembayaran->save();
     
-            // Redirect to the view page after successful update
             return redirect('/lihat_pembayaran_siswa')->with('success', 'Pembayaran berhasil diupdate.');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
