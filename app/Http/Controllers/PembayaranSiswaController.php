@@ -92,5 +92,16 @@ class PembayaranSiswaController extends Controller
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
-    
+
+    // ======================================================================== LOGIN
+    public function viewLogin(Request $request)
+    {
+        return view('login');
+    }
+
+    // ======================================================================== ABOUT
+    public function viewAbout(Request $request)
+    {
+        return view('about');
+    }
 }
