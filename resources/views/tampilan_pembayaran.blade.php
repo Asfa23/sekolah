@@ -80,7 +80,7 @@
 
                 <div class="mt-6">
                     <button type="submit"
-                        class="w-[12vh] py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:bg-green-600">
+                        class="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:bg-green-600">
                         Submit
                     </button>
                 </div>
