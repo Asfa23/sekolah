@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pembayaran_siswa', function (Blueprint $table) {
             $table->id('ID_PEMBAYARAN');
             $table->unsignedBigInteger('ID_SISWA');
-            $table->decimal('JUMLAH_PEMBAYARAN', 10, 2); // 10 total digit, 2 angka desimal
+            $table->decimal('JUMLAH_PEMBAYARAN', 20, 2);
             $table->enum('KATEGORI', ['Pembayaran Siswa']);
             $table->date('TANGGAL_PEMBAYARAN');
 
