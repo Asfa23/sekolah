@@ -18,10 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Buat masukin data inputan ke database 
-Route::get('/pembayaran', [PembayaranSiswaController::class, 'viewPembayaran']);
-Route::post('/postPembayaran', [PembayaranSiswaController::class, 'submitPembayaran']);
-
 // Buat ke tabel pembayaran_siswa dan dimunculin
 Route::get('/lihat_pembayaran_siswa', [PembayaranSiswaController::class, 'lihatPembayaranSiswa']);
 

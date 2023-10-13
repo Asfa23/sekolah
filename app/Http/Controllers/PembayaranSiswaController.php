@@ -19,7 +19,7 @@ class PembayaranSiswaController extends Controller
             if ($jumlahPembayaran < 0) {
                 return response()->json(['error' => 'Jumlah pembayaran tidak boleh negatif.']);
             }
-        
+         
             $today = now();
             if ($tanggalPembayaran > $today) {
                 return redirect('/pembayaran')->with('error', 'Tanggal pembayaran tidak boleh melebihi hari ini.');

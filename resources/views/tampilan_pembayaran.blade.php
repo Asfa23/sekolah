@@ -4,15 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pembayaran</title>
-    <!-- Include Tailwind CSS via CDN or import it using your build system -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
     @vite('resources/css/app.css')
 </head>
-
 <body class="bg-gray-100">
     <div class="flex">
-        <!-- Sidebar -->
         <aside class="w-[30vh] h-[92vh] p-6 rounded-lg m-8 bg-gradient-to-t from-purple-600 to-purple-400 flex flex-col items-center space-y-10">         
                 <div class="w-40 h-40 bg-gradient-to-r from-purple-700 to-purple-500 rounded-2xl flex items-center justify-center mt-4">
                     <img src="{{ URL::asset("img/student.svg")}}" alt="Student Icon" class="w-20 h-20">
@@ -45,7 +42,6 @@
             </ul>
         </aside>
 
-        <!-- Main Content -->
         <main class="w-3/5 p-8">
             <h1 class="text-5xl font-bold mb-6">Pembayaran</h1>
 

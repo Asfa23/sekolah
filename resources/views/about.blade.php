@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>About</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
     @vite('resources/css/app.css')
 </head>
 
 <body class="bg-gray-100">
     <div class="flex">
-        <!-- Sidebar -->
         <aside class="w-[30vh] h-[92vh] p-6 rounded-lg m-8 bg-gradient-to-t from-purple-600 to-purple-400 flex flex-col items-center space-y-10">         
             <div class="w-40 h-40 bg-gradient-to-r from-purple-700 to-purple-500 rounded-2xl flex items-center justify-center mt-4">
                 <img src="{{ URL::asset("img/student.svg")}}" alt="Student Icon" class="w-20 h-20">
@@ -44,15 +43,15 @@
         </ul>
     </aside>
 
-        <!-- Main Content -->
-        <main class="w-3/4 p-8 flex items-center justify-center">
-            <div class="text-center">
-                <h1 class="text-6xl font-bold text-gray-900 text-center">Selamat Datang!</h1>
-                <p class="text-2xl text-gray-700 mt-10 text-center">
-                    Selamat datang di Sistem Manajemen Keuangan Sekolah Swasta kami! Kami menawarkan solusi yang efisien dan transparan untuk pengelolaan keuangan sekolah, termasuk melacak pembayaran siswa, pendapatan sekolah, dan pengeluaran.
-                </p>
-        </div>
-        </main>
+    <main class="w-3/4 p-8 flex items-center justify-center">
+        <div class="text-center">
+            <h1 class="text-6xl font-bold text-gray-900 text-center">Selamat Datang!</h1>
+            <p class="text-2xl text-gray-700 mt-10 text-center">
+                Selamat datang di Sistem Manajemen Keuangan Sekolah! Kami menawarkan solusi yang efisien dan transparan untuk pengelolaan keuangan sekolah, termasuk melacak pembayaran siswa, pendapatan sekolah, dan pengeluaran.
+            </p>
+    </div>
+    </main>
+
     </div>
 </body>
 
