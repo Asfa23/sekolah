@@ -49,11 +49,11 @@
         </ul>
     </aside>
 
-    <main class="w-3/5 p-8">
+    <main class="w-4/5 p-8">
         <h1 class="text-5xl font-bold mb-6">Konfirmasi Hapus Pembayaran</h1>
 
-        <div class="bg-white rounded-lg shadow-md p-6 w-[65vh]">
-            <p class="text-lg font-semibold mb-4">Apakah Anda yakin akan menghapus data berikut:</p>
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <p class="text-lg font-semibold mb-4">Apakah Anda yakin akan menghapus data berikut :</p>
 
             <div class="mb-3">
                 <span class="font-semibold">ID Pembayaran:</span> {{ $pembayaran->ID_PEMBAYARAN }}
@@ -75,17 +75,17 @@
                 <span class="font-semibold">Tanggal Pembayaran:</span> {{ $pembayaran->TANGGAL_PEMBAYARAN }}
             </div>
 
-            <div class="flex mt-6">
+            <div class="flex justify-center mt-6">
                 <form action="{{ url('/delete_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                        class="w-[12vh] py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600">DELETE</button>
+                        class="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600">DELETE</button>
                 </form>
 
                 <a href="{{ url('/lihat_pembayaran_siswa') }}">
                     <button
-                        class="w-[12vh] py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-2">CANCLE</button>
+                        class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-2">CANCEL</button>
                 </a>
             </div>
         </div>

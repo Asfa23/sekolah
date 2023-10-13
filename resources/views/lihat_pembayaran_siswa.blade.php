@@ -49,7 +49,7 @@
         </ul>
     </aside>
 
-        <main class="w-3/4 p-8"> 
+        <main class="p-8"> 
             <h1 class="text-5xl font-bold mb-6">Data Pembayaran Siswa</h1>
             <div class="bg-white rounded shadow-md p-6">
 
@@ -72,7 +72,7 @@
                         <td class="border p-2 text-center">{{ $pembayaran->JUMLAH_PEMBAYARAN }}</td>
                         <td class="border p-2 text-center">{{ $pembayaran->KATEGORI }}</td>
                         <td class="border p-2 text-center">{{ $pembayaran->TANGGAL_PEMBAYARAN }}</td>
-                        <td class="border p-2 text-center">
+                        <td class="border p-2 text-center flex">
                             <a href="{{ url('/edit_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
                                 class="text-white bg-blue-500 hover:bg-blue-600 p-1 px-2 rounded-lg transition-colors duration-300">Edit</a>
                             <a href="{{ url('/delete_confirmation/'.$pembayaran->ID_PEMBAYARAN) }}"

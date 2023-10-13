@@ -49,7 +49,7 @@
         </ul>
     </aside>
 
-    <main class="w-3/5 p-8">
+    <main class="w-4/5 p-8">
         <h1 class="text-5xl font-bold mb-6">Edit Pembayaran</h1>
         <form action="{{ url('/update_pembayaran/' . $pembayaran->ID_PEMBAYARAN) }}" method="POST"
             class="bg-white p-6 rounded shadow-md">
@@ -79,15 +79,15 @@
                     class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
             </div>
     
-            <div class="mt-6 flex">
+            <div class="mt-6 flex justify-center">
                 <div class="flex-2">
                     <button type="submit"
-                        class="w-[13vh] py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:bg-green-600">
+                        class="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:bg-green-600">
                         Update
                     </button>
                 </div>
                 <div class="ml-3">
-                    <button onclick="window.location.href='{{ url('/lihat_pembayaran_siswa') }}'" class="w-[13vh] py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                    <button onclick="window.location.href='{{ url('/lihat_pembayaran_siswa') }}'" class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
                          Kembali
                     </button>
                 </div>
