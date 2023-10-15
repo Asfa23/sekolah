@@ -51,7 +51,7 @@
 
     <main class="w-4/5 p-8">
         <h1 class="text-5xl font-bold mb-6">Edit Pembayaran</h1>
-        <form action="{{ url('/update_pembayaran/' . $pembayaran->ID_PEMBAYARAN) }}" method="POST"
+        <form action="{{ url('dashboard/superAdmin/update_pembayaran/' . $pembayaran->ID_PEMBAYARAN) }}" method="POST"
             class="bg-white p-6 rounded shadow-md">
             @csrf
     

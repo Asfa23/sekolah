@@ -10,23 +10,29 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex">
-        <aside class="w-[30vh] h-[92vh] p-6 rounded-lg m-8 bg-gradient-to-t from-purple-600 to-purple-400 flex flex-col items-center space-y-10">         
-                <div class="w-40 h-40 bg-gradient-to-r from-purple-700 to-purple-500 rounded-2xl flex items-center justify-center mt-4">
-                    <img src="{{ URL::asset("img/student.svg")}}" alt="Student Icon" class="w-20 h-20">
-                </div>
+    <aside class="w-[30vh] h-[92vh] p-6 rounded-lg m-8 bg-gradient-to-t from-purple-600 to-purple-400 flex flex-col items-center space-y-10">         
+            <div class="w-40 h-40 bg-gradient-to-r from-purple-700 to-purple-500 rounded-2xl flex items-center justify-center mt-4">
+                <img src="{{ URL::asset("img/student.svg")}}" alt="Student Icon" class="w-20 h-20">
+            </div>
             <ul class="space-y-4">        
                 <li>
-                    <a href="/about" class="text-white hover:underline flex items-center">
+                    <a href="/dashboard/siswa" class="text-white hover:underline flex items-center">
                         <img src="{{ URL::asset("img/i.svg")}}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
                         About
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="text-white hover:underline flex items-center">
-                        <img src="{{ URL::asset("img/payment.svg")}}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                    <a href="/dashboard/siswa/pembayaran" class="text-white hover:underline flex items-center">
+                        <img src="{{ URL::asset("img/payment.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
                         Pembayaran
                     </a>
                 </li>
+                <li>
+                    <a href="/dashboard/siswa/pembayaran" class="text-white hover:underline flex items-center">
+                        <img src="{{ URL::asset("img/history.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                        History
+                    </a>
+                </li>            
                 <li>
                     <a href="#" class="text-white hover:underline flex items-center">
                         <img src="{{ URL::asset("img/report.svg")}}" alt="Money Report Icon" class="w-6 h-6 mr-2 font-bold">
@@ -34,7 +40,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/login" class="text-white hover:underline flex items-center">
+                    <a href="/logout" class="text-white hover:underline flex items-center">
                         <img src="{{ URL::asset("img/logout.svg")}}" alt="Logout Icon" class="w-6 h-6 mr-2 font-bold">
                         Logout
                     </a>
@@ -45,7 +51,7 @@
         <main class="w-4/5 p-8">
             <h1 class="text-5xl font-bold mb-6">Pembayaran</h1>
 
-            <form action="/postPembayaran" method="POST" class="bg-white p-6 rounded shadow-md">
+            <form action="/dashboard/siswa/postPembayaran" method="POST" class="bg-white p-6 rounded shadow-md">
                 @csrf 
 
             <div class="mb-4">

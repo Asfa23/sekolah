@@ -76,14 +76,14 @@
             </div>
 
             <div class="flex justify-center mt-6">
-                <form action="{{ url('/delete_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
+                <form action="{{ url('dashboard/superAdmin/delete_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
                         class="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600">DELETE</button>
                 </form>
 
-                <a href="{{ url('/lihat_pembayaran_siswa') }}">
+                <a href="{{ url('dashboard/superAdmin/lihat_pembayaran_siswa') }}">
                     <button
                         class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-2">CANCEL</button>
                 </a>
