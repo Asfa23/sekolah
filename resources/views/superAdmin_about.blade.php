@@ -24,25 +24,25 @@
             </li>
             <li>
                 <a href="/dashboard/superAdmin/pembayaran" class="text-white hover:underline flex items-center">
-                    <img src="{{ URL::asset("img/payment.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
-                    Pembayaran
+                    <img src="{{ URL::asset("img/input_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                    Input Pembayaran
                 </a>
             </li>
             <li>
                 <a href="/dashboard/superAdmin/lihat_pembayaran_siswa" class="text-white hover:underline flex items-center">
-                    <img src="{{ URL::asset("img/data.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                    <img src="{{ URL::asset("img/data_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
                     Data Pembayaran
                 </a>
             </li>
             <li>
                 <a href="#" class="text-white hover:underline flex items-center">
-                    <img src="{{ URL::asset("img/payment.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                    <img src="{{ URL::asset("img/input_pengeluaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
                     Input Pengeluaran
                 </a>
             </li>            
             <li>
                 <a href="#" class="text-white hover:underline flex items-center">
-                    <img src="{{ URL::asset("img/data.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                    <img src="{{ URL::asset("img/data_pengeluaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
                     Data Pengeluaran
                 </a>
             </li>
@@ -63,11 +63,12 @@
 
     <main class="w-3/4 p-8 flex items-center justify-center">
         <div class="text-center">
-        <h1 class="text-6xl font-bold text-gray-900 text-center">
-            Selamat Datang! 
-
+        <h1 class="text-7xl font-bold text-gray-900 text-center">
+            Selamat Datang!
+        </h1>
+        <h1 class="text-7xl font-bold text-gray-900 text-center mt-2">
             @if (Auth::check())
-                {{ Auth::user()->name }}
+            {{ Auth::user()->name }}
             @endif
         </h1>
 
