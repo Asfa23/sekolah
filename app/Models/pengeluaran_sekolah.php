@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class pengeluaran_sekolah extends Model
 {
-    use HasFactory;
+    protected $primaryKey = 'ID_PENGELUARAN';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'JUMLAH_PENGELUARAN',
+        'KATEGORI',
+        'KETERANGAN',
+        'TANGGAL_PEMBAYARAN',
+    ];
 }

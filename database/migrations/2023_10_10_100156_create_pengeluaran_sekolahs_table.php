@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengeluaran_sekolah', function (Blueprint $table) {
+        Schema::create('pengeluaran_sekolahs', function (Blueprint $table) {
             $table->id('ID_PENGELUARAN');
-            $table->decimal('JUMLAH_PENGELUARAN');
+            $table->decimal('JUMLAH_PENGELUARAN', 20, 2);
             $table->string('KETERANGAN');
-            $table->enum('KATEGORI', ['Pengadaan Inventaris', 'Maintenance Gedung', 'Gaji Guru dan Staff', 'Program sekolah', 'Lainnya']);
+            $table->enum('KATEGORI', ['Inventaris', 'Maintenance', 'Gaji Guru & Staff', 'Program sekolah', 'Lainnya']);
             $table->date('TANGGAL_PENGELUARAN');
         });
     }

@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\pengeluaran_sekolah;
+use Illuminate\Http\Request;
+use DB;
+class PengeluaranController extends Controller
+{
+    // Buat Submit Pengeluaran
+    public function submitPengeluaran(Request $request)
+    {
+        if (auth()->user()->role != 'superAdmin'){
+            return redirect('dashboard');
+        }
+
+        try {
+            $jumlahPengeluaran = $request->input('JUMLAH_PENGELUARAN');
+            $kategori = $request->input('KATEGORI');
+            $keterangan = $request->input('KETERANGAN_PENGELUARAN');
+            $tanggalPengeluaran = $request->input('TANGGAL_PENGELUARAN');
+    
+            if ($jumlahPengeluaran < 0) {
+                return response()->json(['error' => 'Jumlah pembayaran tidak boleh negatif.']);
+            }
+         
+            $today = now();
+            if ($tanggalPengeluaran > $today) {
+                return redirect('/dashboard/pengeluaran')->with('error', 'Tanggal pembayaran tidak boleh melebihi hari ini.');
+            }
+    
+            $pengeluaran = new pengeluaran_sekolah();
+            $pengeluaran->JUMLAH_PENGELUARAN = $jumlahPengeluaran;
+            $pengeluaran->KATEGORI = $kategori;
+            $pengeluaran->KETERANGAN = $keterangan;
+            $pengeluaran->TANGGAL_PENGELUARAN = $tanggalPengeluaran;
+    
+            $pengeluaran->save();
+
+            $request->session()->flash('success', 'Pembayaran berhasil disimpan.');
+    
+            return redirect('/dashboard/pengeluaran');
+        } catch (\Exception $e) {
+
+            $request->session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+    
+            return redirect('/dashboard/pengeluaran');
+        }
+    }
+    //Buat View Pengeluaran
+    public function viewPengeluaran(Request $request)
+    {
+        if (auth()->user()->role != 'superAdmin'){
+            return redirect('dashboard');
+        }
+        return view('pengeluaran');
+    }
+
+    //Buat View Lihat Pengeluaran
+    public function lihatPengeluaran()
+    {
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff'){
+            return redirect('dashboard');
+        }
+        $pengeluaranSekolah= DB::table('pengeluaran_sekolahs')->get();
+
+        return view('lihat_pengeluaran', ['pengeluaranSekolah' => $pengeluaranSekolah]);
+    }
+
+}

@@ -13,25 +13,8 @@ class AdminController extends Controller
         echo "<h1>" . Auth::user()->name . "</h1>";
         echo "<a href='logout'>LOGOUT >></a>" ;
     }
-    function siswa()
+    function about()
     {
-        return view('siswa_about');
-    }
-    function guru()
-    {
-        echo "halo semuanya di guru";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>LOGOUT >></a>" ;
-    }
-    function staff()
-    {
-        echo "halo semuanya di staff";
-        echo "<h1>" . Auth::user()->name . "</h1>";
-        echo "<a href='/logout'>LOGOUT >></a>" ;
-    }
-
-    function superAdmin()
-    {
-        return view('superAdmin_about');
+        return view('about');
     }
 }
