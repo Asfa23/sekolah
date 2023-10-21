@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('ID_TRANSPARANSI');
             $table->decimal('JUMLAH_PEMBAYARAN')->nullable();
             $table->decimal('JUMLAH_PENGELUARAN')->nullable();
-            $table->enum('KATEGORI', ['Pembayaran Siswa', 'Pengadaan Inventaris', 'Maintenance Gedung', 'Gaji Guru dan Staff', 'Program sekolah', 'Lainnya']);
+            $table->enum('KATEGORI', ['Pengadaan Inventaris', 'Maintenance Gedung', 'Gaji Guru dan Staff', 'Program sekolah', 'Lainnya']);
             $table->string('KETERANGAN');
         });
     }

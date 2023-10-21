@@ -67,4 +67,54 @@ class PengeluaranController extends Controller
         return view('lihat_pengeluaran', ['pengeluaranSekolah' => $pengeluaranSekolah]);
     }
 
+    // ======================================================================== EDIT PENGELUARAN
+    public function editPengeluaran($id)
+    {
+        if (auth()->user()->role != 'superAdmin'){
+            return redirect('dashboard');
+        }
+        $pengeluaran = pengeluaran_sekolah::where('ID_PENGELUARAN', $id)->first();
+        return view('edit_pengeluaran', compact('pengeluaran'));
+    }
+
+    public function updatePengeluaran(Request $request, $id)
+    {
+        if (auth()->user()->role != 'superAdmin'){
+            return redirect('dashboard');
+        }
+        try {
+            $pengeluaran = pengeluaran_sekolah::find($id);
+
+            $pengeluaran->ID_PENGELUARAN = $request->input('ID_PENGELUARAN');
+            $pengeluaran->JUMLAH_PENGELUARAN = $request->input('JUMLAH_PENGELUARAN');
+            $pengeluaran->KATEGORI = $request->input('KATEGORI');
+            $pengeluaran->KETERANGAN = $request->input('KETERANGAN');
+            $pengeluaran->TANGGAL_PENGELUARAN = $request->input('TANGGAL_PENGELUARAN');
+            $pengeluaran->save();
+    
+            return redirect('/dashboard/lihat_pengeluaran')->with('success', 'Pengeluaran berhasil diupdate.');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+    }
+
+    // ======================================================================== DELETE PENGELUARAN
+    
+    public function deletePengeluaran($id)
+    {
+        try {
+            $pengeluaran = pengeluaran_sekolah::find($id);
+            $pengeluaran->delete();
+
+            return redirect('/dashboard/lihat_pengeluaran')->with('success', 'Data berhasil dihapus.');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+    }
+    public function confirmDeletePengeluaran($id)
+    {
+        $pengeluaran = pengeluaran_sekolah::find($id);
+        return view('delete_pengeluaran', compact('pengeluaran'));
+    }
+
 }

@@ -5,9 +5,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\TotalPerkategoriController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\TotalPengeluaran;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,46 +36,40 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('/dashboard', [AdminController::class, 'about']);
 
-    // Pembayaran
+    // ================Pembayaran================
     Route::get('/dashboard/pembayaran', [PembayaranController::class, 'viewPembayaran']);
     Route::post('/dashboard/postPembayaran', [PembayaranController::class, 'submitPembayaran']);
     
     Route::get('/dashboard/lihat_pembayaran_siswa', [PembayaranController::class, 'lihatPembayaranSiswa']);
 
-    // Buat Delete
+    // Buat edit PEMBAYARAN
     Route::get('/dashboard/edit_pembayaran/{id}', [PembayaranController::class, 'editPembayaran']);
     Route::post('/dashboard/update_pembayaran/{id}', [PembayaranController::class, 'updatePembayaran']);
 
-    // Buat Delete
+    // Buat Delete PEMBAYARAN
     Route::delete('/dashboard/delete_pembayaran/{id}', [PembayaranController::class, 'deletePembayaran']);
-    Route::get('/dashboard/delete_confirmation/{id}', [PembayaranController::class, 'confirmDelete']);
+    Route::get('/dashboard/delete_confirmation/{id}', [PembayaranController::class, 'confirmDeletePembayaran']);
 
-    Route::get('/logout', [SesiController::class, 'logout']);
-
-    // Pengeluaran    
+    // ================Pengeluaran================
     Route::get('/dashboard/pengeluaran', [PengeluaranController::class, 'viewPengeluaran']);
     Route::post('/dashboard/postPengeluaran', [PengeluaranController::class, 'submitPengeluaran']);
 
     Route::get('/dashboard/lihat_pengeluaran', [PengeluaranController::class, 'lihatPengeluaran']);
+
+    // Buat edit PENGELUARAN
+    Route::get('/dashboard/edit_pengeluaran/{id}', [PengeluaranController::class, 'editPengeluaran']);
+    Route::post('/dashboard/update_pengeluaran/{id}', [PengeluaranController::class, 'updatePengeluaran']);
+
+    // Buat Delete PENGELUARAN
+    Route::delete('/dashboard/delete_pengeluaran/{id}', [PengeluaranController::class, 'deletePengeluaran']);
+    Route::get('/dashboard/delete_confirmation/{id}', [PengeluaranController::class, 'confirmDeletePengeluaran']);
+
+    Route::get('/calculate_totals', [TotalPerkategoriController::class, 'calculateTotals']);
+    Route::get('/money_report', function () {
+        $totals = TotalPengeluaran::all();
+        return view('money_report', compact('totals'));
+    });
+
+    // Logout
+    Route::get('/logout', [SesiController::class, 'logout']);
 });
-
-
-
-
-// // Buat masukin data inputan ke database 
-// Route::get('/pembayaran', [PembayaranSiswaController::class, 'viewPembayaran']);
-// Route::post('/postPembayaran', [PembayaranSiswaController::class, 'submitPembayaran']);
-
-// // Buat ke tabel pembayaran_siswa dan dimunculin
-// Route::get('/lihat_pembayaran_siswa', [PembayaranSiswaController::class, 'lihatPembayaranSiswa']);
-
-// // Buat Edit datanya
-// Route::get('/edit_pembayaran/{id}', [PembayaranSiswaController::class, 'editPembayaran']);
-// Route::post('/update_pembayaran/{id}', [PembayaranSiswaController::class, 'updatePembayaran']);
-
-// // Buat Delete
-// Route::delete('/delete_pembayaran/{id}', [PembayaranSiswaController::class, 'deletePembayaran']);
-// Route::get('/delete_confirmation/{id}', [PembayaranSiswaController::class, 'confirmDelete']);
-
-
-

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\pengeluaran_sekolah;
 use App\Models\Pembayaran_Siswa;
 use Illuminate\Http\Request;
 use DB;
@@ -108,9 +109,11 @@ class PembayaranController extends Controller
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
-    public function confirmDelete($id)
+    public function confirmDeletePembayaran($id)
     {
         $pembayaran = Pembayaran_Siswa::find($id);
         return view('delete_pembayaran', compact('pembayaran'));
     }
+
+    
 }

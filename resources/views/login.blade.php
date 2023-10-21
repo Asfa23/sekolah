@@ -3,16 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="{{ URL::asset("img/logo_sekolah.png") }}" type="image/png">
     <title>Selamat Datang!</title>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-gray-100 font-poppins">
+<body class="bg-white font-poppins">
     <div class="flex h-screen">
         <div class="w-[60%] p-10 flex flex-col justify-center">
             <h1 class="text-6xl font-bold text-black mb-7 ml-16">Selamat Datang!</h1>
             
-            <div class="w-[40vw] bg-white rounded-xl shadow-md p-10 ml-16">
-
+            <div class="w-[40vw] bg-white rounded-xl shadow-xl p-10 ml-16 backdrop-blur-md  hover:border-purple-600 hover:border-[3px] hover:ease-in duration-300 hover:scale-101">
                 <!-- dalemnya -->
                 <form action="" method="POST">
                     @csrf
@@ -23,14 +23,11 @@
                         </div>
                         <div class="w-full mb-4">
                             <label for="password" class="form-label">Password</label>
-                            <input input type="password" name="password" class="form-control w-full text-xl bg-gray-200 rounded-lg p-4" placeholder="Masukkan Password">
+                            <input type="password" name="password" class="w-full text-xl bg-gray-200 rounded-lg p-4" placeholder="Masukkan Password">
                         </div>
-                        <button name="submit" type="submit" class="w-full h-[7vh] bg-black text-white font-semibold rounded-lg mt-6 flex items-center justify-center">
+                        <button name="submit" type="submit" class="w-full h-[7vh] bg-gradient-to-r from-purple-600 to-purple-400 text-white font-semibold rounded-lg mt-6 flex items-center justify-center transform hover:scale-105 delay-150 duration-200 ease-in-out">
                             Login
                         </button>
-                        <!-- <a href="/about" class="w-full h-[7vh] bg-black text-white font-semibold rounded-lg mt-6 flex items-center justify-center">
-                            Login
-                        </a>                                    -->
                     </div>
                 </form>
             </div>
@@ -43,10 +40,13 @@
                         @endforeach
                     </ul>
                 </div>
-                @endif
+            @endif
 
         </div>
-        <div class="w-[45%] h-screen bg-gradient-to-r from-purple-600 to-purple-400">
+        <div class="w-[45%] h-screen relative">
+            <video autoplay muted loop id="bg-video" class="w-full h-full object-cover">
+                <source src="{{ URL::asset('img/bg_login.mp4') }}" type="video/mp4">
+            </video>
         </div>
     </div>
 </body>
