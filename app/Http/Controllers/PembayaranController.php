@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\pengeluaran_sekolah;
 use App\Models\Pembayaran_Siswa;
 use Illuminate\Http\Request;
 use DB;
@@ -28,16 +27,22 @@ class PembayaranController extends Controller
             if ($tanggalPembayaran > $today) {
                 return redirect('/dashboard/pembayaran')->with('error', 'Tanggal pembayaran tidak boleh melebihi hari ini.');
             }
-    
+
+            // Images
+            $upfile = $request->file('BUKTI_PEMBAYARAN');
+            $nameimg = time() . '_' . $upfile . $upfile->getClientOriginalExtension();
+            $upfile->storeAs('BUKTI_PEMBAYARAN', $nameimg);    
+
+            
             $pembayaran = new Pembayaran_Siswa();
             $pembayaran->ID_SISWA = $idSiswa;
             $pembayaran->JUMLAH_PEMBAYARAN = $jumlahPembayaran;
             $pembayaran->KATEGORI = $kategori;
             $pembayaran->TANGGAL_PEMBAYARAN = $tanggalPembayaran;
+            $pembayaran->BUKTI_PEMBAYARAN = $nameimg;
+
             $pembayaran->save();
-    
             $request->session()->flash('success', 'Pembayaran berhasil disimpan.');
-    
             return redirect('/dashboard/pembayaran');
         } catch (\Exception $e) {
 
@@ -115,5 +120,19 @@ class PembayaranController extends Controller
         return view('delete_pembayaran', compact('pembayaran'));
     }
 
+    public function approvePembayaran($id)
+    {
+        // Cek apakah pengguna adalah superAdmin atau admin
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'admin') {
+            // Jika bukan superAdmin atau admin, maka redirect atau lakukan tindakan lain sesuai kebijakan Anda.
+            return redirect('/dashboard/lihat_pembayaran_siswa')->with('error', 'Anda tidak diizinkan menyetujui pembayaran.');
+        }
+
+        // Ubah STATUS menjadi 1
+        DB::table('pembayaran_siswa')->where('ID_PEMBAYARAN', $id)->update(['STATUS' => 1]);
+
+        // Redirect kembali ke halaman lihat_pembayaran_siswa dengan pesan sukses
+        return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Pembayaran telah disetujui.');
+    }
     
 }

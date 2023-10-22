@@ -4,10 +4,10 @@
 
 @include('partial.sidebar')
 
-<main class="w-4/5 p-8">
+<main class="w-3/4 p-8">
     <h1 class="text-5xl font-bold mb-6">Pembayaran</h1>
 
-    <form action="/dashboard/postPembayaran" method="POST" class="bg-white p-6 rounded shadow-md">
+    <form action="/dashboard/postPembayaran" method="POST" class="bg-white p-6 rounded shadow-md" enctype="multipart/form-data">
         @csrf 
 
     <div class="mb-4">
@@ -34,6 +34,12 @@
         <label for="TANGGAL_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Tanggal Pembayaran:</label>
         <input type="date" id="TANGGAL_PEMBAYARAN" name="TANGGAL_PEMBAYARAN" required
             class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+    </div>
+
+    <div class="mb-4">
+        <label for="BUKTI_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Bukti Pembayaran (Gambar):</label>
+        <input type="file" id="BUKTI_PEMBAYARAN" name="BUKTI_PEMBAYARAN" required accept=".jpg, .jpeg, .png" 
+                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
     </div>
 
         <div class="mt-6">

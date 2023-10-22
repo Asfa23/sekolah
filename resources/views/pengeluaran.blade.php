@@ -4,7 +4,7 @@
 
 @include('partial.sidebar')
 
-<main class="w-4/5 p-8">
+<main class="w-3/4 p-8">
     <h1 class="text-5xl font-bold mb-6">Input Pengeluaran</h1>
 
     <form action="/dashboard/postPengeluaran" method="POST" class="bg-white p-6 rounded shadow-md">

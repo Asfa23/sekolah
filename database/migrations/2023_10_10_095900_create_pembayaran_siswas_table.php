@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal('JUMLAH_PEMBAYARAN', 20, 2);
             $table->enum('KATEGORI', ['Pembayaran Siswa']);
             $table->date('TANGGAL_PEMBAYARAN');
+            $table->text('BUKTI_PEMBAYARAN')->nullable();
+            $table->tinyInteger('STATUS')->default(0);
 
             $table->foreign('ID_SISWA')->references('ID_SISWA')->on('siswas');
         });

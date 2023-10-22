@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function (){
     Route::post('/dashboard/postPembayaran', [PembayaranController::class, 'submitPembayaran']);
     
     Route::get('/dashboard/lihat_pembayaran_siswa', [PembayaranController::class, 'lihatPembayaranSiswa']);
+    Route::post('/dashboard/approve_pembayaran/{id}', [PembayaranController::class, 'approvePembayaran']);
 
     // Buat edit PEMBAYARAN
     Route::get('/dashboard/edit_pembayaran/{id}', [PembayaranController::class, 'editPembayaran']);
@@ -69,6 +70,7 @@ Route::middleware(['auth'])->group(function (){
         $totals = TotalPengeluaran::all();
         return view('money_report', compact('totals'));
     });
+    
 
     // Logout
     Route::get('/logout', [SesiController::class, 'logout']);
