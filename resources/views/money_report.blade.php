@@ -3,7 +3,7 @@
 @section('contain')
 
 @include('partial.sidebar')
-<div class="flex flex-col w-4/5 p-8">
+<div class="flex flex-col w-3/4 p-8">
     <main class=""> 
             <h1 class="text-5xl font-bold mb-6">Money Report</h1>
             <div class="bg-white rounded-xl shadow-md p-6">

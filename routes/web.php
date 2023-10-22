@@ -9,6 +9,7 @@ use App\Http\Controllers\TotalPerkategoriController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Models\TotalPengeluaran;
+use App\Http\Controllers\MoneyReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,7 +71,6 @@ Route::middleware(['auth'])->group(function (){
         $totals = TotalPengeluaran::all();
         return view('money_report', compact('totals'));
     });
-    
 
     // Logout
     Route::get('/logout', [SesiController::class, 'logout']);

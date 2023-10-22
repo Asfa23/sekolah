@@ -3,7 +3,7 @@
 @section('contain')
 
 @include('partial.sidebar')
-    <main class="p-8"> 
+    <main class="p-8 w-3/4"> 
         <h1 class="text-5xl font-bold mb-6">Data Pengeluaran Sekolah</h1>
         <div class="bg-white rounded shadow-md p-6">
 

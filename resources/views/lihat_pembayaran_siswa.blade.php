@@ -21,7 +21,7 @@
         </thead>
         <tbody>
             @foreach ($pembayaranSiswa as $pembayaran)
-            <tr class="border-b">
+            <tr class="border-b items-center">
                 <td class="border p-2 text-center">{{ $pembayaran->ID_PEMBAYARAN }}</td>
                 <td class="border p-2 text-center">{{ $pembayaran->ID_SISWA }}</td>
                 <td class="border p-2 text-center">{{ $pembayaran->JUMLAH_PEMBAYARAN }}</td>
@@ -36,29 +36,29 @@
                         {{ $pembayaran->STATUS }}
                     @endif
                 </td>                                 
-                <td class="border p-2 text-center flex items-center">
+                <td class="p-2 text-center flex">
                     @if ($pembayaran->BUKTI_PEMBAYARAN)
-                        <button class="p-1 px-1 bg-blue-500 hover:bg-blue-600 rounded-lg" onclick="openModal('{{ asset('storage/BUKTI_PEMBAYARAN/' . $pembayaran->BUKTI_PEMBAYARAN) }}')">
+                        <button class="p-1 px-1 h-[3.75vh] ml-4 bg-blue-500 hover:bg-blue-600 rounded-lg" onclick="openModal('{{ asset('storage/BUKTI_PEMBAYARAN/' . $pembayaran->BUKTI_PEMBAYARAN) }}')">
                             <img src="{{ URL::asset('img/view.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
                         </button>
                     @else
                         No Image
                     @endif
                     <a href="{{ url('/dashboard/edit_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
-                        class="p-1 px-1 ml-1.5 rounded-lg transition-colors duration-300 bg-yellow-500 hover:bg-yellow-600">
-                        <img src="{{ URL::asset("img/edit.svg") }}" alt="Edit Icon" class="w-5 h-5">
+                        class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-yellow-500 hover:bg-yellow-600">
+                        <img src="{{ URL::asset("img/edit.svg") }}" alt="Edit Icon" class="w-5 h-5"/>
                     </a>
                     <form action="{{ url('/dashboard/approve_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
                         @csrf
-                        <button type="submit" class="p-1 px-1 rounded-lg ml-1.5 transition-colors duration-300 bg-green-500 hover:bg-green-600">
+                        <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-green-500 hover:bg-green-600">
                             <img src="{{ URL::asset('img/check.svg') }}" alt="Approve Icon" class="w-5 h-5"/>
                         </button>
                     </form>                                        
                     <a href="{{ url('/dashboard/delete_confirmation/'.$pembayaran->ID_PEMBAYARAN) }}"
-                        class="p-1 px-1 rounded-lg ml-1.5 transition-colors duration-300 bg-red-500 hover:bg-red-600">
+                        class="p-1 px-1 h-[3.75vh] rounded-lg ml-1.5 transition-colors duration-300 bg-red-500 hover:bg-red-600">
                         <img src="{{ URL::asset('img/delete.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
                     </a>
-                </td>                                                         
+                </td>                                                                
             </tr>                    
             @endforeach
         </tbody>
@@ -96,8 +96,8 @@
                     <img id="modalImage" src="" alt="Image" class="w-full">
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button onclick="closeModal()" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover-bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:mt-0 sm:w-auto sm:text-sm">
-                        Close
+                    <button onclick="closeModal()" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover-bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:w-auto sm:text-sm">
+                        Tutup
                     </button>
                 </div>
             </div>
