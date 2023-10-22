@@ -26,7 +26,7 @@
             </table>
     </main>
 
-
+<!-- ini yg tabel bawahnya -->
     @php
         $totalPemasukan = $totals->where('KATEGORI', 'Pembayaran Siswa')->sum('TOTAL_PERKATEGORI');
         $totalPengeluaran = $totals->whereNotIn('KATEGORI', ['Pembayaran Siswa'])->sum('TOTAL_PERKATEGORI');

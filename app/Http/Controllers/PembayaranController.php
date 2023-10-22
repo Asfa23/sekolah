@@ -9,7 +9,7 @@ class PembayaranController extends Controller
 {
     public function submitPembayaran(Request $request)
     {
-        if (auth()->user()->role != 'superAdmin' && auth()->user()->role == 'siswa'){
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role == 'siswa') {
             return redirect('dashboard');
         }
 
@@ -18,22 +18,25 @@ class PembayaranController extends Controller
             $jumlahPembayaran = $request->input('JUMLAH_PEMBAYARAN');
             $kategori = $request->input('KATEGORI');
             $tanggalPembayaran = $request->input('TANGGAL_PEMBAYARAN');
-    
+
             if ($jumlahPembayaran < 0) {
                 return response()->json(['error' => 'Jumlah pembayaran tidak boleh negatif.']);
             }
-         
+
             $today = now();
             if ($tanggalPembayaran > $today) {
                 return redirect('/dashboard/pembayaran')->with('error', 'Tanggal pembayaran tidak boleh melebihi hari ini.');
             }
 
-            // Images
+            // Mendapatkan nama berkas asli, ekstensi, dan nama berkas yang unik
             $upfile = $request->file('BUKTI_PEMBAYARAN');
-            $nameimg = time() . '_' . $upfile . $upfile->getClientOriginalExtension();
-            $upfile->storeAs('BUKTI_PEMBAYARAN', $nameimg);    
+            $originalName = $upfile->getClientOriginalName();
+            $extension = $upfile->getClientOriginalExtension();
+            $nameimg = time() . '_' . $originalName;
 
-            
+            // Menyimpan berkas gambar dengan nama yang benar ke direktori yang diinginkan
+            $upfile->storeAs('BUKTI_PEMBAYARAN', $nameimg, 'public');
+
             $pembayaran = new Pembayaran_Siswa();
             $pembayaran->ID_SISWA = $idSiswa;
             $pembayaran->JUMLAH_PEMBAYARAN = $jumlahPembayaran;
@@ -45,9 +48,7 @@ class PembayaranController extends Controller
             $request->session()->flash('success', 'Pembayaran berhasil disimpan.');
             return redirect('/dashboard/pembayaran');
         } catch (\Exception $e) {
-
             $request->session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
-    
             return redirect('/dashboard/pembayaran');
         }
     }
@@ -78,8 +79,15 @@ class PembayaranController extends Controller
             return redirect('dashboard');
         }
         $pembayaran = Pembayaran_Siswa::where('ID_PEMBAYARAN', $id)->first();
+        
+        // Cek jika ada pesan sukses dalam sesi
+        if (session()->has('success')) {
+            session()->forget('success'); // Hapus pesan sukses dari sesi
+        }
+    
         return view('edit_pembayaran', compact('pembayaran'));
     }
+    
 
     public function updatePembayaran(Request $request, $id)
     {
@@ -94,7 +102,10 @@ class PembayaranController extends Controller
             $pembayaran->KATEGORI = $request->input('KATEGORI');
             $pembayaran->TANGGAL_PEMBAYARAN = $request->input('TANGGAL_PEMBAYARAN');
             $pembayaran->save();
-    
+
+            // Membersihkan pesan sukses dari sesi
+            $request->session()->forget('success');
+
             return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Pembayaran berhasil diupdate.');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
@@ -134,5 +145,22 @@ class PembayaranController extends Controller
         // Redirect kembali ke halaman lihat_pembayaran_siswa dengan pesan sukses
         return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Pembayaran telah disetujui.');
     }
+
+    public function rejectPembayaran($id)
+    {
+        // Cek apakah pengguna adalah superAdmin atau admin
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'admin') {
+            // Jika bukan superAdmin atau admin, maka redirect atau lakukan tindakan lain sesuai kebijakan Anda.
+            return redirect('/dashboard/lihat_pembayaran_siswa')->with('error', 'Anda tidak diizinkan menolak pembayaran.');
+        }
+    
+        // Ubah STATUS menjadi 2 (REJECT)
+        DB::table('pembayaran_siswa')->where('ID_PEMBAYARAN', $id)->update(['STATUS' => 2]);
+    
+        // Redirect kembali ke halaman lihat_pembayaran_siswa dengan pesan sukses
+        return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Pembayaran telah ditolak.');
+    }
+    
+
     
 }

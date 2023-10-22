@@ -12,9 +12,11 @@ class Pembayaran_Siswa extends Model
 
     protected $fillable = [
         'ID_SISWA',
-        'JUMLAH_PEMBAYARAN',
+        'JUMLAH_PEMBAYARAN',        
+        'KATEGORI',
         'TANGGAL_PEMBAYARAN',
-        'KATEGORI'
+        'BUKTI_PEMBAYARAN',
+        'STATUS'
     ];
     protected $table = 'pembayaran_siswa';
 }

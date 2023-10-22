@@ -29,7 +29,7 @@
                     <td class="border p-2 text-center flex">
                         <a href="{{ url('/dashboard/edit_pengeluaran/'.$pengeluaran->ID_PENGELUARAN) }}"
                             class="text-white bg-blue-500 hover:bg-blue-600 p-1 px-2 rounded-lg transition-colors duration-300">Edit</a>
-                        <a href="{{ url('/dashboard/delete_confirmation/'.$pengeluaran->ID_PENGELUARAN) }}"
+                        <a href="{{ url('/dashboard/delete_confirmation_pengeluaran/'.$pengeluaran->ID_PENGELUARAN) }}"
                             class="text-white bg-red-500 hover:bg-red-600 p-1 px-2 rounded-lg ml-2 transition-colors duration-300">Delete</a>
                     </td>                            
                 </tr>                    

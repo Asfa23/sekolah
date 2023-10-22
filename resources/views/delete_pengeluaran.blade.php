@@ -10,25 +10,29 @@
         <div class="bg-white rounded-lg shadow-md p-6">
             <p class="text-lg font-semibold mb-4">Apakah Anda yakin akan menghapus data berikut :</p>
 
-            <div class="mb-3">
-                <span class="font-semibold">ID Pengeluaran:</span> {{ $pengeluaran->ID_PENGELUARAN }}
-            </div>
+            <table class="border border-collapse w-full mb-3">
+                <tr>
+                    <th class="border p-2 font-semibold text-left">ID Pengeluaran:</th>
+                    <td class="border p-2 text-left">{{ $pengeluaran->ID_PENGELUARAN }}</td>
+                </tr>
+                <tr>
+                    <th class="border p-2 font-semibold text-left">Jumlah Pengeluaran:</th>
+                    <td class="border p-2 text-left">{{ $pengeluaran->JUMLAH_PENGELUARAN }}</td>
+                </tr>
+                <tr>
+                    <th class="border p-2 font-semibold text-left">Kategori:</th>
+                    <td class="border p-2 text-left">{{ $pengeluaran->KATEGORI }}</td>
+                </tr>
+                <tr>
+                    <th class="border p-2 font-semibold text-left">Keterangan:</th>
+                    <td class="border p-2 text-left">{{ $pengeluaran->KETERANGAN }}</td>
+                </tr>
+                <tr>
+                    <th class="border p-2 font-semibold text-left">Tanggal Pengeluaran:</th>
+                    <td class="border p-2 text-left">{{ $pengeluaran->TANGGAL_PENGELUARAN }}</td>
+                </tr>
+            </table>
 
-            <div class="mb-3">
-                <span class="font-semibold">Jumlah Pengeluaran:</span> {{ $pengeluaran->JUMLAH_PENGELUARAN }}
-            </div>
-
-            <div class="mb-3">
-                <span class="font-semibold">Kategori:</span> {{ $pengeluaran->KATEGORI }}
-            </div>
-
-            <div class="mb-3">
-                <span class="font-semibold">Keterangan:</span> {{ $pengeluaran->KETERANGAN }}
-            </div>
-
-            <div class="mb-3">
-                <span class="font-semibold">Tanggal Pengeluaran:</span> {{ $pengeluaran->TANGGAL_PENGELUARAN }}
-            </div>
 
             <div class="flex justify-center mt-6">
                 <form action="{{ url('dashboard/delete_pengeluaran/'.$pengeluaran->ID_PENGELUARAN) }}" method="POST">

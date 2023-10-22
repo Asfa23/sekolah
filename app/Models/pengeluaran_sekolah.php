@@ -12,9 +12,9 @@ class pengeluaran_sekolah extends Model
 
     protected $fillable = [
         'JUMLAH_PENGELUARAN',
-        'KATEGORI', // Perbaiki penamaan kolom menjadi 'KATEGORI'
+        'KATEGORI', 
         'KETERANGAN',
-        'TANGGAL_PENGELUARAN', // Pastikan penamaan kolom ini sesuai dengan yang ada di tabel
+        'TANGGAL_PENGELUARAN', 
     ];
     protected $table = 'pengeluaran_sekolahs';
     

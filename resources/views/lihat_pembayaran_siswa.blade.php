@@ -16,6 +16,7 @@
                 <th class="border p-2">Kategori</th>
                 <th class="border p-2">Tanggal</th>
                 <th class="border p-2">Status</th>
+                <th class="border p-2">Persetujuan</th> 
                 <th class="border p-2">Aksi</th>
             </tr>
         </thead>
@@ -32,37 +33,59 @@
                         N/A
                     @elseif ($pembayaran->STATUS === 1)
                         ACC
+                    @elseif ($pembayaran->STATUS === 2)
+                        REJ
                     @else
                         {{ $pembayaran->STATUS }}
                     @endif
                 </td>                                 
+                <td class="border p-2 text-center">
+                    <div class="flex justify-center">
+                        <!-- Icon untuk reject -->
+                        <form action="{{ url('/dashboard/reject_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-red-500 hover-bg-red-600">
+                                <img src="{{ URL::asset('img/reject.svg') }}" alt="Reject Icon" class="w-5 h-5"/>
+                            </button>
+                        </form>
+                        
+                            <!-- Icon untuk approve -->
+                        <form action="{{ url('/dashboard/approve_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-green-500 hover-bg-green-600">
+                                <img src="{{ URL::asset('img/check.svg') }}" alt="Approve Icon" class="w-5 h-5"/>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+
                 <td class="p-2 text-center flex">
+                    <!-- icon foto bukti pembayaran -->
                     @if ($pembayaran->BUKTI_PEMBAYARAN)
-                        <button class="p-1 px-1 h-[3.75vh] ml-4 bg-blue-500 hover:bg-blue-600 rounded-lg" onclick="openModal('{{ asset('storage/BUKTI_PEMBAYARAN/' . $pembayaran->BUKTI_PEMBAYARAN) }}')">
+                        <button class="p-1 px-1 h-[3.75vh] ml-4 bg-blue-500 hover-bg-blue-600 rounded-lg" onclick="openModal('{{ asset('storage/BUKTI_PEMBAYARAN/' . $pembayaran->BUKTI_PEMBAYARAN) }}')">
                             <img src="{{ URL::asset('img/view.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
                         </button>
                     @else
                         No Image
                     @endif
+
+                    <!-- icon edit -->
                     <a href="{{ url('/dashboard/edit_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
-                        class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-yellow-500 hover:bg-yellow-600">
-                        <img src="{{ URL::asset("img/edit.svg") }}" alt="Edit Icon" class="w-5 h-5"/>
+                        class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-yellow-500 hover-bg-yellow-600">
+                        <img src="{{ URL::asset("img/edit.svg") }}" alt "Edit Icon" class="w-5 h-5"/>
                     </a>
-                    <form action="{{ url('/dashboard/approve_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-green-500 hover:bg-green-600">
-                            <img src="{{ URL::asset('img/check.svg') }}" alt="Approve Icon" class="w-5 h-5"/>
-                        </button>
-                    </form>                                        
-                    <a href="{{ url('/dashboard/delete_confirmation/'.$pembayaran->ID_PEMBAYARAN) }}"
-                        class="p-1 px-1 h-[3.75vh] rounded-lg ml-1.5 transition-colors duration-300 bg-red-500 hover:bg-red-600">
+                    
+                    <!-- icon delete -->
+                    <a href="{{ url('/dashboard/delete_confirmation_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
+                        class="p-1 px-1 h-[3.75vh] rounded-lg ml-1.5 transition-colors duration-300 bg-red-500 hover-bg-red-600">
                         <img src="{{ URL::asset('img/delete.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
                     </a>
-                </td>                                                                
+                </td>
             </tr>                    
             @endforeach
         </tbody>
     </table>
+
 
     @if(session('success'))
     <div class="bg-green-100 border border-green-400 text-green-700 px-2 py-2 rounded relative mt-2 text-sm" role="alert">
@@ -91,7 +114,7 @@
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"> 
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <img id="modalImage" src="" alt="Image" class="w-full">
                 </div>

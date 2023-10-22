@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\superAdminController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SesiController;
@@ -37,6 +38,9 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('/dashboard', [AdminController::class, 'about']);
 
+    // ================History Siswa================
+    Route::get('/dashboard/history_pembayaran', [SiswaController::class, 'viewHistory']);
+
     // ================Pembayaran================
     Route::get('/dashboard/pembayaran', [PembayaranController::class, 'viewPembayaran']);
     Route::post('/dashboard/postPembayaran', [PembayaranController::class, 'submitPembayaran']);
@@ -49,8 +53,10 @@ Route::middleware(['auth'])->group(function (){
     Route::post('/dashboard/update_pembayaran/{id}', [PembayaranController::class, 'updatePembayaran']);
 
     // Buat Delete PEMBAYARAN
+    Route::get('/dashboard/delete_confirmation_pembayaran/{id}', [PembayaranController::class, 'confirmDeletePembayaran']);
     Route::delete('/dashboard/delete_pembayaran/{id}', [PembayaranController::class, 'deletePembayaran']);
-    Route::get('/dashboard/delete_confirmation/{id}', [PembayaranController::class, 'confirmDeletePembayaran']);
+
+    Route::post('/dashboard/reject_pembayaran/{id}', [PembayaranController::class, 'rejectPembayaran']);
 
     // ================Pengeluaran================
     Route::get('/dashboard/pengeluaran', [PengeluaranController::class, 'viewPengeluaran']);
@@ -63,9 +69,10 @@ Route::middleware(['auth'])->group(function (){
     Route::post('/dashboard/update_pengeluaran/{id}', [PengeluaranController::class, 'updatePengeluaran']);
 
     // Buat Delete PENGELUARAN
+    Route::get('/dashboard/delete_confirmation_pengeluaran/{id}', [PengeluaranController::class, 'confirmDeletePengeluaran']);
     Route::delete('/dashboard/delete_pengeluaran/{id}', [PengeluaranController::class, 'deletePengeluaran']);
-    Route::get('/dashboard/delete_confirmation/{id}', [PengeluaranController::class, 'confirmDeletePengeluaran']);
 
+    // Buat money report
     Route::get('/calculate_totals', [TotalPerkategoriController::class, 'calculateTotals']);
     Route::get('/money_report', function () {
         $totals = TotalPengeluaran::all();
