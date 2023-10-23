@@ -7,6 +7,8 @@ use App\Http\Controllers\SesiController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\TotalPerkategoriController;
+use App\Http\Controllers\ManajemenUserController;
+use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Models\TotalPengeluaran;
@@ -78,6 +80,21 @@ Route::middleware(['auth'])->group(function (){
         $totals = TotalPengeluaran::all();
         return view('money_report', compact('totals'));
     });
+
+    //Buat Manajemen User
+    Route::get('/manajemen_user', [ManajemenUserController::class, 'index'])->name('manajemen_user');
+
+    // Buat Edit User
+    Route::get('/dashboard/edit_user/{id}', [ManajemenUserController::class, 'edit'])->name('edit_user');
+    Route::post('/dashboard/update_user/{id}', [ManajemenUserController::class, 'update'])->name('update_user');
+
+    // Delete User
+    Route::get('/dashboard/delete_confirmation_user/{id}', [ManajemenUserController::class, 'showDeleteConfirmation'])->name('delete_confirmation_user');
+    Route::delete('/dashboard/delete_user/{id}', [ManajemenUserController::class, 'delete'])->name('delete_user');
+
+    // Create User
+    Route::get('/dashboard/create_user', [ManajemenUserController::class, 'create'])->name('create_user');
+    Route::post('/dashboard/store_user', [ManajemenUserController::class, 'store'])->name('store_user');
 
     // Logout
     Route::get('/logout', [SesiController::class, 'logout']);

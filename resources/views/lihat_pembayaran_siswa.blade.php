@@ -72,7 +72,7 @@
                     <!-- icon edit -->
                     <a href="{{ url('/dashboard/edit_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
                         class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-yellow-500 hover-bg-yellow-600">
-                        <img src="{{ URL::asset("img/edit.svg") }}" alt "Edit Icon" class="w-5 h-5"/>
+                        <img src="{{ URL::asset("img/edit.svg") }}" alt = "Edit Icon" class="w-5 h-5"/>
                     </a>
                     
                     <!-- icon delete -->

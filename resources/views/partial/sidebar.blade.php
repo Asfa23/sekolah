@@ -27,8 +27,43 @@
         @endif
        {{-- End Siswa --}}
 
+       {{-- Staff --}}
+       @if (Auth::user()->role == 'staff')
+       <li>
+            <a href="/dashboard/pembayaran" class="text-white hover:underline flex items-center">
+                <img src="{{ URL::asset("img/input_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                Input Pembayaran
+            </a>
+        </li>
+        <li>
+            <a href="/dashboard/lihat_pembayaran_siswa" class="text-white hover:underline flex items-center">
+                <img src="{{ URL::asset("img/data_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                Data Pembayaran
+            </a>
+        </li>
+        <li>
+            <a href="/dashboard/pengeluaran" class="text-white hover:underline flex items-center">
+                <img src="{{ URL::asset("img/input_pengeluaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                Input Pengeluaran
+            </a>
+        </li>            
+        <li>
+            <a href="/dashboard/lihat_pengeluaran" class="text-white hover:underline flex items-center">
+                <img src="{{ URL::asset("img/data_pengeluaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                Data Pengeluaran
+            </a>
+        </li>
+        @endif
+       {{-- End Staff --}}
+
        {{-- Super --}}
        @if (Auth::user()->role == 'superAdmin')
+       <li>
+        <a href="{{ route('manajemen_user') }}" class="text-white hover:underline flex items-center">
+            <img src="{{ URL::asset("img/user.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+            Manajemen User
+        </a>
+        </li>
        <li>
             <a href="/dashboard/pembayaran" class="text-white hover:underline flex items-center">
                 <img src="{{ URL::asset("img/input_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
