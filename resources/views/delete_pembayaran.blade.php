@@ -16,8 +16,8 @@
                     <td class="border p-2 text-left">{{ $pembayaran->ID_PEMBAYARAN }}</td>
                 </tr>
                 <tr>
-                    <th class="border p-2 font-semibold text-left">ID Siswa</th>
-                    <td class="border p-2 text-left">{{ $pembayaran->ID_SISWA }}</td>
+                    <th class="border p-2 font-semibold text-left">ID User</th>
+                    <td class="border p-2 text-left">{{ $pembayaran->ID_USER }}</td>
                 </tr>
                 <tr>
                     <th class="border p-2 font-semibold text-left">Jumlah Pembayaran</th>

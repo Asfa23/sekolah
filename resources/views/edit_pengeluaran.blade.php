@@ -29,7 +29,7 @@
                     <option value="Maintenance" @if($pengeluaran->KATEGORI == 'Maintenance') selected @endif>Maintenance</option>
                     <option value="Gaji Guru & Staff" @if($pengeluaran->KATEGORI == 'Gaji Guru & Staff') selected @endif>Gaji Guru & Staff</option>
                     <option value="Program sekolah" @if($pengeluaran->KATEGORI == 'Program sekolah') selected @endif>Program sekolah</option>
-                    <option value="Lainnya" @if($pengeluaran->KATEGORI == 'Lainnya') selected @endif>Lainnya</option>
+                    <option value="Pengeluaran Lainnya" @if($pengeluaran->KATEGORI == 'Pengeluaran Lainnya') selected @endif>Pengeluaran Lainnya</option>
                 </select>
             </div>
 

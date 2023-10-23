@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('pembayaran_siswa', function (Blueprint $table) {
             $table->id('ID_PEMBAYARAN');
-            $table->unsignedBigInteger('ID_SISWA');
+            $table->unsignedBigInteger('ID_USER');
             $table->decimal('JUMLAH_PEMBAYARAN', 20, 2);
-            $table->enum('KATEGORI', ['Pembayaran Siswa']);
+            $table->enum('KATEGORI', ['Pembayaran Siswa','Bantuan Pemerintah','Pemasukan Lainnya']);
             $table->date('TANGGAL_PEMBAYARAN');
             $table->text('BUKTI_PEMBAYARAN')->nullable();
             $table->tinyInteger('STATUS')->default(0);
 
-            $table->foreign('ID_SISWA')->references('ID_SISWA')->on('siswas');
+            $table->foreign('ID_USER')->references('id')->on('users');
         });
     }
 

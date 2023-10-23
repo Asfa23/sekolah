@@ -25,7 +25,7 @@
             <option value="Inventaris">Inventaris</option>
             <option value="Gaji Guru & Staff">Gaji Guru & Staff</option>
             <option value="Program Sekolah">Program Sekolah</option>
-            <option value="Lainnya">Lainnya</option>
+            <option value="Pengeluaran Lainnya">Pengeluaran Lainnya</option>
         </select>
     </div>
 

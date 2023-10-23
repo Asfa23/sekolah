@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 <th class="border p-2">ID Pembayaran</th>
-                <th class="border p-2">ID Siswa</th>
+                <th class="border p-2">ID User</th>
                 <th class="border p-2">Jumlah</th>
                 <th class="border p-2">Kategori</th>
                 <th class="border p-2">Tanggal</th>
@@ -24,8 +24,8 @@
             @foreach ($pembayaranSiswa as $pembayaran)
             <tr class="border-b items-center">
                 <td class="border p-2 text-center">{{ $pembayaran->ID_PEMBAYARAN }}</td>
-                <td class="border p-2 text-center">{{ $pembayaran->ID_SISWA }}</td>
-                <td class="border p-2 text-center">{{ $pembayaran->JUMLAH_PEMBAYARAN }}</td>
+                <td class="border p-2 text-center">{{ $pembayaran->ID_USER }}</td>
+                <td class="border p-2 text-center">Rp {{ $pembayaran->JUMLAH_PEMBAYARAN }}</td>
                 <td class="border p-2 text-center">{{ $pembayaran->KATEGORI }}</td>
                 <td class="border p-2 text-center">{{ $pembayaran->TANGGAL_PEMBAYARAN }}</td>
                 <td class="border p-2 text-center">

@@ -11,7 +11,7 @@ class Pembayaran_Siswa extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'ID_SISWA',
+        'ID_USER',
         'JUMLAH_PEMBAYARAN',        
         'KATEGORI',
         'TANGGAL_PEMBAYARAN',

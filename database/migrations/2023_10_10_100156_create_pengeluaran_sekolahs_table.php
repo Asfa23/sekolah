@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('ID_PENGELUARAN');
             $table->decimal('JUMLAH_PENGELUARAN', 20, 2);
             $table->string('KETERANGAN');
-            $table->enum('KATEGORI', ['Inventaris', 'Maintenance', 'Gaji Guru & Staff', 'Program sekolah', 'Lainnya']);
+            $table->enum('KATEGORI', ['Inventaris', 'Maintenance', 'Gaji Guru & Staff', 'Program sekolah', 'Pengeluaran Lainnya']);
             $table->date('TANGGAL_PENGELUARAN');
         });
     }

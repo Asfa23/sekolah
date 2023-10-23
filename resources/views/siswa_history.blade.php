@@ -28,11 +28,11 @@
                 <td class="border p-2 text-center">{{ $pembayaran->TANGGAL_PEMBAYARAN }}</td>
                 <td class="border p-2 text-center">
                     @if ($pembayaran->STATUS === 0)
-                        N/A
+                        PENDING
                     @elseif ($pembayaran->STATUS === 1)
-                        ACC
+                        ACCEPT
                     @elseif ($pembayaran->STATUS === 2)
-                        REJ
+                        REJECT
                     @else
                         {{ $pembayaran->STATUS }}
                     @endif

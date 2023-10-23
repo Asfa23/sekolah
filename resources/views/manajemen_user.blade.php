@@ -37,14 +37,14 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="mt-6">
+        <div class="mb-3 mt-7">
         <a href="{{ url('/dashboard/create_user') }}" class="text-white px-4 py-2  rounded-lg transition-colors duration-300 bg-green-500 hover-bg-green-600">
             Create User
         </a>
         </div>
     </div>
     @if(session('success'))
-    <div class="mt-6 bg-green-100 border border-green-400 text-green-700 px-2 py-2 rounded relative mt-2 text-sm" role="alert">
+    <div class="mt-6 bg-green-100 border border-green-400 text-green-700 px-2 py-2 rounded relative text-sm" role="alert">
         <strong class="font-bold">Sukses!</strong>
         <span class="block sm:inline">{{ session('success') }}</span>
     </div>

@@ -11,8 +11,8 @@
             @csrf
     
             <div class="mb-4">
-                <label for="ID_SISWA" class="block text-sm font-medium text-gray-700">ID Siswa:</label>
-                <input type="text" name="ID_SISWA" value="{{ $pembayaran->ID_SISWA }}" required
+                <label for="ID_USER" class="block text-sm font-medium text-gray-700">ID Siswa:</label>
+                <input type="text" name="ID_USER" value="{{ $pembayaran->ID_USER }}" required
                     class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
             </div>
     
@@ -26,6 +26,8 @@
                 <label for="KATEGORI" class="block text-sm font-medium text-gray-700">Kategori:</label>
                 <select name="KATEGORI" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
                     <option value="Pembayaran Siswa" @if($pembayaran->KATEGORI == 'Pembayaran Siswa') selected @endif>Pembayaran Siswa</option>
+                    <option value="Bantuan Pemerintah" @if($pembayaran->KATEGORI == 'Bantuan Pemerintah') selected @endif>Bantuan Pemerintah</option>
+                    <option value="Pemasukan Lainnya" @if($pembayaran->KATEGORI == 'Pemasukan Lainnya') selected @endif>Pemasukan Lainnya</option>
                 </select>
             </div>
     

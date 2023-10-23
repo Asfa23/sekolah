@@ -11,8 +11,8 @@
         @csrf 
 
     <div class="mb-4">
-        <label for="ID_SISWA" class="block text-sm font-medium text-gray-700">ID Siswa:</label>
-        <input type="number" id="ID_SISWA" name="ID_SISWA" min="1000" required
+        <label for="ID_USER" class="block text-sm font-medium text-gray-700">ID User:</label>
+        <input type="number" id="ID_USER" name="ID_USER" min="1000" required
             class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
     </div>
 
@@ -27,6 +27,8 @@
         <select id="KATEGORI" name="KATEGORI"
             class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
             <option value="Pembayaran Siswa">Pembayaran Siswa</option>
+            <option value="Bantuan Pemerintah">Bantuan Pemerintah</option>
+            <option value="Pemasukan Lainnya">Pemasukan Lainnya</option>
         </select>
     </div>
 
