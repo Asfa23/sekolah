@@ -10,7 +10,7 @@ class PengeluaranController extends Controller
     // Buat Submit Pengeluaran
     public function submitPengeluaran(Request $request)
     {
-        if (auth()->user()->role != 'superAdmin'){
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff'){
             return redirect('dashboard');
         }
 
@@ -37,7 +37,7 @@ class PengeluaranController extends Controller
     
             $pengeluaran->save();
 
-            $request->session()->flash('success', 'Pembayaran berhasil disimpan.');
+            $request->session()->flash('success', 'Data Pengeluaran berhasil disimpan.');
     
             return redirect('/dashboard/pengeluaran');
         } catch (\Exception $e) {
@@ -50,7 +50,7 @@ class PengeluaranController extends Controller
     //Buat View Pengeluaran
     public function viewPengeluaran(Request $request)
     {
-        if (auth()->user()->role != 'superAdmin'){
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff'){
             return redirect('dashboard');
         }
         return view('pengeluaran');
@@ -92,7 +92,7 @@ class PengeluaranController extends Controller
             $pengeluaran->TANGGAL_PENGELUARAN = $request->input('TANGGAL_PENGELUARAN');
             $pengeluaran->save();
     
-            return redirect('/dashboard/lihat_pengeluaran')->with('success', 'Pengeluaran berhasil diupdate.');
+            return redirect('/dashboard/lihat_pengeluaran')->with('success', 'Data Pengeluaran berhasil diperbarui.');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
@@ -106,7 +106,7 @@ class PengeluaranController extends Controller
             $pengeluaran = pengeluaran_sekolah::find($id);
             $pengeluaran->delete();
 
-            return redirect('/dashboard/lihat_pengeluaran')->with('success', 'Data berhasil dihapus.');
+            return redirect('/dashboard/lihat_pengeluaran')->with('success', 'Data Pengeluaran berhasil dihapus.');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }

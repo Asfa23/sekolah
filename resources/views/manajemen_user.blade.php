@@ -5,6 +5,24 @@
 
 <main class="w-3/4 p-8">
     <h1 class="text-5xl font-bold mb-6">Manajemen User</h1>
+
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+            <button onclick="closeAlert(this)" class="absolute top-0 bottom-0 right-0 px-4 py-3 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    @endif
+
+    <script>
+        function closeAlert(button) {
+            button.parentElement.style.display = 'none';
+        }
+    </script> 
+
     <div class="bg-white rounded shadow-md p-4">
         <table class="w-full border border-collapse mb-4">
             <thead>
@@ -25,8 +43,8 @@
                         <td class="border p-2 text-center">{{ $user->email }}</td>
                         <td class="border p-2 text-center">{{ $user->role }}</td>
                         <!-- pass <td class="border p-2 text-center"> {{ $user->password }}</td> --> 
-                        <td class="p-2 text-center flex">
-                            <a href="{{ url('/dashboard/edit_user/'. $user->id) }}" class="btn btn-primary ml-6 p-1 px-1 h-[3.75vh] rounded-lg transition-colors duration-300 bg-yellow-500 hover-bg-yellow-600">
+                        <td class="p-2 text-center flex flex-row justify-center items-center">
+                            <a href="{{ url('/dashboard/edit_user/'. $user->id) }}" class="btn btn-primary p-1 px-1 h-[3.75vh] rounded-lg transition-colors duration-300 bg-yellow-500 hover-bg-yellow-600">
                                 <img src="{{ URL::asset("img/edit.svg") }}" alt = "Edit Icon" class="w-5 h-5"/>
                             </a>
                             <a href="{{ url('/dashboard/delete_confirmation_user/'. $user->id) }}" class="btn btn-danger p-1 px-1 h-[3.75vh] rounded-lg ml-1.5 transition-colors duration-300 bg-red-500 hover-bg-red-600">
@@ -43,11 +61,6 @@
         </a>
         </div>
     </div>
-    @if(session('success'))
-    <div class="mt-6 bg-green-100 border border-green-400 text-green-700 px-2 py-2 rounded relative text-sm" role="alert">
-        <strong class="font-bold">Sukses!</strong>
-        <span class="block sm:inline">{{ session('success') }}</span>
-    </div>
-    @endif
 </main>
 @endsection
+

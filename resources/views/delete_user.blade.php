@@ -5,7 +5,7 @@
 @include('partial.sidebar')
 
 <main class="w-3/4 p-8">
-    <h1 class="text-3xl font-semibold mb-4">Konfirmasi Hapus User</h1>
+    <h1 class="text-5xl font-bold mb-4">Konfirmasi Hapus User</h1>
     <div class="bg-white rounded-lg shadow-md p-6">
         <p class="text-lg font-semibold mb-4">Apakah anda yakin ingin menghapus user berikut:</p>
 
@@ -34,7 +34,7 @@
                 <button type="submit" class="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600">
                     Hapus
                 </button>
-                <a href="{{ route('manajemen_user') }}" class="py-2 px-5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-2">
+                <a href="{{ route('manajemen_user') }}" class="py-2 px-5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-3">
                     Batal
                 </a>
             </div>

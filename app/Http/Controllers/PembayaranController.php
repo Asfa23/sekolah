@@ -3,57 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pembayaran_Siswa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use DB;
 class PembayaranController extends Controller
 {
     public function submitPembayaran(Request $request)
-{
-    if (auth()->user()->role != 'superAdmin' && auth()->user()->role == 'siswa') {
-        return redirect('dashboard');
-    }
-
-    try {
-        $idUser = $request->input('ID_USER');
-        $jumlahPembayaran = $request->input('JUMLAH_PEMBAYARAN');
-        $kategori = $request->input('KATEGORI');
-        $tanggalPembayaran = $request->input('TANGGAL_PEMBAYARAN');
-
-        if ($jumlahPembayaran < 0) {
-            return response()->json(['error' => 'Jumlah pembayaran tidak boleh negatif.']);
+    {
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role !== 'siswa' && auth()->user()->role !== 'staff') {
+            return redirect('dashboard');
         }
-
-        $today = now();
-        if ($tanggalPembayaran > $today) {
-            return redirect('/dashboard/pembayaran')->with('error', 'Tanggal pembayaran tidak boleh melebihi hari ini.');
+    
+        try {
+            $idUser = auth()->user()->id; // Mengambil ID pengguna yang sedang login
+            $jumlahPembayaran = $request->input('JUMLAH_PEMBAYARAN');
+            $kategori = $request->input('KATEGORI');
+            $tanggalPembayaran = $request->input('TANGGAL_PEMBAYARAN');
+    
+            if ($jumlahPembayaran < 0) {
+                return response()->json(['error' => 'Jumlah pembayaran tidak boleh negatif.']);
+            }
+    
+            $today = now();
+            if ($tanggalPembayaran > $today) {
+                return redirect('/dashboard/pembayaran')->with('error', 'Tanggal pembayaran tidak boleh melebihi hari ini.');
+            }
+    
+            // Images
+            $upfile = $request->file('BUKTI_PEMBAYARAN');
+            $nameimg = time() . '_' . $upfile->getClientOriginalName(); // Menggunakan nama asli berkas
+            $upfile->storeAs('/BUKTI_PEMBAYARAN', $nameimg);
+    
+            $pembayaran = new Pembayaran_Siswa();
+            $pembayaran->ID_USER = $idUser; // Mengisi ID_USER dengan ID pengguna yang sedang login
+            $pembayaran->JUMLAH_PEMBAYARAN = $jumlahPembayaran;
+            $pembayaran->KATEGORI = $kategori;
+            $pembayaran->TANGGAL_PEMBAYARAN = $tanggalPembayaran;
+            $pembayaran->BUKTI_PEMBAYARAN = $nameimg;
+    
+            $pembayaran->save();
+            $request->session()->flash('success', 'Data Pembayaran berhasil disimpan.');
+            return redirect('/dashboard/pembayaran');
+        } catch (\Exception $e) {
+            $request->session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return redirect('/dashboard/pembayaran');
         }
-
-        // Images
-        $upfile = $request->file('BUKTI_PEMBAYARAN');
-        $nameimg = time() . '_' . $upfile->getClientOriginalName(); // Menggunakan nama asli berkas
-        $upfile->storeAs('/BUKTI_PEMBAYARAN', $nameimg);
-
-        $pembayaran = new Pembayaran_Siswa();
-        $pembayaran->ID_USER = $idUser;
-        $pembayaran->JUMLAH_PEMBAYARAN = $jumlahPembayaran;
-        $pembayaran->KATEGORI = $kategori;
-        $pembayaran->TANGGAL_PEMBAYARAN = $tanggalPembayaran;
-        $pembayaran->BUKTI_PEMBAYARAN = $nameimg;
-
-        $pembayaran->save();
-        $request->session()->flash('success', 'Pembayaran berhasil disimpan.');
-        return redirect('/dashboard/pembayaran');
-    } catch (\Exception $e) {
-        $request->session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
-        return redirect('/dashboard/pembayaran');
     }
-}
-
 
     // ======================================================================== PEMBAYARAN
     public function viewPembayaran(Request $request)
     {
-        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'siswa' && auth()->user()->role != 'staff'){
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role !== 'siswa' && auth()->user()->role !== 'staff'){
             return redirect('dashboard');
         }
         return view('pembayaran');
@@ -93,7 +93,7 @@ class PembayaranController extends Controller
             $pembayaran->TANGGAL_PEMBAYARAN = $request->input('TANGGAL_PEMBAYARAN');
             $pembayaran->save();
     
-            return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Pembayaran berhasil diupdate.');
+            return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Data Pembayaran berhasil diperbarui.');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
@@ -107,7 +107,7 @@ class PembayaranController extends Controller
             $pembayaran = Pembayaran_Siswa::find($id);
             $pembayaran->delete();
 
-            return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Data berhasil dihapus.');
+            return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Data Pembayaran berhasil dihapus.');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }

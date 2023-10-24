@@ -4,10 +4,28 @@
 @include('partial.sidebar')
 
 <main class="w-3/4 p-8"> 
-    <h1 class="text-5xl font-bold mb-6">Data Pembayaran Siswa</h1>
+    <h1 class="text-5xl font-bold mb-6">Data pembayaran</h1>
+
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+            <button onclick="closeAlert(this)" class="absolute top-0 bottom-0 right-0 px-4 py-3 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    @endif
+
+    <script>
+        function closeAlert(button) {
+            button.parentElement.style.display = 'none';
+        }
+    </script>   
+
     <div class="bg-white rounded shadow-md p-4">
 
-    <table class="w-full border border-collapse mb-4">
+    <table class="w-full border border-collapse">
         <thead>
             <tr>
                 <th class="border p-2">ID Pembayaran</th>
@@ -30,9 +48,9 @@
                 <td class="border p-2 text-center">{{ $pembayaran->TANGGAL_PEMBAYARAN }}</td>
                 <td class="border p-2 text-center">
                     @if ($pembayaran->STATUS === 0)
-                        N/A
+                        PEND
                     @elseif ($pembayaran->STATUS === 1)
-                        ACC
+                        VER
                     @elseif ($pembayaran->STATUS === 2)
                         REJ
                     @else
@@ -59,40 +77,31 @@
                     </div>
                 </td>
 
-                <td class="p-2 text-center flex">
-                    <!-- icon foto bukti pembayaran -->
+                <td class="p-2 text-center flex flex-row justify-center items-center">
+                    
                     @if ($pembayaran->BUKTI_PEMBAYARAN)
-                        <button class="p-1 px-1 h-[3.75vh] ml-4 bg-blue-500 hover-bg-blue-600 rounded-lg" onclick="openModal('{{ asset('storage/BUKTI_PEMBAYARAN/' . $pembayaran->BUKTI_PEMBAYARAN) }}')">
+                        <button class="p-1 px-1 h-[3.75vh] bg-blue-500 hover-bg-blue-600 rounded-lg" onclick="openModal('{{ asset('storage/BUKTI_PEMBAYARAN/' . $pembayaran->BUKTI_PEMBAYARAN) }}')">
                             <img src="{{ URL::asset('img/view.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
                         </button>
-                    @else
-                        No Image
                     @endif
-
-                    <!-- icon edit -->
-                    <a href="{{ url('/dashboard/edit_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
-                        class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-yellow-500 hover-bg-yellow-600">
-                        <img src="{{ URL::asset("img/edit.svg") }}" alt = "Edit Icon" class="w-5 h-5"/>
-                    </a>
                     
-                    <!-- icon delete -->
-                    <a href="{{ url('/dashboard/delete_confirmation_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
-                        class="p-1 px-1 h-[3.75vh] rounded-lg ml-1.5 transition-colors duration-300 bg-red-500 hover-bg-red-600">
-                        <img src="{{ URL::asset('img/delete.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
-                    </a>
+                    @if (Auth::user()->role == 'superAdmin')
+                        <a href="{{ url('/dashboard/edit_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
+                            class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-yellow-500 hover-bg-yellow-600">
+                            <img src="{{ URL::asset("img/edit.svg") }}" alt = "Edit Icon" class="w-5 h-5"/>
+                        </a>
+                        
+                        
+                        <a href="{{ url('/dashboard/delete_confirmation_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
+                            class="p-1 px-1 h-[3.75vh] rounded-lg ml-1.5 transition-colors duration-300 bg-red-500 hover-bg-red-600">
+                            <img src="{{ URL::asset('img/delete.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
+                        </a>
+                    @endif
                 </td>
             </tr>                    
             @endforeach
         </tbody>
     </table>
-
-
-    @if(session('success'))
-    <div class="bg-green-100 border border-green-400 text-green-700 px-2 py-2 rounded relative mt-2 text-sm" role="alert">
-        <strong class="font-bold">Sukses!</strong>
-        <span class="block sm:inline">{{ session('success') }}</span>
-    </div>
-    @endif
 
     <script>
         function openModal(imageUrl) {

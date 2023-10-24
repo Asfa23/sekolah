@@ -46,18 +46,14 @@
                     class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
             </div>
     
-            <div class="mt-6 flex justify-center">
-                <div class="flex-2">
+            <div class="mt-6 flex">
                     <button type="submit"
                         class="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:bg-green-600">
                         Update
                     </button>
-                </div>
-                <div class="ml-3">
-                    <button onclick="window.location.href='{{ url('/lihat_pengeluaran') }}'" class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                    <a href="/dashboard/lihat_pengeluaran" class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-3">
                          Kembali
-                    </button>
-                </div>
+                    </a>
             </div>                   
         </form>
     </main>

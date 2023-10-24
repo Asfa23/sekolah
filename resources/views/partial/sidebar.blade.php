@@ -15,7 +15,7 @@
         <li>
             <a href="/dashboard/pembayaran" class="text-white hover:underline flex items-center">
                 <img src="{{ URL::asset("img/payment.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
-                Pembayaran
+                Pembayaran Siswa
             </a>
         </li>
         <li>
@@ -30,7 +30,7 @@
        {{-- Staff --}}
        @if (Auth::user()->role == 'staff')
        <li>
-            <a href="/dashboard/pembayaran" class="text-white hover:underline flex items-center">
+            <a href="/dashboard/create_pembayaran" class="text-white hover:underline flex items-center">
                 <img src="{{ URL::asset("img/input_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
                 Input Pembayaran
             </a>
@@ -51,6 +51,12 @@
             <a href="/dashboard/lihat_pengeluaran" class="text-white hover:underline flex items-center">
                 <img src="{{ URL::asset("img/data_pengeluaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
                 Data Pengeluaran
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-white hover:underline flex items-center">
+                <img src="{{ URL::asset("img/history.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                Log Edit & Delete
             </a>
         </li>
         @endif
@@ -66,11 +72,17 @@
         </li>
        <li>
             <a href="/dashboard/pembayaran" class="text-white hover:underline flex items-center">
-                <img src="{{ URL::asset("img/input_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
-                Input Pembayaran
+                <img src="{{ URL::asset("img/payment.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                Pembayaran Siswa
             </a>
         </li>
         <li>
+            <li>
+                <a href="/dashboard/create_pembayaran" class="text-white hover:underline flex items-center">
+                    <img src="{{ URL::asset("img/input_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                    Input Pembayaran
+                </a>
+            </li>
             <a href="/dashboard/lihat_pembayaran_siswa" class="text-white hover:underline flex items-center">
                 <img src="{{ URL::asset("img/data_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
                 Data Pembayaran
@@ -86,6 +98,12 @@
             <a href="/dashboard/lihat_pengeluaran" class="text-white hover:underline flex items-center">
                 <img src="{{ URL::asset("img/data_pengeluaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
                 Data Pengeluaran
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-white hover:underline flex items-center">
+                <img src="{{ URL::asset("img/history.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
+                Log Edit & Delete
             </a>
         </li>
         @endif

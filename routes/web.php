@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\superAdminController;
+use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\PembayaranController;
@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function (){
     // ================Pembayaran================
     Route::get('/dashboard/pembayaran', [PembayaranController::class, 'viewPembayaran']);
     Route::post('/dashboard/postPembayaran', [PembayaranController::class, 'submitPembayaran']);
-    
+ 
     Route::get('/dashboard/lihat_pembayaran_siswa', [PembayaranController::class, 'lihatPembayaranSiswa']);
     Route::post('/dashboard/approve_pembayaran/{id}', [PembayaranController::class, 'approvePembayaran']);
 
@@ -95,6 +95,9 @@ Route::middleware(['auth'])->group(function (){
     // Create User
     Route::get('/dashboard/create_user', [ManajemenUserController::class, 'create'])->name('create_user');
     Route::post('/dashboard/store_user', [ManajemenUserController::class, 'store'])->name('store_user');
+
+    Route::get('/dashboard/create_pembayaran', [superAdminController::class, 'showForm']);
+    Route::post('/dashboard/create_pembayaran', [superAdminController::class, 'submitPembayaran']);
 
     // Logout
     Route::get('/logout', [SesiController::class, 'logout']);
