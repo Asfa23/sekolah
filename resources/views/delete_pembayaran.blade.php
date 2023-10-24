@@ -34,8 +34,12 @@
                 <tr>
                     <th class="border p-2 font-semibold text-left">Bukti Pembayaran</th>
                     <td class="border p-2 text-left">
-                        <img src="{{ asset('storage/BUKTI_PEMBAYARAN/' . $pembayaran->BUKTI_PEMBAYARAN) }}" alt="Bukti Pembayaran" class="w-[30rem]" />
-                    </td>
+                        @if ($pembayaran->BUKTI_PEMBAYARAN)
+                            <img src="{{ asset('storage/BUKTI_PEMBAYARAN/' . $pembayaran->BUKTI_PEMBAYARAN) }}" alt="Bukti Pembayaran" class="w-[30rem]" />
+                        @else
+                            Tidak ada
+                        @endif
+                    </td>                    
                 </tr>
             </table>
 
