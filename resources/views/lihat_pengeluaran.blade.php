@@ -29,6 +29,7 @@
             <thead>
                 <tr>
                     <th class="border p-2">ID Pengeluaran</th>
+                    <th class="border p-2">ID User</th>
                     <th class="border p-2">Jumlah Pengeluaran</th>
                     <th class="border p-2">Kategori</th>
                     <th class="border p-2">Keterangan</th>
@@ -40,11 +41,12 @@
                 @foreach ($pengeluaranSekolah as $pengeluaran)
                 <tr class="border-b">
                     <td class="border p-2 text-center">{{ $pengeluaran->ID_PENGELUARAN}}</td>
+                    <td class="border p-2 text-center">{{ $pengeluaran->ID_USER}}</td>
                     <td class="border p-2 text-center">{{ $pengeluaran->JUMLAH_PENGELUARAN}}</td>
                     <td class="border p-2 text-center">{{ $pengeluaran->KATEGORI }}</td>
                     <td class="border p-2 text-center">{{ $pengeluaran->KETERANGAN}}</td>
                     <td class="border p-2 text-center">{{ $pengeluaran->TANGGAL_PENGELUARAN}}</td>
-                    <td class="p-2 text-center flex">
+                    <td class="p-2 text-center flex flex-row justify-center items-center">
                         @if ($pengeluaran->BUKTI_PENGELUARAN)
                         <button class="p-1 px-1 h-[3.75vh] bg-blue-500 hover-bg-blue-600 rounded-lg" onclick="openModal('{{ asset('storage/BUKTI_PENGELUARAN/' . $pengeluaran->BUKTI_PENGELUARAN) }}')">
                             <img src="{{ URL::asset('img/view.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
