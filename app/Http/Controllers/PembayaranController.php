@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LogEditDeletePem;
 use App\Models\Pembayaran_Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -85,13 +86,31 @@ class PembayaranController extends Controller
         if (auth()->user()->role != 'superAdmin'){
             return redirect('dashboard');
         }
+    
         try {
             $pembayaran = Pembayaran_Siswa::find($id);
-
+            
+            $alasan = $request->input('alasan'); // Ambil alasan dari input
+    
+            // Simpan data ke log_edit_delete_pemasukan
+            $logData = [
+                'ID_USER' => $pembayaran->ID_USER,
+                'JUMLAH_UANG' => $pembayaran->JUMLAH_PEMBAYARAN,
+                'KATEGORI' => $pembayaran->KATEGORI,
+                'TANGGAL_PENGUBAHAN' => now(),
+                'AKSI' => 'EDIT',
+                'ALASAN' => $alasan, // Mengambil alasan dari input
+            ];
+    
+            // Insert data ke tabel log_edit_delete_pemasukan
+            DB::table('log_edit_delete_pemasukan')->insert($logData);
+    
+            // Update data di tabel pembayaran_siswa
             $pembayaran->ID_USER = $request->input('ID_USER');
             $pembayaran->JUMLAH_PEMBAYARAN = $request->input('JUMLAH_PEMBAYARAN');
             $pembayaran->KATEGORI = $request->input('KATEGORI');
             $pembayaran->TANGGAL_PEMBAYARAN = $request->input('TANGGAL_PEMBAYARAN');
+            // $pembayaran->ALASAN = $alasan; // Update alasan
             $pembayaran->save();
     
             return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Data Pembayaran berhasil diperbarui.');
@@ -99,6 +118,7 @@ class PembayaranController extends Controller
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
+    
 
     // ======================================================================== DELETE PEMBAYARAN
     
@@ -106,13 +126,29 @@ class PembayaranController extends Controller
     {
         try {
             $pembayaran = Pembayaran_Siswa::find($id);
+    
+            // Simpan data ke log_edit_delete_pemasukan
+            $logData = [
+                'ID_USER' => $pembayaran->ID_USER,
+                'JUMLAH_UANG' => $pembayaran->JUMLAH_PEMBAYARAN,
+                'KATEGORI' => $pembayaran->KATEGORI,
+                'TANGGAL_PENGUBAHAN' => now(),
+                'AKSI' => 'DELETE',
+                'ALASAN' => request('alasan'), // Mengambil alasan dari form input
+            ];
+    
+            // Insert data ke tabel log_edit_delete_pemasukan
+            DB::table('log_edit_delete_pemasukan')->insert($logData);
+    
+            // Hapus data dari tabel pembayaran_siswa
             $pembayaran->delete();
-
+    
             return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Data Pembayaran berhasil dihapus.');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
+    
     public function confirmDeletePembayaran($id)
     {
         $pembayaran = Pembayaran_Siswa::find($id);

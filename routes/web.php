@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\superAdminController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\AdminController;
@@ -98,6 +99,9 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('/dashboard/create_pembayaran', [superAdminController::class, 'showForm']);
     Route::post('/dashboard/create_pembayaran', [superAdminController::class, 'submitPembayaran']);
+
+    // LOG Edit & Delete
+    Route::get('/dashboard/log', [LogController::class, 'viewLog'])->name('log');
 
     // Logout
     Route::get('/logout', [SesiController::class, 'logout']);

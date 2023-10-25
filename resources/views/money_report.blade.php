@@ -13,9 +13,11 @@
         $totalPengeluaran = $totals->whereNotIn('KATEGORI', ['Pembayaran Siswa', 'Bantuan Pemerintah', 'Pemasukan Lainnya'])->sum('TOTAL_PERKATEGORI');
         $sisa = $totalPemasukan - $totalPengeluaran;
         @endphp
-
-        <div class="mt-6 bg-white rounded-xl shadow-md p-6">
-        <h2 class="text-lg font-semibold mb-2">Alokasi Dana</h2>
+        
+        <div class="text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md text-center">
+            Alokasi Dana
+        </div>
+        <div class="mt-2 bg-white rounded-lg shadow-md p-6">
         <table class="table-auto border w-full">
         <tr class="border">
             <td class="px-4 py-2 border font-semibold">Total Pemasukan</td>
@@ -34,8 +36,10 @@
 
         <div class="grid grid-cols-2 gap-6 mt-6">
             <!-- Tabel Pemasukan -->
-            <div class="bg-white rounded-xl shadow-md p-6">
-                <h2 class="text-lg font-semibold mb-2">Alokasi Pemasukan Perkategori</h2>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="mb-3 text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md text-center">
+                    Alokasi Pemasukan Perkategori
+                </div>
                 <table class="w-full border border-collapse">
                     <thead>
                         <tr>
@@ -57,8 +61,10 @@
             </div>
         
             <!-- Tabel Pengeluaran -->
-            <div class="bg-white rounded-xl shadow-md p-6">
-                <h2 class="text-lg font-semibold mb-2">Alokasi Pengeluaran Perkategori</h2>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="mb-3 text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md text-center">
+                    Alokasi Pengeluaran Perkategori
+                </div>
                 <table class="w-full border border-collapse">
                     <thead>
                         <tr>

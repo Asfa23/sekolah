@@ -43,21 +43,24 @@
                 </tr>
             </table>
 
-
             <div class="flex mt-6">
-                <form action="{{ url('dashboard/delete_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
+                <form action="{{ url('dashboard/delete_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST" class="w-full pb-4 pt-4">
                     @csrf
                     @method('DELETE')
-                    <button type="submit"
-                        class="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600">Hapus</button>
-                </form>
 
-                <a href="{{ url('dashboard/lihat_pembayaran_siswa') }}" >
-                    <button
-                        class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-3">Batal
+                    <div class="mb-8 flex w-full items-center">
+                        <label for="alasan" class="flex justify-center items-center text-md font-semibold p-2 bg-red-600 text-white">Alasan</label>
+                        <input type="text" name="alasan" id="alasan" class="w-full shadow appearance-none border rounded-r-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan alasan delete" required>
+                    </div>
+
+                    <button type="submit" class="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                        Hapus
                     </button>
-                </a>
 
+                    <a href="{{ url('dashboard/lihat_pembayaran_siswa') }}">
+                        <button class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-3">Batal</button>
+                    </a>
+                </form>
             </div>
         </div>
     </main>
