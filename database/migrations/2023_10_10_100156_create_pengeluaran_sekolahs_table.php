@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('pengeluaran_sekolahs', function (Blueprint $table) {
             $table->id('ID_PENGELUARAN');
+            $table->unsignedBigInteger('ID_USER');
             $table->decimal('JUMLAH_PENGELUARAN', 20, 2);
             $table->string('KETERANGAN');
             $table->enum('KATEGORI', ['Inventaris', 'Maintenance', 'Gaji Guru & Staff', 'Program sekolah', 'Pengeluaran Lainnya']);
+            $table->text('BUKTI_PENGELUARAN')->nullable();
             $table->date('TANGGAL_PENGELUARAN');
+
+            $table->foreign('ID_USER')->references('id')->on('users');
         });
     }
 

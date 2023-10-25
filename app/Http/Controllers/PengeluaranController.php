@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\pengeluaran_sekolah;
 use Illuminate\Http\Request;
+use App\Models\User;
 use DB;
 class PengeluaranController extends Controller
 {
@@ -15,6 +16,7 @@ class PengeluaranController extends Controller
         }
 
         try {
+            $idUser = auth()->user()->id;
             $jumlahPengeluaran = $request->input('JUMLAH_PENGELUARAN');
             $kategori = $request->input('KATEGORI');
             $keterangan = $request->input('KETERANGAN_PENGELUARAN');
@@ -28,12 +30,19 @@ class PengeluaranController extends Controller
             if ($tanggalPengeluaran > $today) {
                 return redirect('/dashboard/pengeluaran')->with('error', 'Tanggal pembayaran tidak boleh melebihi hari ini.');
             }
+
+            // Images
+            $upfile = $request->file('BUKTI_PENGELUARAN');
+            $nameimg = time() . '_' . $upfile->getClientOriginalName(); // Menggunakan nama asli berkas
+            $upfile->storeAs('/BUKTI_PENGELUARAN', $nameimg);
     
             $pengeluaran = new pengeluaran_sekolah();
+            $pengeluaran->ID_USER = $idUser;
             $pengeluaran->JUMLAH_PENGELUARAN = $jumlahPengeluaran;
             $pengeluaran->KATEGORI = $kategori;
             $pengeluaran->KETERANGAN = $keterangan;
             $pengeluaran->TANGGAL_PENGELUARAN = $tanggalPengeluaran;
+            $pengeluaran->BUKTI_PENGELUARAN = $nameimg;
     
             $pengeluaran->save();
 

@@ -17,7 +17,6 @@ class PembayaranController extends Controller
         try {
             $idUser = auth()->user()->id; // Mengambil ID pengguna yang sedang login
             $jumlahPembayaran = $request->input('JUMLAH_PEMBAYARAN');
-            $kategori = $request->input('KATEGORI');
             $tanggalPembayaran = $request->input('TANGGAL_PEMBAYARAN');
     
             if ($jumlahPembayaran < 0) {
@@ -28,6 +27,8 @@ class PembayaranController extends Controller
             if ($tanggalPembayaran > $today) {
                 return redirect('/dashboard/pembayaran')->with('error', 'Tanggal pembayaran tidak boleh melebihi hari ini.');
             }
+
+            $kategori = 'Pembayaran Siswa';
     
             // Images
             $upfile = $request->file('BUKTI_PEMBAYARAN');
@@ -121,7 +122,7 @@ class PembayaranController extends Controller
     public function approvePembayaran($id)
     {
         // Cek apakah pengguna adalah superAdmin atau admin
-        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'admin') {
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff') {
             // Jika bukan superAdmin atau admin, maka redirect atau lakukan tindakan lain sesuai kebijakan Anda.
             return redirect('/dashboard/lihat_pembayaran_siswa')->with('error', 'Anda tidak diizinkan menyetujui pembayaran.');
         }
@@ -136,7 +137,7 @@ class PembayaranController extends Controller
     public function rejectPembayaran($id)
     {
         // Cek apakah pengguna adalah superAdmin atau admin
-        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'admin') {
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff') {
             // Jika bukan superAdmin atau admin, maka redirect atau lakukan tindakan lain sesuai kebijakan Anda.
             return redirect('/dashboard/lihat_pembayaran_siswa')->with('error', 'Anda tidak diizinkan menolak pembayaran.');
         }

@@ -70,12 +70,6 @@
             Manajemen User
         </a>
         </li>
-       <li>
-            <a href="/dashboard/pembayaran" class="text-white hover:underline flex items-center">
-                <img src="{{ URL::asset("img/payment.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
-                Pembayaran Siswa
-            </a>
-        </li>
         <li>
             <li>
                 <a href="/dashboard/create_pembayaran" class="text-white hover:underline flex items-center">

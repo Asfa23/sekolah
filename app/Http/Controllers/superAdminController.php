@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Pembayaran_Siswa;
 use Illuminate\Http\Request;
+use App\Models\Pembayaran_Siswa;
+use App\Models\User;
+use DBl;
 
 class superAdminController extends Controller
 {
@@ -30,11 +31,17 @@ class superAdminController extends Controller
             // Set default status to 1 for superAdmin
             $status = auth()->user()->role == 'superAdmin' ? 1 : 0;
 
+            // Images
+            $upfile = $request->file('BUKTI_PEMBAYARAN');
+            $nameimg = time() . '_' . $upfile->getClientOriginalName(); // Menggunakan nama asli berkas
+            $upfile->storeAs('/BUKTI_PEMBAYARAN', $nameimg);
+
             $pembayaran = new Pembayaran_Siswa();
             $pembayaran->ID_USER = $idUser;
             $pembayaran->JUMLAH_PEMBAYARAN = $jumlahPembayaran;
             $pembayaran->KATEGORI = $kategori;
             $pembayaran->TANGGAL_PEMBAYARAN = $tanggalPembayaran;
+            $pembayaran->BUKTI_PEMBAYARAN = $nameimg;
             $pembayaran->STATUS = $status;
 
             $pembayaran->save();

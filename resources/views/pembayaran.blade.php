@@ -24,14 +24,9 @@
 
     <div class="mb-4">
         <label for="KATEGORI" class="block text-sm font-medium text-gray-700">Kategori:</label>
-        <select id="KATEGORI" name="KATEGORI"
-            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
-            <option value="" disabled selected>Pilih Kategori</option>
-            <option value="Pembayaran Siswa">Pembayaran Siswa</option>
-            <option value="Bantuan Pemerintah">Bantuan Pemerintah</option>
-            <option value="Pemasukan Lainnya">Pemasukan Lainnya</option>
-        </select>
-    </div>
+        <input id="KATEGORI" name="KATEGORI"
+            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-100" readonly value="SPP">
+    </div>    
 
     <div class="mb-4">
         <label for="TANGGAL_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Tanggal Pembayaran:</label>
