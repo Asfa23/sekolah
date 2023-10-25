@@ -18,15 +18,15 @@
         <h2 class="text-lg font-semibold mb-2">Alokasi Dana</h2>
         <table class="table-auto border w-full">
         <tr class="border">
-            <td class="px-4 py-2 border">Total Pemasukan</td>
+            <td class="px-4 py-2 border font-semibold">Total Pemasukan</td>
             <td class="px-4 py-2 border">Rp {{ $totalPemasukan }}</td>
         </tr>
         <tr class="border">
-            <td class="px-4 py-2 border">Total Pengeluaran</td>
+            <td class="px-4 py-2 border font-semibold ">Total Pengeluaran</td>
             <td class="px-4 py-2 border">Rp {{ $totalPengeluaran }}</td>
         </tr>
-        <tr class="border">
-            <td class="px-4 py-2 border">Dana Tersisa</td>
+        <tr class="border ">
+            <td class="px-4 py-2 border font-semibold ">Dana Tersisa</td>
             <td class="px-4 py-2 border">Rp {{ $sisa }}</td>
         </tr>
         </table>

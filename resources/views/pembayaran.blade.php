@@ -42,8 +42,8 @@
     <div class="mb-4">
         <label for="BUKTI_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Bukti Pembayaran (Gambar):</label>
         <input type="file" id="BUKTI_PEMBAYARAN" name="BUKTI_PEMBAYARAN" required accept=".jpg, .jpeg, .png" 
-                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
-    </div>
+            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" accept-language="id-ID">
+    </div>    
 
         <div class="mt-6">
             <button type="submit"

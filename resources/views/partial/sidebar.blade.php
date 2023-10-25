@@ -21,7 +21,7 @@
         <li>
             <a href="/dashboard/history_pembayaran" class="text-white hover:underline flex items-center">
                 <img src="{{ URL::asset("img/history.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
-                History
+                Histori Pembayaran
             </a>
         </li>
         @endif
