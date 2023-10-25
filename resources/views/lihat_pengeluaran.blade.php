@@ -28,7 +28,7 @@
         <table class="w-full border border-collapse">
             <thead>
                 <tr>
-                    <th class="border p-2">ID Pengeluaran</th>
+                    <th class="border p-2">ID</th>
                     <th class="border p-2">ID User</th>
                     <th class="border p-2">Jumlah Pengeluaran</th>
                     <th class="border p-2">Kategori</th>

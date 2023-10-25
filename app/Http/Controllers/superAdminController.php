@@ -11,6 +11,9 @@ class superAdminController extends Controller
 {
     public function showForm()
     {
+        if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff'){
+            return redirect('dashboard');
+        }
         $users = User::all();
 
         return view('create_pembayaran', ['users' => $users]);
@@ -28,8 +31,8 @@ class superAdminController extends Controller
                 return redirect('/dashboard/create_pembayaran')->with('error', 'Jumlah pembayaran tidak boleh negatif.');
             }
 
-            // Set default status to 1 for superAdmin
-            $status = auth()->user()->role == 'superAdmin' ? 1 : 0;
+           // Set default status to 1 for superAdmin and staff
+            $status = (auth()->user()->role == 'superAdmin' || auth()->user()->role == 'staff') ? 1 : 0;
 
             // Images
             $upfile = $request->file('BUKTI_PEMBAYARAN');
