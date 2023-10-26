@@ -7,6 +7,7 @@ use App\Models\Pembayaran_Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use DB;
+
 class PembayaranController extends Controller
 {
     public function submitPembayaran(Request $request)
@@ -33,11 +34,11 @@ class PembayaranController extends Controller
     
             // Images
             $upfile = $request->file('BUKTI_PEMBAYARAN');
-            $nameimg = time() . '_' . $upfile->getClientOriginalName(); // Menggunakan nama asli berkas
+            $nameimg = time() . '_' . $upfile->getClientOriginalName(); 
             $upfile->storeAs('/BUKTI_PEMBAYARAN', $nameimg);
     
             $pembayaran = new Pembayaran_Siswa();
-            $pembayaran->ID_USER = $idUser; // Mengisi ID_USER dengan ID pengguna yang sedang login
+            $pembayaran->ID_USER = $idUser; 
             $pembayaran->JUMLAH_PEMBAYARAN = $jumlahPembayaran;
             $pembayaran->KATEGORI = $kategori;
             $pembayaran->TANGGAL_PEMBAYARAN = $tanggalPembayaran;
@@ -66,7 +67,7 @@ class PembayaranController extends Controller
         if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff'){
             return redirect('dashboard');
         }
-        $pembayaranSiswa = DB::table('pembayaran_siswa')->get();
+        $pembayaranSiswa = DB::table('pembayaran_siswa')->paginate(10);
 
         return view('lihat_pembayaran_siswa', ['pembayaranSiswa' => $pembayaranSiswa]);
     }

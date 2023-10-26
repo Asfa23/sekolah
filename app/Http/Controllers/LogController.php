@@ -15,8 +15,8 @@ class LogController extends Controller
             return redirect('dashboard');
         }
 
-        $pemasukanLogs = LogEditDeletePemasukan::all();
-        $pengeluaranLogs = LogEditDeletePengeluaran::all(); // Tambahkan ini
+        $pemasukanLogs = LogEditDeletePemasukan::paginate(3, ['*'], 'pemasukanLogs');
+        $pengeluaranLogs = LogEditDeletePengeluaran::paginate(3, ['*'], 'pengeluaranLogs');
 
         return view('log', compact('pemasukanLogs', 'pengeluaranLogs')); // Perbarui compact
     }

@@ -9,25 +9,21 @@
 
     <form action="/dashboard/create_pembayaran" method="POST" class="bg-white p-6 rounded shadow-md" enctype="multipart/form-data">
         @csrf
-
-        @if (Auth::user()->role == 'superAdmin')
+        
         <div class="mb-4">
             <label for="ID_USER" class="block text-sm font-medium text-gray-700">ID User:</label>
             <select name="ID_USER" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                <option value="" disabled selected>Pilih User</option>
                 @foreach ($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @if (auth()->user()->role === 'superAdmin' && $user->role !== 'guru')
+                        <option value="{{ $user->id }}">{{ $user->id }}</option>
+                    @elseif (auth()->user()->role === 'staff' && ($user->id === auth()->user()->id || ($user->role !== 'guru' && $user->role !== 'superAdmin')))
+                        <option value="{{ $user->id }}">{{ $user->id }}</option>
+                    @endif
                 @endforeach
             </select>
         </div>
-        @endif
-
-        @if (Auth::user()->role == 'staff')
-        <div class="mb-4">
-            <label for="ID_USER" class="block text-sm font-medium text-gray-700">ID User:</label>
-            <input type="text" name="ID_USER" value="{{ auth()->user()->id }}" readonly
-                class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-00 bg-gray-100">
-        </div>
-        @endif
+        
 
         <div class="mb-4">
             <label for="JUMLAH_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Jumlah Pembayaran:</label>

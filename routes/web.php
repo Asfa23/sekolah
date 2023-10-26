@@ -48,7 +48,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/dashboard/pembayaran', [PembayaranController::class, 'viewPembayaran']);
     Route::post('/dashboard/postPembayaran', [PembayaranController::class, 'submitPembayaran']);
  
-    Route::get('/dashboard/lihat_pembayaran_siswa', [PembayaranController::class, 'lihatPembayaranSiswa']);
+    Route::get('/dashboard/lihat_pembayaran_siswa', [PembayaranController::class, 'lihatPembayaranSiswa'])->name('lihat_pembayaran_siswa');
     Route::post('/dashboard/approve_pembayaran/{id}', [PembayaranController::class, 'approvePembayaran']);
 
     // Buat edit PEMBAYARAN

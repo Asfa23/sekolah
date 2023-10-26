@@ -6,3 +6,18 @@
 *{
     font-family: 'Poppins', sans-serif;
 }
+
+/* Add spacing between pagination links */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjust as needed for the desired spacing */
+}
+
+.pagination .pagination li {
+    margin: 0 5px; /* Adjust the margin to control spacing between links */
+}
+
+.pagination .pagination li span {
+    padding: 5px 10px; /* Adjust the padding for the links as needed */
+}

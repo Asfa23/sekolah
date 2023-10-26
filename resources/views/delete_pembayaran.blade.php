@@ -31,16 +31,6 @@
                     <th class="border p-2 font-semibold text-left">Tanggal Pembayaran</th>
                     <td class="border p-2 text-left">{{ $pembayaran->TANGGAL_PEMBAYARAN }}</td>
                 </tr>
-                <tr>
-                    <th class="border p-2 font-semibold text-left">Bukti Pembayaran</th>
-                    <td class="border p-2 text-left">
-                        @if ($pembayaran->BUKTI_PEMBAYARAN)
-                            <img src="{{ asset('storage/BUKTI_PEMBAYARAN/' . $pembayaran->BUKTI_PEMBAYARAN) }}" alt="Bukti Pembayaran" class="w-[30rem]" />
-                        @else
-                            Tidak ada
-                        @endif
-                    </td>                    
-                </tr>
             </table>
 
             <div class="flex mt-6">
@@ -56,9 +46,8 @@
                     <button type="submit" class="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600">
                         Hapus
                     </button>
-
-                    <a href="{{ url('dashboard/lihat_pembayaran_siswa') }}">
-                        <button class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-3">Batal</button>
+                    <a href="{{ url('dashboard/lihat_pembayaran_siswa') }}" class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-3">
+                         Batal
                     </a>
                 </form>
             </div>

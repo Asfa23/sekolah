@@ -136,6 +136,8 @@
         </div>
     </div>
 
+    {{ $pembayaranSiswa->onEachSide(1)->render('custom') }}
+
 </main>
 
 @endsection

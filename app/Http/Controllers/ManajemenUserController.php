@@ -11,7 +11,7 @@ class ManajemenUserController extends Controller
     // Main - Manajemen User
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(10);
         return view('manajemen_user', compact('users'));
     }
 
@@ -52,20 +52,26 @@ class ManajemenUserController extends Controller
         return redirect()->route('manajemen_user')->with('success', 'Data User berhasil diperbarui.');
     }
     
-        // Delete - Manajemen User
-        public function showDeleteConfirmation($id)
-        {
-            $user = User::find($id);
-            return view('delete_user', compact('user')); 
+    // Delete - Manajemen User
+    public function showDeleteConfirmation($id)
+    {
+        $user = User::find($id);
+        return view('delete_user', compact('user')); 
+    }
+
+    public function delete($id)
+    {
+        $user = User::find($id);
+
+        // Pengecekan apakah pengguna yang sedang masuk adalah "superAdmin" dan mencoba menghapus dirinya sendiri.
+        if ($user->role === 'superAdmin' && $user->id === auth()->user()->id) {
+            return redirect()->route('manajemen_user')->with('error', 'Super Admin tidak dapat menghapus diri sendiri.');
         }
 
-        public function delete($id)
-        {
-            $user = User::find($id);
-            $user->delete();
+        $user->delete();
 
-            return redirect()->route('manajemen_user')->with('success', 'Data User berhasil dihapus.');
-        }
+        return redirect()->route('manajemen_user')->with('success', 'Data User berhasil dihapus.');
+    }
 
         // Create - Manajemen User
         public function create()

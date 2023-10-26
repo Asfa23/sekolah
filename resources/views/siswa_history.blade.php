@@ -40,6 +40,9 @@
                 @endforeach
             </tbody>
         </table>
+        
+        {{ $pembayaranSiswa->onEachSide(1)->render('custom') }}
+
     </div>
 </main>
 @endsection

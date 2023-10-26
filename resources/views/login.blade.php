@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="{{ URL::asset("img/logo_sekolah.png") }}" type="image/png">
-    <title>Selamat Datang!</title>
+    <title>SchooLens</title>
     @vite('resources/css/app.css')
 </head>
 <body class="bg-white font-poppins">

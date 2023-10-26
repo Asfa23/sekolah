@@ -17,6 +17,17 @@
         </div>
     @endif
 
+    @if(session('error'))
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+        <span class="block sm:inline">{{ session('error') }}</span>
+        <button onclick="closeAlert(this)" class="absolute top-0 bottom-0 right-0 px-4 py-3 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+@endif
+
     <script>
         function closeAlert(button) {
             button.parentElement.style.display = 'none';
@@ -24,6 +35,11 @@
     </script> 
 
     <div class="bg-white rounded shadow-md p-4">
+        <div class="mb-5 mt-2 text-right">
+            <a href="{{ url('/dashboard/create_user') }}" class="text-white px-4 py-2 rounded-lg transition-colors duration-300 bg-green-500 hover-bg-green-600">
+                Create User
+            </a>
+        </div>           
         <table class="w-full border border-collapse mb-4">
             <thead>
                 <tr>
@@ -55,11 +71,7 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="mb-3 mt-7">
-        <a href="{{ url('/dashboard/create_user') }}" class="text-white px-4 py-2  rounded-lg transition-colors duration-300 bg-green-500 hover-bg-green-600">
-            Create User
-        </a>
-        </div>
+        {{ $users->onEachSide(1)->render('custom') }}
     </div>
 </main>
 @endsection

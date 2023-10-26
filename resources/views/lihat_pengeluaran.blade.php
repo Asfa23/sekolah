@@ -99,7 +99,11 @@
                 </div>
             </div>
         </div>
+
+        {{ $pengeluaranSekolah->onEachSide(1)->render('custom') }}
+
         </div>
+
     </main>
 
 @endsection

@@ -71,7 +71,7 @@ class PengeluaranController extends Controller
         if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff'){
             return redirect('dashboard');
         }
-        $pengeluaranSekolah= DB::table('pengeluaran_sekolahs')->get();
+        $pengeluaranSekolah= DB::table('pengeluaran_sekolahs')->paginate(10);
 
         return view('lihat_pengeluaran', ['pengeluaranSekolah' => $pengeluaranSekolah]);
     }
