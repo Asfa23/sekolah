@@ -8,6 +8,7 @@ use DB;
 
 class SiswaController extends Controller
 {
+    // ======================================================================== HISTORI PEMBAYARAN SISWA 
     public function viewHistory(Request $request)
     {
         if (auth()->user()->role == 'siswa') {
@@ -18,4 +19,5 @@ class SiswaController extends Controller
         }
     }
 }
+
 

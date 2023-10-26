@@ -46,8 +46,7 @@
                     <th class="border p-2">ID</th>
                     <th class="border p-2">Name</th>
                     <th class="border p-2">Email</th>
-                    <th class="border p-2">Role</th>
-                    <!-- pass <th class="border p-2">Password</th> --> 
+                    <th class="border p-2">Role</th> 
                     <th class="border p-2">Actions</th>
                 </tr>
             </thead>
@@ -58,7 +57,6 @@
                         <td class="border p-2 text-center">{{ $user->name }}</td>
                         <td class="border p-2 text-center">{{ $user->email }}</td>
                         <td class="border p-2 text-center">{{ $user->role }}</td>
-                        <!-- pass <td class="border p-2 text-center"> {{ $user->password }}</td> --> 
                         <td class="p-2 text-center flex flex-row justify-center items-center">
                             <a href="{{ url('/dashboard/edit_user/'. $user->id) }}" class="btn btn-primary p-1 px-1 h-[3.75vh] rounded-lg transition-colors duration-300 bg-yellow-500 hover-bg-yellow-600">
                                 <img src="{{ URL::asset("img/edit.svg") }}" alt = "Edit Icon" class="w-5 h-5"/>

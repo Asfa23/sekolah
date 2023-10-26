@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LogController extends Controller
 {
+     // ======================================================================== LOG EDIT & DELETE
     public function viewLog(Request $request)
     {
         if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff'){
@@ -18,7 +19,7 @@ class LogController extends Controller
         $pemasukanLogs = LogEditDeletePemasukan::paginate(3, ['*'], 'pemasukanLogs');
         $pengeluaranLogs = LogEditDeletePengeluaran::paginate(3, ['*'], 'pengeluaranLogs');
 
-        return view('log', compact('pemasukanLogs', 'pengeluaranLogs')); // Perbarui compact
+        return view('log', compact('pemasukanLogs', 'pengeluaranLogs')); 
     }
 }
 

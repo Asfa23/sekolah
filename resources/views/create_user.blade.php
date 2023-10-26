@@ -9,7 +9,6 @@
 
     <form action="{{ url('/dashboard/store_user') }}" method="POST" class="bg-white rounded shadow-md p-6">
         @csrf
-
         <div class="mb-4">
             <label for="name" class="text-sm font-semibold">Name:</label>
             <input type="text" name="name" id="name" class="form-input w-full p-2 border rounded" required>
@@ -28,7 +27,7 @@
                 <option value="guru">Guru</option>
                 <option value="staff">Staff</option>
             </select>
-        </div>
+        </div>        
 
         <div class="mb-4">
             <label for="password" class="text-sm font-semibold">Password:</label>

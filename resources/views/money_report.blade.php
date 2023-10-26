@@ -7,7 +7,6 @@
 <main class="">
         <h1 class="text-5xl font-bold mb-6">Money Report</h1>
 
-        <!-- ini yg tabel bawahnya -->
         @php
         $totalPemasukan = $totals->whereIn('KATEGORI', ['Pembayaran Siswa', 'Bantuan Pemerintah', 'Pemasukan Lainnya'])->sum('TOTAL_PERKATEGORI');
         $totalPengeluaran = $totals->whereNotIn('KATEGORI', ['Pembayaran Siswa', 'Bantuan Pemerintah', 'Pemasukan Lainnya'])->sum('TOTAL_PERKATEGORI');
@@ -35,7 +34,6 @@
         </div>
 
         <div class="grid grid-cols-2 gap-6 mt-6">
-            <!-- Tabel Pemasukan -->
             <div class="bg-white rounded-lg shadow-md p-6">
                 <div class="mb-3 text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md text-center">
                     Alokasi Pemasukan Perkategori
@@ -60,7 +58,6 @@
                 </table>
             </div>
         
-            <!-- Tabel Pengeluaran -->
             <div class="bg-white rounded-lg shadow-md p-6">
                 <div class="mb-3 text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md text-center">
                     Alokasi Pengeluaran Perkategori

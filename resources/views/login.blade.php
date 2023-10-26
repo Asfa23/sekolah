@@ -13,7 +13,6 @@
             <h1 class="text-6xl font-bold text-black mb-7 ml-16">Selamat Datang!</h1>
             
             <div class="w-[40vw] bg-white rounded-xl shadow-xl p-10 ml-16 backdrop-blur-md  hover:border-purple-600 hover:border-[3px] hover:ease-in duration-300 hover:scale-101">
-                <!-- dalemnya -->
                 <form action="" method="POST">
                     @csrf
                     <div class="flex flex-col items-center">

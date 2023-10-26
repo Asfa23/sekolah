@@ -59,15 +59,12 @@
                 </td>                                 
                 <td class="border p-2 text-center">
                     <div class="flex justify-center">
-                        <!-- Icon untuk reject -->
                         <form action="{{ url('/dashboard/reject_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
                             @csrf
                             <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-red-500 hover-bg-red-600">
                                 <img src="{{ URL::asset('img/reject.svg') }}" alt="Reject Icon" class="w-5 h-5"/>
                             </button>
                         </form>
-                        
-                            <!-- Icon untuk approve -->
                         <form action="{{ url('/dashboard/approve_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
                             @csrf
                             <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-green-500 hover-bg-green-600">
@@ -90,8 +87,6 @@
                             class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-yellow-500 hover-bg-yellow-600">
                             <img src="{{ URL::asset("img/edit.svg") }}" alt = "Edit Icon" class="w-5 h-5"/>
                         </a>
-                        
-                        
                         <a href="{{ url('/dashboard/delete_confirmation_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}"
                             class="p-1 px-1 h-[3.75vh] rounded-lg ml-1.5 transition-colors duration-300 bg-red-500 hover-bg-red-600">
                             <img src="{{ URL::asset('img/delete.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
@@ -137,9 +132,7 @@
             </div>
         </div>
     </div>
-
     {{ $pembayaranSiswa->onEachSide(1)->render('custom') }}
-
 </main>
 
 @endsection

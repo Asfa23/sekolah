@@ -10,6 +10,7 @@ use DB;
 
 class PembayaranController extends Controller
 {
+    // ======================================================================== CREATE PEMBAYARAN - SISWA
     public function submitPembayaran(Request $request)
     {
         if (auth()->user()->role != 'superAdmin' && auth()->user()->role !== 'siswa' && auth()->user()->role !== 'staff') {
@@ -17,7 +18,7 @@ class PembayaranController extends Controller
         }
     
         try {
-            $idUser = auth()->user()->id; // Mengambil ID pengguna yang sedang login
+            $idUser = auth()->user()->id; 
             $jumlahPembayaran = $request->input('JUMLAH_PEMBAYARAN');
             $tanggalPembayaran = $request->input('TANGGAL_PEMBAYARAN');
     
@@ -53,7 +54,7 @@ class PembayaranController extends Controller
         }
     }
 
-    // ======================================================================== PEMBAYARAN
+    // ======================================================================== VIEW DATA PEMBAYARAN
     public function viewPembayaran(Request $request)
     {
         if (auth()->user()->role != 'superAdmin' && auth()->user()->role !== 'siswa' && auth()->user()->role !== 'staff'){
@@ -91,27 +92,23 @@ class PembayaranController extends Controller
         try {
             $pembayaran = Pembayaran_Siswa::find($id);
             
-            $alasan = $request->input('alasan'); // Ambil alasan dari input
+            $alasan = $request->input('alasan'); 
     
-            // Simpan data ke log_edit_delete_pemasukan
             $logData = [
                 'ID_USER' => $pembayaran->ID_USER,
                 'JUMLAH_UANG' => $pembayaran->JUMLAH_PEMBAYARAN,
                 'KATEGORI' => $pembayaran->KATEGORI,
                 'TANGGAL_PENGUBAHAN' => now(),
                 'AKSI' => 'EDIT',
-                'ALASAN' => $alasan, // Mengambil alasan dari input
+                'ALASAN' => $alasan,
             ];
     
-            // Insert data ke tabel log_edit_delete_pemasukan
             DB::table('log_edit_delete_pemasukan')->insert($logData);
     
-            // Update data di tabel pembayaran_siswa
             $pembayaran->ID_USER = $request->input('ID_USER');
             $pembayaran->JUMLAH_PEMBAYARAN = $request->input('JUMLAH_PEMBAYARAN');
             $pembayaran->KATEGORI = $request->input('KATEGORI');
             $pembayaran->TANGGAL_PEMBAYARAN = $request->input('TANGGAL_PEMBAYARAN');
-            // $pembayaran->ALASAN = $alasan; // Update alasan
             $pembayaran->save();
     
             return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Data Pembayaran berhasil diperbarui.');
@@ -128,20 +125,18 @@ class PembayaranController extends Controller
         try {
             $pembayaran = Pembayaran_Siswa::find($id);
     
-            // Simpan data ke log_edit_delete_pemasukan
             $logData = [
                 'ID_USER' => $pembayaran->ID_USER,
                 'JUMLAH_UANG' => $pembayaran->JUMLAH_PEMBAYARAN,
                 'KATEGORI' => $pembayaran->KATEGORI,
                 'TANGGAL_PENGUBAHAN' => now(),
                 'AKSI' => 'DELETE',
-                'ALASAN' => request('alasan'), // Mengambil alasan dari form input
+                'ALASAN' => request('alasan'),
             ];
     
-            // Insert data ke tabel log_edit_delete_pemasukan
+            
             DB::table('log_edit_delete_pemasukan')->insert($logData);
     
-            // Hapus data dari tabel pembayaran_siswa
             $pembayaran->delete();
     
             return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Data Pembayaran berhasil dihapus.');
@@ -149,6 +144,8 @@ class PembayaranController extends Controller
             return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
+
+    // ======================================================================== CONFIRM PEMBAYARAN
     
     public function confirmDeletePembayaran($id)
     {
@@ -158,31 +155,25 @@ class PembayaranController extends Controller
 
     public function approvePembayaran($id)
     {
-        // Cek apakah pengguna adalah superAdmin atau admin
         if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff') {
-            // Jika bukan superAdmin atau admin, maka redirect atau lakukan tindakan lain sesuai kebijakan Anda.
             return redirect('/dashboard/lihat_pembayaran_siswa')->with('error', 'Anda tidak diizinkan menyetujui pembayaran.');
         }
-
-        // Ubah STATUS menjadi 1
         DB::table('pembayaran_siswa')->where('ID_PEMBAYARAN', $id)->update(['STATUS' => 1]);
 
-        // Redirect kembali ke halaman lihat_pembayaran_siswa dengan pesan sukses
         return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Pembayaran telah disetujui.');
     }
 
+     // ======================================================================== REJECT PEMBAYARAN
+
     public function rejectPembayaran($id)
     {
-        // Cek apakah pengguna adalah superAdmin atau admin
+
         if (auth()->user()->role != 'superAdmin' && auth()->user()->role != 'staff') {
-            // Jika bukan superAdmin atau admin, maka redirect atau lakukan tindakan lain sesuai kebijakan Anda.
             return redirect('/dashboard/lihat_pembayaran_siswa')->with('error', 'Anda tidak diizinkan menolak pembayaran.');
         }
     
-        // Ubah STATUS menjadi 2 (REJECT)
         DB::table('pembayaran_siswa')->where('ID_PEMBAYARAN', $id)->update(['STATUS' => 2]);
     
-        // Redirect kembali ke halaman lihat_pembayaran_siswa dengan pesan sukses
         return redirect('/dashboard/lihat_pembayaran_siswa')->with('success', 'Pembayaran telah ditolak.');
     }
     

@@ -6,7 +6,6 @@
 <main class="w-3/4 p-8">
     <h1 class="text-5xl font-bold mb-6">Log Edit & Delete</h1>
 
-    <!-- Bagian Pemasukan -->
     <div class="text-lg font-semibold mb-2 bg-gradient-to-l from-gray-700 to-gray-500 p-1 text-white rounded-md text-center">
         Pemasukan
     </div>
@@ -42,7 +41,6 @@
         {{ $pemasukanLogs->onEachSide(1)->render('custom') }}
     </div>
 
-    <!-- Bagian Pengeluaran -->
     <div class="text-lg font-semibold mb-2 bg-gradient-to-l from-gray-700 to-gray-500 p-1 text-white rounded-md text-center mt-8">
         Pengeluaran
     </div>
