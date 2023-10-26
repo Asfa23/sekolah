@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use DB;
 
 class ManajemenUserController extends Controller
 {
@@ -100,6 +101,4 @@ class ManajemenUserController extends Controller
 
         return redirect()->route('manajemen_user')->with('success', 'Berhasil membuat user baru.');
     }
-
-
 }

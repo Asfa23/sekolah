@@ -11,7 +11,7 @@ class SiswaController extends Controller
     // ======================================================================== HISTORI PEMBAYARAN SISWA 
     public function viewHistory(Request $request)
     {
-        if (auth()->user()->role == 'siswa') {
+        if (auth()->user()->role != 'siswa') {
             $pembayaranSiswa = Pembayaran_Siswa::paginate(10); 
             return view('siswa_history', compact('pembayaranSiswa'));
         } else {

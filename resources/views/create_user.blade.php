@@ -27,7 +27,7 @@
                 <option value="guru">Guru</option>
                 <option value="staff">Staff</option>
             </select>
-        </div>        
+        </div>
 
         <div class="mb-4">
             <label for="password" class="text-sm font-semibold">Password:</label>
