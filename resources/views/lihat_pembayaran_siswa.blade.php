@@ -46,33 +46,43 @@
                 <td class="border p-2 text-center">Rp {{ $pembayaran->JUMLAH_PEMBAYARAN }}</td>
                 <td class="border p-2 text-center">{{ $pembayaran->KATEGORI }}</td>
                 <td class="border p-2 text-center">{{ $pembayaran->TANGGAL_PEMBAYARAN }}</td>
+
                 <td class="border p-2 text-center">
-                    @if ($pembayaran->STATUS === 0)
-                        PEND
-                    @elseif ($pembayaran->STATUS === 1)
-                        VER
-                    @elseif ($pembayaran->STATUS === 2)
-                        REJ
+                    @if ($pembayaran->KATEGORI === "Pembayaran Siswa")
+                        @if ($pembayaran->STATUS === 0)
+                            PEND
+                        @elseif ($pembayaran->STATUS === 1)
+                            VER
+                        @elseif ($pembayaran->STATUS === 2)
+                            REJ
+                        @else
+                            {{ $pembayaran->STATUS }}
+                        @endif
                     @else
-                        {{ $pembayaran->STATUS }}
+                        -  
                     @endif
                 </td>                                 
                 <td class="border p-2 text-center">
-                    <div class="flex justify-center">
-                        <form action="{{ url('/dashboard/reject_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-red-500 hover-bg-red-600">
-                                <img src="{{ URL::asset('img/reject.svg') }}" alt="Reject Icon" class="w-5 h-5"/>
-                            </button>
-                        </form>
-                        <form action="{{ url('/dashboard/approve_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-green-500 hover-bg-green-600">
-                                <img src="{{ URL::asset('img/check.svg') }}" alt="Approve Icon" class="w-5 h-5"/>
-                            </button>
-                        </form>
-                    </div>
+                        @if ($pembayaran->KATEGORI === "Pembayaran Siswa")
+                            <div class="flex justify-center">
+                                <form action="{{ url('/dashboard/reject_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-red-500 hover-bg-red-600">
+                                        <img src="{{ URL::asset('img/reject.svg') }}" alt="Reject Icon" class="w-5 h-5"/>
+                                    </button>
+                                </form>
+                                <form action="{{ url('/dashboard/approve_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-green-500 hover-bg-green-600">
+                                        <img src="{{ URL::asset('img/check.svg') }}" alt="Approve Icon" class="w-5 h-5"/>
+                                    </button>
+                                </form>
+                            </div>
+                        @else
+                            -
+                        @endif
                 </td>
+                
 
                 <td class="p-2 text-center flex flex-row justify-center items-center">
                     
