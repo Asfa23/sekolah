@@ -10,7 +10,7 @@
 <body class="bg-white font-poppins">
     <div class="flex h-screen">
         <div class="w-[60%] p-10 flex flex-col justify-center">
-            <h1 class="text-6xl font-bold text-black mb-7 ml-16">Selamat Datang!</h1>
+            <h1 class="text-7xl font-bold text-black mb-7 ml-16">SchooLens!</h1>
             
             <div class="w-[40vw] bg-white rounded-xl shadow-xl p-10 ml-16 backdrop-blur-md  hover:border-purple-600 hover:border-[3px] hover:ease-in duration-300 hover:scale-101">
                 <form action="" method="POST">
