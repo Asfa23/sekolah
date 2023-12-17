@@ -13,24 +13,35 @@
         $sisa = $totalPemasukan - $totalPengeluaran;
         @endphp
         
-        <div class="text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md text-center">
-            Alokasi Dana
+        <div class="flex items-center justify-between text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md">
+            <div class="flex items-center flex-grow">
+                <span class="mx-auto">Alokasi Dana</span>
+            </div>
+            <button onclick="toggleVisualization()" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg bg-purple-700 hover:bg-purple-600">
+                <img src="{{ URL::asset("img/switch.svg") }}" alt="">
+            </button>            
         </div>
+
         <div class="mt-2 bg-white rounded-lg shadow-md p-6">
-        <table class="table-auto border w-full">
-        <tr class="border">
-            <td class="px-4 py-2 border font-semibold">Total Pemasukan</td>
-            <td class="px-4 py-2 border">Rp {{ $totalPemasukan }}</td>
-        </tr>
-        <tr class="border">
-            <td class="px-4 py-2 border font-semibold ">Total Pengeluaran</td>
-            <td class="px-4 py-2 border">Rp {{ $totalPengeluaran }}</td>
-        </tr>
-        <tr class="border ">
-            <td class="px-4 py-2 border font-semibold ">Dana Tersisa</td>
-            <td class="px-4 py-2 border">Rp {{ $sisa }}</td>
-        </tr>
-        </table>
+            <div id="visualization" style="display: none;">
+                <canvas id="chart"></canvas>
+            </div>
+            <div id="table" style="display: block;">
+                <table class="table-auto border w-full">
+                    <tr class="border">
+                        <td class="px-4 py-2 border font-semibold">Total Pemasukan</td>
+                        <td class="px-4 py-2 border">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</td>
+                    </tr>
+                    <tr class="border">
+                        <td class="px-4 py-2 border font-semibold ">Total Pengeluaran</td>
+                        <td class="px-4 py-2 border">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</td>
+                    </tr>
+                    <tr class="border ">
+                        <td class="px-4 py-2 border font-semibold ">Dana Tersisa</td>
+                        <td class="px-4 py-2 border">Rp {{ number_format($sisa, 0, ',', '.') }}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <div class="grid grid-cols-2 gap-6 mt-6">
@@ -50,7 +61,7 @@
                             @if(in_array($total->KATEGORI, ['Pembayaran Siswa', 'Bantuan Pemerintah', 'Pemasukan Lainnya']))
                             <tr>
                                 <td class="border p-2 text-center">{{ $total->KATEGORI }}</td>
-                                <td class="border p-2 text-center">Rp {{ $total->TOTAL_PERKATEGORI }}</td>
+                                <td class="border p-2 text-center">Rp {{ number_format($total->TOTAL_PERKATEGORI, 0, ',', '.') }}</td>
                             </tr>
                             @endif
                         @endforeach
@@ -74,7 +85,7 @@
                             @if(!in_array($total->KATEGORI, ['Pembayaran Siswa', 'Bantuan Pemerintah', 'Pemasukan Lainnya']))
                             <tr>
                                 <td class="border p-2 text-center">{{ $total->KATEGORI }}</td>
-                                <td class="border p-2 text-center">Rp {{ $total->TOTAL_PERKATEGORI }}</td>
+                                <td class="border p-2 text-center">Rp {{ number_format($total->TOTAL_PERKATEGORI, 0, ',', '.') }}</td>
                             </tr>
                             @endif
                         @endforeach
@@ -82,9 +93,47 @@
                 </table>
             </div>
         </div>
-        
-    </main>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Chart.js configuration
+            var ctx = document.getElementById('chart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Total Pemasukan', 'Total Pengeluaran', 'Dana Tersisa'],
+                    datasets: [{
+                        data: [
+                            {{ $totalPemasukan }},
+                            {{ $totalPengeluaran }},
+                            {{ $sisa }}
+                        ],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 205, 86, 0.6)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
 
+            // Toggle function
+            function toggleVisualization() {
+                var visualization = document.getElementById('visualization');
+                var table = document.getElementById('table');
+
+                if (visualization.style.display === 'none') {
+                    visualization.style.display = 'block';
+                    table.style.display = 'none';
+                } else {
+                    visualization.style.display = 'none';
+                    table.style.display = 'block';
+                }
+            }
+        </script>
+    </main>
 </div>
 @endsection
-

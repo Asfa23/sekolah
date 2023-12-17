@@ -4,7 +4,7 @@
 @include('partial.sidebar')
 
 <main class="w-3/4 p-8"> 
-    <h1 class="text-5xl font-bold mb-6">Data pembayaran</h1>
+    <h1 class="text-5xl font-bold mb-6">Data Pemasukan Sekolah</h1>
 
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6" role="alert">
@@ -43,7 +43,7 @@
             <tr class="border-b items-center">
                 <td class="border p-2 text-center">{{ $pembayaran->ID_PEMBAYARAN }}</td>
                 <td class="border p-2 text-center">{{ $pembayaran->ID_USER }}</td>
-                <td class="border p-2 text-center">Rp {{ $pembayaran->JUMLAH_PEMBAYARAN }}</td>
+                <td class="border p-2 text-center">Rp {{ number_format($pembayaran->JUMLAH_PEMBAYARAN, 0, ',', '.') }}</td>
                 <td class="border p-2 text-center">{{ $pembayaran->KATEGORI }}</td>
                 <td class="border p-2 text-center">{{ $pembayaran->TANGGAL_PEMBAYARAN }}</td>
 
@@ -63,24 +63,29 @@
                     @endif
                 </td>                                 
                 <td class="border p-2 text-center">
-                        @if ($pembayaran->KATEGORI === "Pembayaran Siswa")
-                            <div class="flex justify-center">
-                                <form action="{{ url('/dashboard/reject_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-red-500 hover-bg-red-600">
-                                        <img src="{{ URL::asset('img/reject.svg') }}" alt="Reject Icon" class="w-5 h-5"/>
-                                    </button>
-                                </form>
-                                <form action="{{ url('/dashboard/approve_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-green-500 hover-bg-green-600">
-                                        <img src="{{ URL::asset('img/check.svg') }}" alt="Approve Icon" class="w-5 h-5"/>
-                                    </button>
-                                </form>
-                            </div>
-                        @else
-                            -
-                        @endif
+                    @if ($pembayaran->KATEGORI === "Pembayaran Siswa")
+                    @if ($pembayaran->STATUS == 0) {{-- Check if the payment is not yet approved or rejected --}}
+                        <div class="flex justify-center">
+                            <form action="{{ url('/dashboard/reject_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-red-500 hover-bg-red-600">
+                                    <img src="{{ URL::asset('img/reject.svg') }}" alt="Reject Icon" class="w-5 h-5"/>
+                                </button>
+                            </form>
+                            <form action="{{ url('/dashboard/approve_pembayaran/'.$pembayaran->ID_PEMBAYARAN) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-green-500 hover-bg-green-600">
+                                    <img src="{{ URL::asset('img/check.svg') }}" alt="Approve Icon" class="w-5 h-5"/>
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        - {{-- Display a dash if the payment is already approved or rejected --}}
+                    @endif
+                @else
+                    -
+                @endif
+                
                 </td>
                 
 

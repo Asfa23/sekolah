@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Factory as FakerFactory;
 
 class DummyUsersSeeder extends Seeder
 {
@@ -13,53 +14,34 @@ class DummyUsersSeeder extends Seeder
      */
     public function run(): void
     {
-        $userData = [
-            [
-                "id"=> 1010,
-                'name'=>'Mas Siswa 1',
-                'email'=>'siswa1@gmail.com',
-                'role'=>'siswa',
-                'password'=>bcrypt('123456')
-            ],
-            [
-                "id"=> 1012,
-                'name'=>'Mas Siswa 2',
-                'email'=>'siswa2@gmail.com',
-                'role'=>'siswa',
-                'password'=>bcrypt('123456')
-            ],
-            [
-                "id"=> 1013,
-                'name'=>'Mas Siswa 3',
-                'email'=>'siswa3@gmail.com',
-                'role'=>'siswa',
-                'password'=>bcrypt('123456')
-            ],
-            [
-                "id"=> 2001,
-                'name'=>'Mas Super Admin',
-                'email'=>'superAdmin@gmail.com',
-                'role'=>'superAdmin',
-                'password'=>bcrypt('123456')
-            ],
-            [
-                "id" => 3001,
-                'name'=>'Mas Staff',
-                'email'=>'staff@gmail.com',
-                'role'=>'staff',
-                'password'=>bcrypt('123456')
-            ],
-            [
-                "id" => 4001,
-                'name'=>'Mas Guru',
-                'email'=>'guru@gmail.com',
-                'role'=>'guru',
-                'password'=>bcrypt('123456')
-            ],
-        ];
+        $faker = FakerFactory::create();
+        $roles = ['superAdmin', 'siswa', 'staff', 'guru'];
+        $userData = [];
 
-        foreach($userData as $key => $val){
-            User::create($val); 
+        // Generate 4 users with specific roles
+        for ($i = 0; $i < count($roles); $i++) {
+            $userData[] = [
+                "id" => 1000 + $i + 1,
+                'name' => "User " . ucfirst($roles[$i]),
+                'email' => strtolower($roles[$i]) . "@example.com",
+                'role' => $roles[$i],
+                'password' => bcrypt('12345678')
+            ];
+        }
+
+        // Generate 46 users with real names and roles (excluding superAdmin)
+        for ($i = 4; $i < 50; $i++) {
+            $userData[] = [
+                "id" => 2000 + $i + 1,
+                'name' => $faker->name,
+                'email' => "user{$i}@example.com",
+                'role' => $roles[($i - 1) % (count($roles) - 1) + 1], // Exclude superAdmin
+                'password' => bcrypt('12345678')
+            ];
+        }
+
+        foreach ($userData as $key => $val) {
+            User::create($val);
         }
     }
 }

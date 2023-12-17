@@ -42,7 +42,7 @@
                 <tr class="border-b">
                     <td class="border p-2 text-center">{{ $pengeluaran->ID_PENGELUARAN}}</td>
                     <td class="border p-2 text-center">{{ $pengeluaran->ID_USER}}</td>
-                    <td class="border p-2 text-center">Rp {{ $pengeluaran->JUMLAH_PENGELUARAN}}</td>
+                    <td class="border p-2 text-center">Rp {{ number_format($pengeluaran->JUMLAH_PENGELUARAN, 0, ',', '.') }}</td> 
                     <td class="border p-2 text-center">{{ $pengeluaran->KATEGORI }}</td>
                     <td class="border p-2 text-center">{{ $pengeluaran->KETERANGAN}}</td>
                     <td class="border p-2 text-center">{{ $pengeluaran->TANGGAL_PENGELUARAN}}</td>

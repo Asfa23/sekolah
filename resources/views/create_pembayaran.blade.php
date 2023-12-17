@@ -5,7 +5,7 @@
 @include('partial.sidebar')
 
 <main class="w-3/4 p-8">
-    <h1 class="text-5xl font-bold mb-6">Pembayaran</h1>
+    <h1 class="text-5xl font-bold mb-6">Pemasukan</h1>
 
     <form action="/dashboard/create_pembayaran" method="POST" class="bg-white p-6 rounded shadow-md" enctype="multipart/form-data">
         @csrf
@@ -26,7 +26,7 @@
         
 
         <div class="mb-4">
-            <label for="JUMLAH_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Jumlah Pembayaran:</label>
+            <label for="JUMLAH_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Jumlah Pemasukan:</label>
             <input type="number" id="JUMLAH_PEMBAYARAN" name="JUMLAH_PEMBAYARAN" step="0.01" min="0" required
                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
         </div>
@@ -42,13 +42,13 @@
         </div>
 
         <div class="mb-4">
-            <label for="TANGGAL_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Tanggal Pembayaran:</label>
+            <label for="TANGGAL_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Tanggal Pemasukan:</label>
             <input type="date" id="TANGGAL_PEMBAYARAN" name="TANGGAL_PEMBAYARAN" required
                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
         </div>
 
         <div class="mb-4">
-            <label for="BUKTI_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Bukti Pembayaran (Gambar):</label>
+            <label for="BUKTI_PEMBAYARAN" class="block text-sm font-medium text-gray-700">Bukti Pemasukan(Gambar):</label>
             <input type="file" id="BUKTI_PEMBAYARAN" name="BUKTI_PEMBAYARAN" required accept=".jpg, .jpeg, .png" 
                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" accept-language="id-ID">
         </div>        
@@ -59,6 +59,7 @@
             </button>
         </div>
     </form>
+    
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4">
             {{ session('success') }}

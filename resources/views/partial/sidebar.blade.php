@@ -32,13 +32,13 @@
        <li>
             <a href="/dashboard/create_pembayaran" class="text-white hover:underline flex items-center">
                 <img src="{{ URL::asset("img/input_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
-                Input Pembayaran
+                Input Pemasukan
             </a>
         </li>
         <li>
             <a href="/dashboard/lihat_pembayaran_siswa" class="text-white hover:underline flex items-center">
                 <img src="{{ URL::asset("img/data_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
-                Data Pembayaran
+                Data Pemasukan
             </a>
         </li>
         <li>
@@ -74,12 +74,12 @@
             <li>
                 <a href="/dashboard/create_pembayaran" class="text-white hover:underline flex items-center">
                     <img src="{{ URL::asset("img/input_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
-                    Input Pembayaran
+                    Input Pemasukan
                 </a>
             </li>
             <a href="/dashboard/lihat_pembayaran_siswa" class="text-white hover:underline flex items-center">
                 <img src="{{ URL::asset("img/data_pembayaran.svg") }}" alt="Payment Icon" class="w-6 h-6 mr-2 font-bold">
-                Data Pembayaran
+                Data Pemasukan
             </a>
         </li>
         <li>
