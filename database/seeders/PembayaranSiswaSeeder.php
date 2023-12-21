@@ -20,30 +20,40 @@ class PembayaranSiswaSeeder extends Seeder
         $siswaUserIds = User::where('role', 'siswa')->pluck('id')->toArray();
         $staffUserIds = User::where('role', 'staff')->pluck('id')->toArray();
 
-        // Generate 50 random entries for the pembayaran_siswa table
-        for ($i = 0; $i < 50; $i++) {
-            $userId = $faker->randomElement($siswaUserIds);
+        // Generate entries for each month from January 2020 until now
+        $startDate = new \DateTime('2020-01-01');
+        $endDate = new \DateTime();
+        $interval = new \DateInterval('P1M');
+        $period = new \DatePeriod($startDate, $interval, $endDate);
 
-            Pembayaran_Siswa::create([
-                'ID_USER' => $userId,
-                'JUMLAH_PEMBAYARAN' => $faker->randomFloat(2, 50, 1000),
-                'KATEGORI' => 'Pembayaran Siswa', // Set the category explicitly for siswa
-                'TANGGAL_PEMBAYARAN' => $faker->date,
-                'BUKTI_PEMBAYARAN' => $faker->imageUrl(), // Example of a random image URL
-                'STATUS' => 1, // Assuming all payments are successful
-            ]);
+        foreach ($period as $date) {
+            // Generate 30 random entries for the pembayaran_siswa table for siswa
+            for ($i = 0; $i < 30; $i++) {
+                $userId = $faker->randomElement($siswaUserIds);
+
+                Pembayaran_Siswa::create([
+                    'ID_USER' => $userId,
+                    'JUMLAH_PEMBAYARAN' => $faker->randomFloat(2, 500000, 1000000),
+                    'KATEGORI' => 'Pembayaran Siswa',
+                    'TANGGAL_PEMBAYARAN' => $date->format('Y-m-d'),
+                    'BUKTI_PEMBAYARAN' => $faker->imageUrl(),
+                    'STATUS' => 1,
+                ]);
+            }
 
             // Generate 10 random entries for the pembayaran_siswa table with any category for staff
-            $userId = $faker->randomElement($staffUserIds);
+            for ($i = 0; $i < 10; $i++) {
+                $userId = $faker->randomElement($staffUserIds);
 
-            Pembayaran_Siswa::create([
-                'ID_USER' => $userId,
-                'JUMLAH_PEMBAYARAN' => $faker->randomFloat(2, 50, 1000),
-                'KATEGORI' => $faker->randomElement(['Pembayaran Siswa', 'Bantuan Pemerintah', 'Pemasukan Lainnya']),
-                'TANGGAL_PEMBAYARAN' => $faker->date,
-                'BUKTI_PEMBAYARAN' => $faker->imageUrl(), // Example of a random image URL
-                'STATUS' => 1, // Assuming all payments are successful
-            ]);
+                Pembayaran_Siswa::create([
+                    'ID_USER' => $userId,
+                    'JUMLAH_PEMBAYARAN' => $faker->randomFloat(2, 500000, 5000000),
+                    'KATEGORI' => $faker->randomElement(['Pembayaran Siswa', 'Bantuan Pemerintah', 'Pemasukan Lainnya']),
+                    'TANGGAL_PEMBAYARAN' => $date->format('Y-m-d'),
+                    'BUKTI_PEMBAYARAN' => $faker->imageUrl(),
+                    'STATUS' => 1,
+                ]);
+            }
         }
     }
 }

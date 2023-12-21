@@ -17,18 +17,26 @@ class PengeluaranSekolahSeeder extends Seeder
         $staffUserIds = User::where('role', 'staff')->pluck('id')->toArray();
         $superAdminUserIds = User::where('role', 'superAdmin')->pluck('id')->toArray();
 
-        // Generate 50 random entries for the pengeluaran_sekolahs table
-        for ($i = 0; $i < 50; $i++) {
-            $userId = $faker->randomElement(array_merge($staffUserIds, $superAdminUserIds));
+        // Generate entries for each month from January 2020 until now
+        $startDate = new \DateTime('2020-01-01');
+        $endDate = new \DateTime();
+        $interval = new \DateInterval('P1M');
+        $period = new \DatePeriod($startDate, $interval, $endDate);
 
-            pengeluaran_sekolah::create([
-                'ID_USER' => $userId,
-                'JUMLAH_PENGELUARAN' => $faker->randomFloat(2, 100, 10000),
-                'KETERANGAN' => $faker->sentence,
-                'KATEGORI' => $faker->randomElement(['Inventaris', 'Maintenance', 'Gaji Guru & Staff', 'Program sekolah', 'Pengeluaran Lainnya']),
-                'BUKTI_PENGELUARAN' => $faker->imageUrl(), // Example of a random image URL
-                'TANGGAL_PENGELUARAN' => $faker->date,
-            ]);
+        foreach ($period as $date) {
+            // Generate 30 random entries for the pengeluaran_sekolahs table
+            for ($i = 0; $i < 30; $i++) {
+                $userId = $faker->randomElement(array_merge($staffUserIds, $superAdminUserIds));
+
+                pengeluaran_sekolah::create([
+                    'ID_USER' => $userId,
+                    'JUMLAH_PENGELUARAN' => $faker->randomFloat(2, 500000, 1000000),
+                    'KETERANGAN' => $faker->sentence,
+                    'KATEGORI' => $faker->randomElement(['Inventaris', 'Maintenance', 'Gaji Guru & Staff', 'Program sekolah', 'Pengeluaran Lainnya']),
+                    'BUKTI_PENGELUARAN' => $faker->imageUrl(),
+                    'TANGGAL_PENGELUARAN' => $date->format('Y-m-d'),
+                ]);
+            }
         }
     }
 }
