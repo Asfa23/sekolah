@@ -14,6 +14,7 @@ use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Models\TotalPengeluaran;
 use App\Http\Controllers\MoneyReportController;
+use App\Http\Controllers\ChartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,12 +78,15 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/dashboard/delete_confirmation_pengeluaran/{id}', [PengeluaranController::class, 'confirmDeletePengeluaran']);
     Route::delete('/dashboard/delete_pengeluaran/{id}', [PengeluaranController::class, 'deletePengeluaran']);
 
-    // ======================================================================== MONEY REPORT
+    // MONEY REPORT
     Route::get('/calculate_totals', [TotalPerkategoriController::class, 'calculateTotals']);
     Route::get('/money_report', function () {
         $totals = TotalPengeluaran::all();
         return view('money_report', compact('totals'));
     });
+
+    // Rute untuk AJAX chart data
+    Route::get('/getChartData/{year}', [ChartController::class, 'getChartData']);
 
     // ======================================================================== MANAJEMEN USER
     Route::get('/manajemen_user', [ManajemenUserController::class, 'index'])->name('manajemen_user');
