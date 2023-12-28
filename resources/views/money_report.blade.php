@@ -34,8 +34,8 @@
                             <option value="{{ $year }}">{{ $year }}</option>
                         @endfor
                     </select>
-                    <button onclick="updateChart()">Tampilkan</button>
-                    <div style="overflow-x: auto;">
+                    <button onclick="updateChart()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
+                    <div style="overflow-x: auto;" class="h-[70vh]">
                         <canvas id="chart"></canvas>
                     </div>
                 </div>

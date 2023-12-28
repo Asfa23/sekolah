@@ -1,4 +1,4 @@
-<aside class="w-[39vh] h-[92vh] p-6 rounded-lg m-8 bg-gradient-to-t from-purple-600 to-purple-400 flex flex-col items-center space-y-7">         
+<aside class="w-[39vh] p-6 rounded-lg m-8 bg-gradient-to-t from-purple-600 to-purple-400 flex flex-col items-center space-y-7">         
     <div class="bg-gradient-to-r from-purple-700 to-purple-500 rounded-2xl flex items-center justify-center mt-4 p-[2.2rem]">
         <img src="{{ URL::asset("img/student.svg")}}" alt="Student Icon" class="w-20 h-20">
     </div>

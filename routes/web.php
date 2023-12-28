@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\TotalPengeluaran;
 use App\Http\Controllers\MoneyReportController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\VisualisasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,4 +113,8 @@ Route::middleware(['auth'])->group(function (){
 
     // ======================================================================== LOGOUT
     Route::get('/logout', [SesiController::class, 'logout']);
+
+    // ======================================================================== VISUALISASI
+    Route::get('/visualisasi', [VisualisasiController::class, 'index']);
+    Route::get('/getVisualisasiChartData/{year}', [VisualisasiController::class, 'getChartData']);
 });
