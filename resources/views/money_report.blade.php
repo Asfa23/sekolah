@@ -1,5 +1,3 @@
-<!-- resources/views/money_report.blade.php -->
-
 @extends('layout.main')
 
 @section('contain')
@@ -13,14 +11,14 @@
                 $totalPengeluaran = $totals->whereNotIn('KATEGORI', ['Pembayaran Siswa', 'Bantuan Pemerintah', 'Pemasukan Lainnya'])->sum('TOTAL_PERKATEGORI');
                 $sisa = $totalPemasukan - $totalPengeluaran;
             @endphp
-            
+
             <div class="flex items-center justify-between text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md">
                 <div class="flex items-center flex-grow">
                     <span class="mx-auto">Alokasi Dana</span>
                 </div>
                 <button onclick="toggleVisualization()" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg bg-purple-700 hover:bg-purple-600">
                     <img src="{{ URL::asset("img/switch.svg") }}" alt="">
-                </button>            
+                </button>
             </div>
 
             <div class="mt-2 bg-white rounded-lg shadow-md p-6">
@@ -35,11 +33,11 @@
                         @endfor
                     </select>
                     <button onclick="updateChart()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
-                    <div style="overflow-x: auto;" class="h-[70vh]">
-                        <canvas id="chart"></canvas>
+                    <div style="overflow-x: auto;">
+                        <canvas id="chart" class="!h-40"></canvas>
                     </div>
                 </div>
-                
+
                 <div id="table" style="display: block;">
                     <table class="table-auto border w-full">
                         <tr class="border">
@@ -64,10 +62,22 @@
                         <span class="flex-grow">Alokasi Pemasukan Perkategori</span>
                         <button onclick="toggleVisualization2()" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg bg-purple-700 hover:bg-purple-600">
                             <img src="{{ URL::asset("img/switch.svg") }}" alt="">
-                        </button> 
+                        </button>
                     </div>
                     <div id="visualization2" style="display: none;">
-                        <canvas id="chart2"></canvas>
+                        <label for="selectYear2" class="text-lg font-semibold">Pilih Tahun:</label>
+                        <select id="selectYear2" class="border rounded-md p-1">
+                            @php
+                                $currentYear = date('Y');
+                            @endphp
+                            @for ($year = $currentYear; $year >= 2020; $year--)
+                                <option value="{{ $year }}">{{ $year }}</option>
+                            @endfor
+                        </select>
+                        <button onclick="updateChart2()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
+                        <div style="overflow-x: auto;">
+                            <canvas id="chart2" class="!h-40"></canvas>
+                        </div>
                     </div>
                     <div id="table2" style="display: block;">
                         <table class="w-full border border-collapse">
@@ -90,16 +100,28 @@
                         </table>
                     </div>
                 </div>
-            
+
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <div class="mb-3 text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md text-center flex items-center">
                         <span class="flex-grow">Alokasi Pengeluaran Perkategori</span>
                         <button onclick="toggleVisualization3()" class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg bg-purple-700 hover:bg-purple-600">
                             <img src="{{ URL::asset("img/switch.svg") }}" alt="">
-                        </button> 
+                        </button>
                     </div>
                     <div id="visualization3" style="display: none;">
-                        <canvas id="chart3"></canvas>
+                        <label for="selectYear3" class="text-lg font-semibold">Pilih Tahun:</label>
+                        <select id="selectYear3" class="border rounded-md p-1">
+                            @php
+                                $currentYear = date('Y');
+                            @endphp
+                            @for ($year = $currentYear; $year >= 2020; $year--)
+                                <option value="{{ $year }}">{{ $year }}</option>
+                            @endfor
+                        </select>
+                        <button onclick="updateChart3()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
+                        <div style="overflow-x: auto;">
+                            <canvas id="chart3" class="!h-40"></canvas>
+                        </div>
                     </div>
                     <div id="table3" style="display: block;">
                         <table class="w-full border border-collapse">
@@ -123,189 +145,186 @@
                     </div>
                 </div>
             </div>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script>
-                var ctx = document.getElementById('chart').getContext('2d');
-                var chart;
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('chart').getContext('2d');
+        var chart;
 
-                var ctx2 = document.getElementById('chart2').getContext('2d');
-                var chart2;
+        var ctx2 = document.getElementById('chart2').getContext('2d');
+        var chart2;
+
+        var ctx3 = document.getElementById('chart3').getContext('2d');
+        var chart3;
+
+        var data2 = {
+            labels: [],
+            totalPemasukanPerkategori: [],
+            colors: [],
+        };
+
+        var data3 = {
+            labels: [],
+            totalPengeluaranPerkategori: [],
+            colors: [],
+        };
+
+        function updateChart() {
+            var selectedYear = document.getElementById('selectYear').value;
+
+            fetch('/getChartData/' + selectedYear)
+                .then(response => response.json())
+                .then(data => {
+                    if (chart) {
+                        chart.destroy();
+                    }
+
+                    chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Total Pemasukan',
+                                data: data.totalPemasukan,
+                                backgroundColor: 'rgba(255, 99, 132)',
+                            }, {
+                                label: 'Total Pengeluaran',
+                                data: data.totalPengeluaran,
+                                backgroundColor: 'rgba(54, 162, 235)',
+                            }, {
+                                label: 'Dana Tersisa',
+                                data: data.sisa,
+                                backgroundColor: 'rgba(255, 205, 86)',
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        }
+                    });  
+                })
+        }
+
+        function fetchChartData(url, callback) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok, status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    callback(data);
+                })
+                .catch(error => {
+                    console.error(`Error fetching data from ${url}:`, error);
+                });
+        }
+
+        function updateChart2() {
+    var selectedYear2 = document.getElementById('selectYear2').value;
+
+    fetch('/getChartData2/' + selectedYear2)
+        .then(response => response.json())
+        .then(data => {
+            if (chart2) {
+                chart2.destroy();
+            }
+
+            var ctx2 = document.getElementById('chart2').getContext('2d');
+                chart2 = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            data: data.totalPemasukanPerkategori,
+                            backgroundColor: data.colors,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data for chart 2:', error);
+            });
+    }
+
+    function updateChart3() {
+        var selectedYear3 = document.getElementById('selectYear3').value;
+
+        fetch('/getChartData3/' + selectedYear3)
+            .then(response => response.json())
+            .then(data => {
+                if (chart3) {
+                    chart3.destroy();
+                }
 
                 var ctx3 = document.getElementById('chart3').getContext('2d');
-                var chart3;
-
-                // Initialize data2 and data3 with default values
-                var data2 = {
-                    labels: [],
-                    totalPemasukanPerkategori: [],
-                    colors: [],
-                };
-
-                var data3 = {
-                    labels: [],
-                    totalPengeluaranPerkategori: [],
-                    colors: [],
-                };
-
-                function updateChart() {
-                    var selectedYear = document.getElementById('selectYear').value;
-
-                    // Gunakan AJAX untuk mengambil data berdasarkan tahun yang dipilih
-                    fetch('/getChartData/' + selectedYear)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (chart) {
-                                chart.destroy(); // Hancurkan grafik yang ada jika ada
-                            }
-
-                            chart = new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: data.labels,
-                                    datasets: [{
-                                        label: 'Total Pemasukan',
-                                        data: data.totalPemasukan,
-                                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                                    }, {
-                                        label: 'Total Pengeluaran',
-                                        data: data.totalPengeluaran,
-                                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                                    }, {
-                                        label: 'Dana Tersisa',
-                                        data: data.sisa,
-                                        backgroundColor: 'rgba(255, 205, 86, 0.6)',
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                }
-                            });
-
-                            // Inisialisasi chart2 dan chart3
-                            chart2 = new Chart(ctx2, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: data.data2.labels,
-                                    datasets: [{
-                                        data: data.data2.totalPemasukanPerkategori,
-                                        backgroundColor: data.data2.colors,
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                }
-                            });
-
-                            chart3 = new Chart(ctx3, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: data.data3.labels,
-                                    datasets: [{
-                                        data: data.data3.totalPengeluaranPerkategori,
-                                        backgroundColor: data.data3.colors,
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                }
-                            });
-                        })
-                        .catch(error => console.error('Error:', error));
-                }
-
-                function updateChart2(data) {
-                    console.log('Data for chart2:', data);
-                    if (chart2) {
-                        chart2.destroy();
+                chart3 = new Chart(ctx3, {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            data: data.totalPengeluaranPerkategori[0], // Menggunakan set data pertama, sesuaikan jika perlu
+                            backgroundColor: data.colors,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
                     }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data for chart 3:', error);
+            });
+    }
+        updateChart();
 
-                    chart2 = new Chart(ctx2, {
-                        type: 'doughnut',
-                        data: {
-                            labels: data.labels,
-                            datasets: [{
-                                data: data.totalPemasukanPerkategori,
-                                backgroundColor: data.colors,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                        }
-                    });
-                }
+        function toggleVisualization() {
+            var visualization = document.getElementById('visualization');
+            var table = document.getElementById('table');
 
-                function updateChart3(data) {
-                     console.log('Data for chart3:', data);
-                    if (chart3) {
-                        chart3.destroy();
-                    }
+            if (visualization.style.display === 'none') {
+                visualization.style.display = 'block';
+                table.style.display = 'none';
+            } else {
+                visualization.style.display = 'none';
+                table.style.display = 'block';
+            }
+        }
 
-                    chart3 = new Chart(ctx3, {
-                        type: 'doughnut',
-                        data: {
-                            labels: data.labels,
-                            datasets: [{
-                                data: data.totalPengeluaranPerkategori,
-                                backgroundColor: data.colors,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                        }
-                    });
-                }
+        function toggleVisualization2() {
+        var visualization2 = document.getElementById('visualization2');
+        var table2 = document.getElementById('table2');
 
-                // Render grafik pertama kali
-                updateChart();
+        if (visualization2.style.display === 'none') {
+            visualization2.style.display = 'block';
+            table2.style.display = 'none';
+            updateChart2();
+        } else {
+            visualization2.style.display = 'none';
+            table2.style.display = 'block';
+        }
+    }
 
-                function toggleVisualization() {
-                    console.log('Toggle Visualization called');
-                    var visualization = document.getElementById('visualization');
-                    var table = document.getElementById('table');
+    function toggleVisualization3() {
+        var visualization3 = document.getElementById('visualization3');
+        var table3 = document.getElementById('table3');
 
-                    if (visualization.style.display === 'none') {
-                        visualization.style.display = 'block';
-                        table.style.display = 'none';
-                    } else {
-                        visualization.style.display = 'none';
-                        table.style.display = 'block';
-                    }
-                }
+        if (visualization3.style.display === 'none') {
+            visualization3.style.display = 'block';
+            table3.style.display = 'none';
+            updateChart3();
+        } else {
+            visualization3.style.display = 'none';
+            table3.style.display = 'block';
+        }
+    }
 
-                function toggleVisualization2() {
-                    var visualization2 = document.getElementById('visualization2');
-                    var table2 = document.getElementById('table2');
-
-                    if (visualization2.style.display === 'none') {
-                        visualization2.style.display = 'block';
-                        table2.style.display = 'none';
-                        updateChart2(data2); // Use the data2 variable
-                    } else {
-                        visualization2.style.display = 'none';
-                        table2.style.display = 'block';
-                    }
-                }
-
-                function toggleVisualization3() {
-                    var visualization3 = document.getElementById('visualization3');
-                    var table3 = document.getElementById('table3');
-
-                    if (visualization3.style.display === 'none') {
-                        visualization3.style.display = 'block';
-                        table3.style.display = 'none';
-                        updateChart3(data3); // Use the data3 variable
-                    } else {
-                        visualization3.style.display = 'none';
-                        table3.style.display = 'block';
-                    }
-                }
-            </script>
-
+    </script>   
         </main>
     </div>
 @endsection

@@ -88,6 +88,9 @@ Route::middleware(['auth'])->group(function (){
 
     // Rute untuk AJAX chart data
     Route::get('/getChartData/{year}', [ChartController::class, 'getChartData']);
+    Route::get('/getChartData2/{year}', [ChartController::class, 'getChartData2']);
+    Route::get('/getChartData3/{year}', [ChartController::class, 'getChartData3']);
+
 
     // ======================================================================== MANAJEMEN USER
     Route::get('/manajemen_user', [ManajemenUserController::class, 'index'])->name('manajemen_user');
