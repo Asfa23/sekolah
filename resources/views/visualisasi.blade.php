@@ -1,5 +1,3 @@
-<!-- resources/views/visualisasi.blade.php -->
-
 @extends('layout.main')
 
 @section('contain')
@@ -8,19 +6,14 @@
         <main class="">
             <h1 class="text-5xl font-bold mb-6">Visualisasi</h1>
 
-            <!-- <label for="selectYear" class="text-lg font-semibold">Pilih Tahun:</label>
-            <select id="selectYear" class="border rounded-md p-1">
-                @foreach ($years as $year)
-                    <option value="{{ $year }}">{{ $year }}</option>
-                @endforeach
-            </select>
-            <button onclick="updateCharts()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button> -->
+            <div class="flex items-center justify-between text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md">
+                <div class="flex items-center flex-grow">
+                    <span class="mx-auto">Alokasi Dana</span>
+                </div>         
+            </div>
 
             <div id="visualization" style="">
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="mb-3 text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md text-center flex items-center">
-                        <span class="flex-grow">Alokasi Dana</span>
-                    </div>
                     <label for="selectYear" class="text-lg font-semibold">Pilih Tahun:</label>
                     <select id="selectYear" class="border rounded-md p-1">
                         @php
@@ -37,17 +30,13 @@
                 </div>
             </div>
 
-            <!-- <div style="overflow-x: auto;">
-                <canvas id="barChart"></canvas>
-            </div> -->
-
             <div class="grid grid-rows-2 gap-6 mt-6">
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <div class="mb-3 text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md text-center flex items-center">
                         <span class="flex-grow">Alokasi Pemasukan Perkategori</span>
                     </div>
                     <div style="overflow-x: auto;">
-                        <canvas id="pemasukanPieChart"></canvas>
+                        <canvas id="pemasukanPieChart" class="h-[70vh]"></canvas>
                     </div>
                 </div>
 
@@ -56,7 +45,7 @@
                         <span class="flex-grow">Alokasi Pengeluaran Perkategori</span>
                     </div>
                     <div style="overflow-x: auto;">
-                        <canvas id="pengeluaranPieChart"></canvas>
+                        <canvas id="pengeluaranPieChart" class="h-[70vh]"></canvas>
                     </div>
                 </div>
             </div>

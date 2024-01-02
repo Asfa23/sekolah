@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pembayaran_Siswa;
 use App\Models\Pengeluaran_Sekolah;
+use App\Models\FactTransaksi;
 use Illuminate\Http\Request;
 
 class ChartController extends Controller

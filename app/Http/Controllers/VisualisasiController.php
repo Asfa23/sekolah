@@ -20,71 +20,6 @@ class VisualisasiController extends Controller
         return view('visualisasi', compact('years'));
     }
 
-    // public function getChartData($year)
-    // {
-    //     $barChartData = $this->getBarChartData($year);
-    //     $pemasukanPieChartData = $this->getPieChartData('pembayaran_siswa', 'Pemasukan', $year);
-    //     $pengeluaranPieChartData = $this->getPieChartData('pengeluaran_sekolahs', 'Pengeluaran', $year);
-
-    //     return response()->json([
-    //         'barChartData' => $barChartData,
-    //         'pemasukanPieChartData' => $pemasukanPieChartData,
-    //         'pengeluaranPieChartData' => $pengeluaranPieChartData,
-    //     ]);
-    // }
-
-    private function getBarChartData($year)
-    {
-        $months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-
-        $totalPemasukan = [];
-        $totalPengeluaran = [];
-        $danaTersisa = [];
-
-        foreach ($months as $month) {
-            $totalPemasukan[] = Pembayaran_Siswa::where(DB::raw('YEAR(TANGGAL_PEMBAYARAN)'), $year)
-                ->where(DB::raw('MONTH(TANGGAL_PEMBAYARAN)'), $month)
-                ->sum('JUMLAH_PEMBAYARAN');
-
-            $totalPengeluaran[] = pengeluaran_sekolah::where(DB::raw('YEAR(TANGGAL_PENGELUARAN)'), $year)
-                ->where(DB::raw('MONTH(TANGGAL_PENGELUARAN)'), $month)
-                ->sum('JUMLAH_PENGELUARAN');
-
-            $danaTersisa[] = $totalPemasukan[count($totalPemasukan) - 1] - $totalPengeluaran[count($totalPengeluaran) - 1];
-        }
-
-        return [
-            'labels' => $months,
-            'totalPemasukan' => $totalPemasukan,
-            'totalPengeluaran' => $totalPengeluaran,
-            'danaTersisa' => $danaTersisa,
-        ];
-    }
-
-    private function getPieChartData($table, $kategori, $year)
-    {
-        $months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-
-        $data = [];
-
-        foreach ($months as $month) {
-            $totalPerKategori = DB::table($table)
-                ->select(DB::raw('SUM(JUMLAH_' . $kategori . ') as total'))
-                ->where(DB::raw('YEAR(TANGGAL_' . $kategori . ')'), $year)
-                ->where(DB::raw('MONTH(TANGGAL_' . $kategori . ')'), $month)
-                ->get()
-                ->pluck('total')
-                ->first();
-
-            $data[] = [
-                'label' => $kategori,
-                'value' => $totalPerKategori ?? 0,
-            ];
-        }
-
-        return $data;
-    }
-
     // ==============================================================ini yg chartcontroller
 
     public function getChartData($year)
@@ -164,4 +99,5 @@ class VisualisasiController extends Controller
             ],
         ]);
     }
+    // ==============================================================ini END yg chartcontroller
 }

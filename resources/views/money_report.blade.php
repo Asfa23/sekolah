@@ -34,7 +34,7 @@
                     </select>
                     <button onclick="updateChart()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
                     <div style="overflow-x: auto;">
-                        <canvas id="chart" class="!h-40"></canvas>
+                        <canvas id="chart" class="!h-[65vh]"></canvas>
                     </div>
                 </div>
 
@@ -76,7 +76,7 @@
                         </select>
                         <button onclick="updateChart2()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
                         <div style="overflow-x: auto;">
-                            <canvas id="chart2" class="!h-40"></canvas>
+                            <canvas id="chart2" class="!h-[40vw]"></canvas>
                         </div>
                     </div>
                     <div id="table2" style="display: block;">
@@ -120,7 +120,7 @@
                         </select>
                         <button onclick="updateChart3()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
                         <div style="overflow-x: auto;">
-                            <canvas id="chart3" class="!h-40"></canvas>
+                            <canvas id="chart3" class="!h-[40vw]"></canvas>
                         </div>
                     </div>
                     <div id="table3" style="display: block;">
@@ -221,35 +221,35 @@
         }
 
         function updateChart2() {
-    var selectedYear2 = document.getElementById('selectYear2').value;
+            var selectedYear2 = document.getElementById('selectYear2').value;
 
-    fetch('/getChartData2/' + selectedYear2)
-        .then(response => response.json())
-        .then(data => {
-            if (chart2) {
-                chart2.destroy();
-            }
-
-            var ctx2 = document.getElementById('chart2').getContext('2d');
-                chart2 = new Chart(ctx2, {
-                    type: 'doughnut',
-                    data: {
-                        labels: data.labels,
-                        datasets: [{
-                            data: data.totalPemasukanPerkategori,
-                            backgroundColor: data.colors,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
+            fetch('/getChartData2/' + selectedYear2)
+                .then(response => response.json())
+                .then(data => {
+                    if (chart2) {
+                        chart2.destroy();
                     }
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching data for chart 2:', error);
-            });
-    }
+
+                    var ctx2 = document.getElementById('chart2').getContext('2d');
+                        chart2 = new Chart(ctx2, {
+                            type: 'doughnut',
+                            data: {
+                                labels: data.labels,
+                                datasets: [{
+                                    data: data.totalPemasukanPerkategori,
+                                    backgroundColor: data.colors,
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data for chart 2:', error);
+                    });
+            }
 
     function updateChart3() {
         var selectedYear3 = document.getElementById('selectYear3').value;
@@ -296,7 +296,7 @@
             }
         }
 
-        function toggleVisualization2() {
+    function toggleVisualization2() {
         var visualization2 = document.getElementById('visualization2');
         var table2 = document.getElementById('table2');
 
