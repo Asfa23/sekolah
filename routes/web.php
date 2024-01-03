@@ -87,10 +87,8 @@ Route::middleware(['auth'])->group(function (){
     });
 
     // Rute untuk AJAX chart data
-
-    // Rute untuk AJAX chart data
     Route::get('/getChartData/{year}/{semester}', [ChartController::class, 'getChartData']);
-    Route::get('/getChartData2/{year}/{semester}', [ChartController::class, 'getChartData2']);
+    Route::get('/getChartData2/{year}/{semester}/{visualization}', [ChartController::class, 'getChartData2']);
     Route::get('/getChartData3/{year}/{semester}', [ChartController::class, 'getChartData3']);
 
     // Route::get('/getChartData/{year}', [ChartController::class, 'getChartData']);

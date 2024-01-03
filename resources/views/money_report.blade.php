@@ -23,7 +23,11 @@
 
             <div class="mt-2 bg-white rounded-lg shadow-md p-6">
                 <div id="visualization" style="display: none;">
-                    <!-- Pilih Tahun dan Semester -->
+                    <label for="selectChartType" class="text-lg font-semibold ml-4">Pilih Jenis Chart:</label>
+                    <select id="selectChartType" class="border rounded-md p-1">
+                        <option value="bar">Bar Chart</option>
+                        <option value="line">Line Chart</option>
+                    </select>
                     <label for="selectYear" class="text-lg font-semibold">Pilih Tahun:</label>
                     <select id="selectYear" class="border rounded-md p-1">
                         @php
@@ -36,13 +40,14 @@
 
                     <label for="selectSemester" class="text-lg font-semibold ml-4">Pilih Semester:</label>
                     <select id="selectSemester" class="border rounded-md p-1">
+                        <option value="Keseluruhan">Keseluruhan</option>
                         <option value="Ganjil">Semester Ganjil</option>
                         <option value="Genap">Semester Genap</option>
                     </select>
                     <button onclick="updateChart()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
 
                     <div style="overflow-x: auto;">
-                        <canvas id="chart" class="!h-[65vh]"></canvas>
+                        <canvas id="chart" class="!h-[20vh]"></canvas>
                     </div>
                 </div>
 
@@ -73,6 +78,12 @@
                         </button>
                     </div>
                     <div id="visualization2" style="display: none;">
+                        <label for="selectVisualization2" class="text-lg font-semibold">Pilih Visualisasi:</label>
+                        <select id="selectVisualization2" class="border rounded-md p-1">
+                            <option value="pie">Pie Chart</option>
+                            <option value="bar">Bar Chart</option>
+                        </select>
+
                         <label for="selectYear2" class="text-lg font-semibold">Pilih Tahun:</label>
                         <select id="selectYear2" class="border rounded-md p-1">
                             @php
@@ -91,7 +102,7 @@
                         <button onclick="updateChart2()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
 
                         <div style="overflow-x: auto;">
-                            <canvas id="chart2" class="!h-[40vw]"></canvas>
+                            <canvas id="chart2" class="!h-[20vw]"></canvas>
                         </div>
                     </div>
                     <div id="table2" style="display: block;">
@@ -124,6 +135,12 @@
                         </button>
                     </div>
                     <div id="visualization3" style="display: none;">
+                        <label for="selectVisualization3" class="text-lg font-semibold">Pilih Visualisasi:</label>
+                        <select id="selectVisualization3" class="border rounded-md p-1">
+                            <option value="pie">Pie Chart</option>
+                            <option value="bar">Bar Chart</option>
+                        </select>
+
                         <label for="selectYear3" class="text-lg font-semibold">Pilih Tahun:</label>
                         <select id="selectYear3" class="border rounded-md p-1">
                             @php
@@ -140,9 +157,10 @@
                         </select>
                         <button onclick="updateChart3()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
                         <div style="overflow-x: auto;">
-                            <canvas id="chart3" class="!h-[40vw]"></canvas>
+                            <canvas id="chart3" class="!h-[20vw]"></canvas>
                         </div>
                     </div>
+
                     <div id="table3" style="display: block;">
                         <table class="w-full border border-collapse">
                             <thead>
@@ -191,6 +209,7 @@
         function updateChart() {
             var selectedYear = document.getElementById('selectYear').value;
             var selectedSemester = document.getElementById('selectSemester').value;
+            var selectedChartType = document.getElementById('selectChartType').value;
 
             fetch(`/getChartData/${selectedYear}/${selectedSemester}`)
                 .then(response => response.json())
@@ -199,8 +218,10 @@
                         chart.destroy();
                     }
 
+                    var ctx = document.getElementById('chart').getContext('2d');
+
                     chart = new Chart(ctx, {
-                        type: 'bar',
+                        type: selectedChartType, // Menggunakan tipe chart yang dipilih
                         data: {
                             labels: data.labels,
                             datasets: [
@@ -208,16 +229,22 @@
                                     label: 'Total Pemasukan',
                                     data: data.totalPemasukan,
                                     backgroundColor: 'rgba(255, 99, 132)',
+                                    borderColor: 'rgba(255, 99, 132)',
+                                    fill: false, // Untuk line plot, set fill menjadi false
                                 },
                                 {
                                     label: 'Total Pengeluaran',
                                     data: data.totalPengeluaran,
                                     backgroundColor: 'rgba(54, 162, 235)',
+                                    borderColor: 'rgba(54, 162, 235)',
+                                    fill: false,
                                 },
                                 {
                                     label: 'Dana Tersisa',
                                     data: data.sisa,
                                     backgroundColor: 'rgba(255, 205, 86)',
+                                    borderColor: 'rgba(255, 205, 86)',
+                                    fill: false,
                                 },
                             ],
                         },
@@ -248,8 +275,10 @@
         function updateChart2() {
             var selectedYear2 = document.getElementById('selectYear2').value;
             var selectedSemester2 = document.getElementById('selectSemester2').value;
+            var selectedVisualization2 = document.getElementById('selectVisualization2').value;
 
-            fetch('/getChartData2/' + selectedYear2 + '/' + selectedSemester2)
+            // Update chart2 based on the selected visualization type
+            fetch(`/getChartData2/${selectedYear2}/${selectedSemester2}/${selectedVisualization2}`)
                 .then(response => response.json())
                 .then(data => {
                     if (chart2) {
@@ -257,55 +286,101 @@
                     }
 
                     var ctx2 = document.getElementById('chart2').getContext('2d');
-                    chart2 = new Chart(ctx2, {
-                        type: 'doughnut',
-                        data: {
-                            labels: data.labels,
-                            datasets: [{
-                                data: data.totalPemasukanPerkategori,
-                                backgroundColor: data.colors,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                        }
-                    });
+                    if (selectedVisualization2 === 'pie') {
+                        chart2 = new Chart(ctx2, {
+                            type: 'doughnut',
+                            data: {
+                                labels: data.labels,
+                                datasets: [{
+                                    data: data.totalPemasukanPerkategori,
+                                    backgroundColor: data.colors,
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                            }
+                        });
+                    } else if (selectedVisualization2 === 'bar') {
+                        chart2 = new Chart(ctx2, {
+                            type: 'bar',
+                            data: {
+                                labels: data.labels,
+                                datasets: [{
+                                    label: 'Total Pemasukan',
+                                    data: data.totalPemasukanPerkategori,
+                                    backgroundColor: data.colors,
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    x: { stacked: true },
+                                    y: { stacked: true }
+                                }
+                            }
+                        });
+                    }
                 })
                 .catch(error => {
                     console.error('Error fetching data for chart 2:', error);
                 });
         }
 
-
         function updateChart3() {
             var selectedYear3 = document.getElementById('selectYear3').value;
             var selectedSemester3 = document.getElementById('selectSemester3').value;
+            var selectedVisualization3 = document.getElementById('selectVisualization3').value;
 
+            // Update chart3 based on the selected visualization type
             fetch(`/getChartData3/${selectedYear3}/${selectedSemester3}`)
-                .then(response => response.json())
-                .then(data => {
+            .then(response => response.json())
+            .then(data => {
                     if (chart3) {
                         chart3.destroy();
                     }
 
                     var ctx3 = document.getElementById('chart3').getContext('2d');
-                    chart3 = new Chart(ctx3, {
-                        type: 'doughnut',
-                        data: {
-                            labels: data.labels,
-                            datasets: [
-                                {
-                                    data: data.totalPengeluaranPerkategori[0],
+                    if (selectedVisualization3 === 'pie') {
+                        chart3 = new Chart(ctx3, {
+                            type: 'doughnut',
+                            data: {
+                                labels: data.labels,
+                                datasets: [{
+                                    data: data.totalPengeluaranPerkategori,
                                     backgroundColor: data.colors,
-                                },
-                            ],
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                        },
-                    });
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                            }
+                        });
+                    } else if (selectedVisualization3 === 'bar') {
+                        chart3 = new Chart(ctx3, {
+                            type: 'bar',
+                            data: {
+                                labels: data.labels,
+                                datasets: [{
+                                    label: 'Total Pengeluaran',
+                                    data: data.totalPengeluaranPerkategori,
+                                    backgroundColor: data.colors,
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    x: { stacked: true },
+                                    y: { stacked: true }
+                                }
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data for chart 3:', error);
                 });
         }
         

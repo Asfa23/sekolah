@@ -16,21 +16,39 @@ class ChartController extends Controller
         $totalPengeluaran = [];
         $sisa = [];
 
-        $startMonth = $semester === 'Ganjil' ? 1 : 7;
-        $endMonth = $startMonth + 5;
+        if ($semester == 'Keseluruhan') {
+            // Ambil data untuk 12 bulan
+            for ($month = 1; $month <= 12; $month++) {
+                $labels[] = date("F", mktime(0, 0, 0, $month, 1));
 
-        for ($month = $startMonth; $month <= $endMonth; $month++) {
-            $labels[] = date("F", mktime(0, 0, 0, $month, 1));
+                $totalPemasukan[] = Pembayaran_Siswa::whereYear('TANGGAL_PEMBAYARAN', $year)
+                    ->whereMonth('TANGGAL_PEMBAYARAN', $month)
+                    ->sum('JUMLAH_PEMBAYARAN');
 
-            $totalPemasukan[] = Pembayaran_Siswa::whereYear('TANGGAL_PEMBAYARAN', $year)
-                ->whereMonth('TANGGAL_PEMBAYARAN', $month)
-                ->sum('JUMLAH_PEMBAYARAN');
+                $totalPengeluaran[] = Pengeluaran_Sekolah::whereYear('TANGGAL_PENGELUARAN', $year)
+                    ->whereMonth('TANGGAL_PENGELUARAN', $month)
+                    ->sum('JUMLAH_PENGELUARAN');
 
-            $totalPengeluaran[] = Pengeluaran_Sekolah::whereYear('TANGGAL_PENGELUARAN', $year)
-                ->whereMonth('TANGGAL_PENGELUARAN', $month)
-                ->sum('JUMLAH_PENGELUARAN');
+                $sisa[] = $totalPemasukan[$month - 1] - $totalPengeluaran[$month - 1];
+            }
+        } else {
+            // Ambil data sesuai semester
+            $startMonth = $semester === 'Ganjil' ? 1 : 7;
+            $endMonth = $startMonth + 5;
 
-            $sisa[] = $totalPemasukan[$month - $startMonth] - $totalPengeluaran[$month - $startMonth];
+            for ($month = $startMonth; $month <= $endMonth; $month++) {
+                $labels[] = date("F", mktime(0, 0, 0, $month, 1));
+
+                $totalPemasukan[] = Pembayaran_Siswa::whereYear('TANGGAL_PEMBAYARAN', $year)
+                    ->whereMonth('TANGGAL_PEMBAYARAN', $month)
+                    ->sum('JUMLAH_PEMBAYARAN');
+
+                $totalPengeluaran[] = Pengeluaran_Sekolah::whereYear('TANGGAL_PENGELUARAN', $year)
+                    ->whereMonth('TANGGAL_PENGELUARAN', $month)
+                    ->sum('JUMLAH_PENGELUARAN');
+
+                $sisa[] = $totalPemasukan[$month - $startMonth] - $totalPengeluaran[$month - $startMonth];
+            }
         }
 
         return response()->json([
@@ -40,6 +58,7 @@ class ChartController extends Controller
             'sisa' => $sisa,
         ]);
     }
+
 
     public function getChartData2($year, $semester)
     {
@@ -72,35 +91,27 @@ class ChartController extends Controller
         return response()->json($indexedData);
     }
 
-    public function getChartData3($year, $semester)
-    {
-        $kategoriLabelsPengeluaran = ['Inventaris', 'Maintenance', 'Gaji Guru & Staff', 'Program sekolah', 'Pengeluaran Lainnya'];
-        $totalPengeluaranPerkategori = [];
-        $colorsPengeluaranPerkategori = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+   public function getChartData3($year, $semester)
+{
+    $kategoriLabelsPengeluaran = ['Inventaris', 'Maintenance', 'Gaji Guru & Staff', 'Program sekolah', 'Pengeluaran Lainnya'];
+    $totalPengeluaranPerkategori = [];
 
-        foreach ($kategoriLabelsPengeluaran as $kategori) {
-            $totalPengeluaranPerkategori[$kategori] = 0;
-        }
-
-        $startMonth = $semester === 'Ganjil' ? 1 : 7;
-        $endMonth = $startMonth + 5;
-
-        for ($month = $startMonth; $month <= $endMonth; $month++) {
-            foreach ($kategoriLabelsPengeluaran as $kategori) {
-                $totalPengeluaranPerkategori[$kategori] += Pengeluaran_Sekolah::whereYear('TANGGAL_PENGELUARAN', $year)
-                    ->whereMonth('TANGGAL_PENGELUARAN', $month)
-                    ->where('KATEGORI', $kategori)
-                    ->sum('JUMLAH_PENGELUARAN');
-            }
-        }
-
-        $indexedData = [
-            'labels' => $kategoriLabelsPengeluaran,
-            'totalPengeluaranPerkategori' => [$totalPengeluaranPerkategori], // Menggabungkan total pengeluaran menjadi satu array
-            'colors' => $colorsPengeluaranPerkategori,
-        ];
-
-        return response()->json($indexedData);
+    foreach ($kategoriLabelsPengeluaran as $kategori) {
+        $totalPengeluaranPerkategori[] = Pengeluaran_Sekolah::whereYear('TANGGAL_PENGELUARAN', $year)
+            ->where('KATEGORI', $kategori)
+            ->sum('JUMLAH_PENGELUARAN');
     }
+
+    $colorsPengeluaranPerkategori = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+
+    $indexedData = [
+        'labels' => $kategoriLabelsPengeluaran,
+        'totalPengeluaranPerkategori' => $totalPengeluaranPerkategori,
+        'colors' => $colorsPengeluaranPerkategori,
+    ];
+
+    return response()->json($indexedData);
+}
+
 
 }
