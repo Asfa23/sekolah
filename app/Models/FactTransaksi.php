@@ -2,29 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class FactTransaksi extends Model
 {
-    use HasFactory;
+    protected $table = 'fact_transaksi';
 
     protected $fillable = [
-        'id_user',
-        'id_pembayaran',
-        'kategori',
-        'tanggal_pembayaran',
-        'jumlah_pembayaran',
-        'bukti_pembayaran',
-        'id_pengeluaran',
-        'id_user_1',
-        'kategori_1',
-        'tanggal_pengeluaran',
-        'jumlah_pengeluaran',
-        'keterangan',
-        'bukti_pengeluaran',
+        'id_pemasukan',
+        'ID_USER',
+        'ID_PEMBAYARAN',
+        'KATEGORI',
+        'TANGGAL_PEMBAYARAN',
+        'JUMLAH_PEMBAYARAN',
+        'BUKTI_PEMBAYARAN',
+        'ID_PENGELUARAN',
+        'ID_USER_1',
+        'KATEGORI_1',
+        'TANGGAL_PENGELUARAN',
+        'JUMLAH_PENGELUARAN',
+        'KETERANGAN',
+        'BUKTI_PENGELUARAN',
     ];
-
-    // Definisi relasi jika diperlukan
-    protected $table = 'fact_transaksi';
 }

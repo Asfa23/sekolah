@@ -23,6 +23,7 @@
 
             <div class="mt-2 bg-white rounded-lg shadow-md p-6">
                 <div id="visualization" style="display: none;">
+                    <!-- Pilih Tahun dan Semester -->
                     <label for="selectYear" class="text-lg font-semibold">Pilih Tahun:</label>
                     <select id="selectYear" class="border rounded-md p-1">
                         @php
@@ -32,7 +33,14 @@
                             <option value="{{ $year }}">{{ $year }}</option>
                         @endfor
                     </select>
+
+                    <label for="selectSemester" class="text-lg font-semibold ml-4">Pilih Semester:</label>
+                    <select id="selectSemester" class="border rounded-md p-1">
+                        <option value="Ganjil">Semester Ganjil</option>
+                        <option value="Genap">Semester Genap</option>
+                    </select>
                     <button onclick="updateChart()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
+
                     <div style="overflow-x: auto;">
                         <canvas id="chart" class="!h-[65vh]"></canvas>
                     </div>
@@ -74,7 +82,14 @@
                                 <option value="{{ $year }}">{{ $year }}</option>
                             @endfor
                         </select>
+
+                        <label for="selectSemester2" class="text-lg font-semibold ml-4">Pilih Semester:</label>
+                        <select id="selectSemester2" class="border rounded-md p-1">
+                            <option value="Ganjil">Semester Ganjil</option>
+                            <option value="Genap">Semester Genap</option>
+                        </select>
                         <button onclick="updateChart2()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
+
                         <div style="overflow-x: auto;">
                             <canvas id="chart2" class="!h-[40vw]"></canvas>
                         </div>
@@ -117,6 +132,11 @@
                             @for ($year = $currentYear; $year >= 2020; $year--)
                                 <option value="{{ $year }}">{{ $year }}</option>
                             @endfor
+                        </select>
+                        <label for="selectSemester3" class="text-lg font-semibold ml-4">Pilih Semester:</label>
+                        <select id="selectSemester3" class="border rounded-md p-1">
+                            <option value="Ganjil">Semester Ganjil</option>
+                            <option value="Genap">Semester Genap</option>
                         </select>
                         <button onclick="updateChart3()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
                         <div style="overflow-x: auto;">
@@ -170,8 +190,9 @@
 
         function updateChart() {
             var selectedYear = document.getElementById('selectYear').value;
+            var selectedSemester = document.getElementById('selectSemester').value;
 
-            fetch('/getChartData/' + selectedYear)
+            fetch(`/getChartData/${selectedYear}/${selectedSemester}`)
                 .then(response => response.json())
                 .then(data => {
                     if (chart) {
@@ -182,26 +203,30 @@
                         type: 'bar',
                         data: {
                             labels: data.labels,
-                            datasets: [{
-                                label: 'Total Pemasukan',
-                                data: data.totalPemasukan,
-                                backgroundColor: 'rgba(255, 99, 132)',
-                            }, {
-                                label: 'Total Pengeluaran',
-                                data: data.totalPengeluaran,
-                                backgroundColor: 'rgba(54, 162, 235)',
-                            }, {
-                                label: 'Dana Tersisa',
-                                data: data.sisa,
-                                backgroundColor: 'rgba(255, 205, 86)',
-                            }]
+                            datasets: [
+                                {
+                                    label: 'Total Pemasukan',
+                                    data: data.totalPemasukan,
+                                    backgroundColor: 'rgba(255, 99, 132)',
+                                },
+                                {
+                                    label: 'Total Pengeluaran',
+                                    data: data.totalPengeluaran,
+                                    backgroundColor: 'rgba(54, 162, 235)',
+                                },
+                                {
+                                    label: 'Dana Tersisa',
+                                    data: data.sisa,
+                                    backgroundColor: 'rgba(255, 205, 86)',
+                                },
+                            ],
                         },
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                        }
-                    });  
-                })
+                        },
+                    });
+                });
         }
 
         function fetchChartData(url, callback) {
@@ -222,8 +247,9 @@
 
         function updateChart2() {
             var selectedYear2 = document.getElementById('selectYear2').value;
+            var selectedSemester2 = document.getElementById('selectSemester2').value;
 
-            fetch('/getChartData2/' + selectedYear2)
+            fetch('/getChartData2/' + selectedYear2 + '/' + selectedSemester2)
                 .then(response => response.json())
                 .then(data => {
                     if (chart2) {
@@ -231,56 +257,58 @@
                     }
 
                     var ctx2 = document.getElementById('chart2').getContext('2d');
-                        chart2 = new Chart(ctx2, {
-                            type: 'doughnut',
-                            data: {
-                                labels: data.labels,
-                                datasets: [{
-                                    data: data.totalPemasukanPerkategori,
-                                    backgroundColor: data.colors,
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data for chart 2:', error);
+                    chart2 = new Chart(ctx2, {
+                        type: 'doughnut',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                data: data.totalPemasukanPerkategori,
+                                backgroundColor: data.colors,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        }
                     });
-            }
-
-    function updateChart3() {
-        var selectedYear3 = document.getElementById('selectYear3').value;
-
-        fetch('/getChartData3/' + selectedYear3)
-            .then(response => response.json())
-            .then(data => {
-                if (chart3) {
-                    chart3.destroy();
-                }
-
-                var ctx3 = document.getElementById('chart3').getContext('2d');
-                chart3 = new Chart(ctx3, {
-                    type: 'doughnut',
-                    data: {
-                        labels: data.labels,
-                        datasets: [{
-                            data: data.totalPengeluaranPerkategori[0], // Menggunakan set data pertama, sesuaikan jika perlu
-                            backgroundColor: data.colors,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data for chart 2:', error);
                 });
-            })
-            .catch(error => {
-                console.error('Error fetching data for chart 3:', error);
-            });
-    }
+        }
+
+
+        function updateChart3() {
+            var selectedYear3 = document.getElementById('selectYear3').value;
+            var selectedSemester3 = document.getElementById('selectSemester3').value;
+
+            fetch(`/getChartData3/${selectedYear3}/${selectedSemester3}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (chart3) {
+                        chart3.destroy();
+                    }
+
+                    var ctx3 = document.getElementById('chart3').getContext('2d');
+                    chart3 = new Chart(ctx3, {
+                        type: 'doughnut',
+                        data: {
+                            labels: data.labels,
+                            datasets: [
+                                {
+                                    data: data.totalPengeluaranPerkategori[0],
+                                    backgroundColor: data.colors,
+                                },
+                            ],
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        },
+                    });
+                });
+        }
+        
         updateChart();
 
         function toggleVisualization() {
