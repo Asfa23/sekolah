@@ -13,18 +13,15 @@ class PengeluaranSekolahSeeder extends Seeder
     {
         $faker = FakerFactory::create();
 
-        // Get the IDs of staff and superAdmin users
         $staffUserIds = User::where('role', 'staff')->pluck('id')->toArray();
         $superAdminUserIds = User::where('role', 'superAdmin')->pluck('id')->toArray();
 
-        // Generate entries for each month from January 2020 until now
         $startDate = new \DateTime('2020-01-01');
         $endDate = new \DateTime();
         $interval = new \DateInterval('P1M');
         $period = new \DatePeriod($startDate, $interval, $endDate);
 
         foreach ($period as $date) {
-            // Generate 30 random entries for the pengeluaran_sekolahs table
             for ($i = 0; $i < 30; $i++) {
                 $userId = $faker->randomElement(array_merge($staffUserIds, $superAdminUserIds));
 

@@ -54,7 +54,37 @@
                         <div style="overflow-x: auto;">
                             <canvas id="chart" class="!h-[50vh]"></canvas>
                         </div>
-                    </div>                    
+                    </div>
+                    
+                    <div id="visualization-semester" style="display: none;" class="flex flex-col">
+                        <span class="text-lg font-bold">Visualisasi Per-Semester</span>
+                        <div class="flex flex-row items-center mb-2 mt-2 text-sm">
+                            <select id="selectChartSemesterType" class="border rounded-md p-1 mr-2">
+                                <option value="bar" disabled selected>Pilih Visualisasi</option>
+                                <option value="bar">Bar Chart</option>
+                                <option value="line">Line Chart</option>
+                            </select>
+                            <button onclick="updateChartSemester()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">>></button>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <canvas id="chart-semester" class="!h-[50vh]"></canvas>
+                        </div>
+                    </div>
+
+                    <div id="visualization-year" style="display: none;" class="flex flex-col">
+                        <span class="text-lg font-bold">Visualisasi Per-Tahun</span>
+                        <div class="flex flex-row items-center mb-2 mt-2 text-sm">
+                            <select id="selectChartYearType" class="border rounded-md p-1 mr-2">
+                                <option value="bar" disabled selected>Pilih Visualisasi</option>
+                                <option value="bar">Bar Chart</option>
+                                <option value="line">Line Chart</option>
+                            </select>
+                            <button onclick="updateChartYear()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">>></button>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <canvas id="chart-year" class="!h-[50vh]"></canvas>
+                        </div>
+                    </div>
                     
                     <div id="table" style="display: block;">
                         <table class="table-auto border w-full">
@@ -74,35 +104,6 @@
                     </div>
                 </div>
 
-                <div id="visualization-semester" class="mt-2 bg-white rounded-lg shadow-md p-6" style="display: none;" class="flex flex-col">
-                    <span class="text-lg font-bold">Visualisasi Per-Semester</span>
-                    <div class="flex flex-row items-center mb-2 mt-2">
-                        <select id="selectChartSemesterType" class="border rounded-md p-1 mr-2">
-                            <option value="bar" disabled selected>Pilih Visualisasi</option>
-                            <option value="bar">Bar Chart</option>
-                            <option value="line">Line Chart</option>
-                        </select>
-                        <button onclick="updateChartSemester()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">>></button>
-                    </div>
-                    <div style="overflow-x: auto;">
-                        <canvas id="chart-semester" class="!h-[50vh]"></canvas>
-                    </div>
-                </div>
-
-                <div id="visualization-year" class="mt-2 bg-white rounded-lg shadow-md p-6" style="display: none;" class="flex flex-col">
-                    <span class="text-lg font-bold">Visualisasi Per-Tahun</span>
-                    <div class="flex flex-row items-center mb-2 mt-2">
-                        <select id="selectChartYearType" class="border rounded-md p-1 mr-2">
-                            <option value="bar" disabled selected>Pilih Visualisasi</option>
-                            <option value="bar">Bar Chart</option>
-                            <option value="line">Line Chart</option>
-                        </select>
-                        <button onclick="updateChartYear()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">>></button>
-                    </div>
-                    <div style="overflow-x: auto;">
-                        <canvas id="chart-year" class="!h-[50vh]"></canvas>
-                    </div>
-                </div>
 
                 <div class="grid grid-cols-2 gap-6 mt-6">
                     <div class="text-lg font-semibold bg-gradient-to-l from-purple-700 to-purple-500 p-1 text-white rounded-md text-center flex items-center">
@@ -140,11 +141,23 @@
                             </select>
                         
                             <select id="selectSemester2" class="border rounded-md p-1 mb-2 text-sm">
-                                <option value="Keseluruhan" disabled selected>Pilih Rentang</option>
+                                <option value="Keseluruhan" disabled selected>Pilih Periode</option>
                                 <option value="Keseluruhan">Keseluruhan</option>
                                 <option value="Ganjil">Semester Ganjil</option>
                                 <option value="Genap">Semester Genap</option>
-                            </select>
+                                <option value="1">Januari</option>
+                                <option value="2">Februari</option>
+                                <option value="3">Maret</option>
+                                <option value="4">April</option>
+                                <option value="5">Mei</option>
+                                <option value="6">Juni</option>
+                                <option value="7">Juli</option>
+                                <option value="8">Agustus</option>
+                                <option value="9">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
+                            </select>                            
                         
                             <button onclick="updateChart2()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md text-sm">>></button>
                         
@@ -184,6 +197,7 @@
                             </select>
 
                             <select id="selectYear3" class="border rounded-md p-1">
+                                <option value="2023" disabled selected>Pilih Tahun</option>
                                 @php
                                     $currentYear = date('Y');
                                 @endphp
@@ -192,12 +206,24 @@
                                 @endfor
                             </select>
 
-                            <select id="selectSemester3" class="border rounded-md p-1">
-                                <option value="Keseluruhan" disabled selected>Pilih Rentang</option>
+                            <select id="selectSemester3" class="border rounded-md p-1 mb-2 text-sm">
+                                <option value="Keseluruhan" disabled selected>Pilih Periode</option>
                                 <option value="Keseluruhan">Keseluruhan</option>
                                 <option value="Ganjil">Semester Ganjil</option>
                                 <option value="Genap">Semester Genap</option>
-                            </select>
+                                <option value="1">Januari</option>
+                                <option value="2">Februari</option>
+                                <option value="3">Maret</option>
+                                <option value="4">April</option>
+                                <option value="5">Mei</option>
+                                <option value="6">Juni</option>
+                                <option value="7">Juli</option>
+                                <option value="8">Agustus</option>
+                                <option value="9">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
+                            </select> 
 
                             <button onclick="updateChart3()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">>></button>
                             <div style="overflow-x: auto;">
@@ -278,7 +304,7 @@
                                     fill: false,
                                 },
                                 {
-                                    label: 'Total Pengeluaran Rp',
+                                    label: 'Total Pengeluaran',
                                     data: data.totalPengeluaran,
                                     backgroundColor: '#FF6384',
                                     borderColor: '#FF6384',
@@ -303,6 +329,14 @@
                                             return 'Rp ' + value.toLocaleString();
                                         }
                                     }
+                                },
+                                x: { 
+                                    ticks: {
+                                        callback: function (value, index) {
+                                            var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                            return months[index];
+                                        }
+                                    }
                                 }
                             },
                             plugins: {
@@ -324,22 +358,6 @@
                             }
                         },
                     });
-                });
-        }
-
-        function fetchChartData(url, callback) {
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Network response was not ok, status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    callback(data);
-                })
-                .catch(error => {
-                    console.error(`Error fetching data from ${url}:`, error);
                 });
         }
 
@@ -396,7 +414,7 @@
                             data: {
                                 labels: data.labels,
                                 datasets: [{
-                                    label: 'Total Pemasukan Rp', // Modify the legend label here
+                                    label: 'Total Pemasukan',
                                     data: data.totalPemasukanPerkategori,
                                     backgroundColor: data.colors,
                                 }]
@@ -417,7 +435,7 @@
                                 },
                                 plugins: {
                                     legend: {
-                                        display: false, // Hide the legend
+                                        display: false, 
                                     },
                                     tooltip: {
                                         callbacks: {
@@ -440,13 +458,11 @@
                 });
         }
 
-        // Fungsi untuk mengupdate Chart 3 (Alokasi Pengeluaran Perkategori)
         function updateChart3() {
             var selectedYear3 = document.getElementById('selectYear3').value;
             var selectedSemester3 = document.getElementById('selectSemester3').value;
             var selectedVisualization3 = document.getElementById('selectVisualization3').value;
 
-            // Update chart3 based on the selected visualization type
             fetch(`/getChartData3/${selectedYear3}/${selectedSemester3}`)
                 .then(response => response.json())
                 .then(data => {
@@ -497,7 +513,7 @@
                             data: {
                                 labels: data.labels,
                                 datasets: [{
-                                    label: 'Total Pengeluaran Rp', // Modify the legend label here
+                                    label: 'Total Pengeluaran', 
                                     data: data.totalPengeluaranPerkategori,
                                     backgroundColor: data.colors,
                                 }]
@@ -518,7 +534,7 @@
                                 },
                                 plugins: {
                                     legend: {
-                                        display: false, // Hide the legend
+                                        display: false, 
                                     },
                                     tooltip: {
                                         callbacks: {
@@ -543,7 +559,7 @@
                 });
         }
 
-        var chartSemester;  // Deklarasi variabel chartSemester di tingkat global
+        var chartSemester;  
 
         document.addEventListener("DOMContentLoaded", function () {
             updateChartSemester();
@@ -574,7 +590,7 @@
                                     fill: false,
                                 },
                                 {
-                                    label: 'Total Pengeluaran Rp',
+                                    label: 'Total Pengeluaran',
                                     data: data.totalPengeluaran,
                                     backgroundColor: '#FF6384',
                                     borderColor: '#FF6384',
@@ -632,7 +648,6 @@
         function updateChartYear() {
             var selectedChartType = document.getElementById('selectChartYearType').value;
 
-            // Ganti URL sesuai dengan endpoint yang benar untuk data tahun
             fetch(`/getChartDataYear`)
                 .then(response => response.json())
                 .then(data => {
@@ -655,7 +670,7 @@
                                     fill: false,
                                 },
                                 {
-                                    label: 'Total Pengeluaran Rp',
+                                    label: 'Total Pengeluaran',
                                     data: data.totalPengeluaran,
                                     backgroundColor: '#FF6384',
                                     borderColor: '#FF6384',
@@ -707,23 +722,21 @@
 
         updateChart();
 
-        function toggleVisualization() {
-            var visualization = document.getElementById('visualization');
-            var table = document.getElementById('table');
-            var visualizationSemester = document.getElementById('visualization-semester');
-            var visualizationYear = document.getElementById('visualization-year');
+        var views = ['table', 'visualization-year', 'visualization-semester', 'visualization'];
+        var currentViewIndex = 0;
 
-            if (visualization.style.display === 'none') {
-                visualization.style.display = 'block';
-                table.style.display = 'none';
-                visualizationSemester.style.display = 'block';
-                visualizationYear.style.display = 'block';
-            } else {
-                visualization.style.display = 'none';
-                table.style.display = 'block';
-                visualizationSemester.style.display = 'none';
-                visualizationYear.style.display = 'none';
-            }
+        function toggleVisualization() {
+            var currentView = document.getElementById(views[currentViewIndex]);
+        
+            views.forEach(view => {
+                var element = document.getElementById(view);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+
+            currentView.style.display = 'block';
+            currentViewIndex = (currentViewIndex + 1) % views.length;
         }
 
         function toggleVisualization2() {

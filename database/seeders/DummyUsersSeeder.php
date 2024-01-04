@@ -18,7 +18,6 @@ class DummyUsersSeeder extends Seeder
         $roles = ['superAdmin', 'siswa', 'staff', 'guru'];
         $userData = [];
 
-        // Generate 4 users with specific roles
         for ($i = 0; $i < count($roles); $i++) {
             $userData[] = [
                 "id" => 1000 + $i + 1,
@@ -29,13 +28,12 @@ class DummyUsersSeeder extends Seeder
             ];
         }
 
-        // Generate 46 users with real names and roles (excluding superAdmin)
         for ($i = 4; $i < 50; $i++) {
             $userData[] = [
                 "id" => 2000 + $i + 1,
                 'name' => $faker->name,
                 'email' => "user{$i}@example.com",
-                'role' => $roles[($i - 1) % (count($roles) - 1) + 1], // Exclude superAdmin
+                'role' => $roles[($i - 1) % (count($roles) - 1) + 1],
                 'password' => bcrypt('12345678')
             ];
         }

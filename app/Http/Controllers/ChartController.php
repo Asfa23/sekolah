@@ -68,7 +68,6 @@ class ChartController extends Controller
         }
 
         if ($semester == 'Keseluruhan') {
-            // Ambil data untuk 12 bulan
             for ($month = 1; $month <= 12; $month++) {
                 foreach ($kategoriLabels as $kategori) {
                     $totalPemasukanPerkategori[$kategori] += FactPemasukan::whereYear('TANGGAL_PEMBAYARAN', $year)
@@ -78,14 +77,23 @@ class ChartController extends Controller
                 }
             }
         } else {
-            // Ambil data sesuai semester
-            $startMonth = $semester === 'Ganjil' ? 1 : 7;
-            $endMonth = $startMonth + 5;
+            if (in_array($semester, ['Ganjil', 'Genap'])) {
+                $startMonth = $semester === 'Ganjil' ? 1 : 7;
+                $endMonth = $startMonth + 5;
 
-            for ($month = $startMonth; $month <= $endMonth; $month++) {
+                for ($month = $startMonth; $month <= $endMonth; $month++) {
+                    foreach ($kategoriLabels as $kategori) {
+                        $totalPemasukanPerkategori[$kategori] += FactPemasukan::whereYear('TANGGAL_PEMBAYARAN', $year)
+                            ->whereMonth('TANGGAL_PEMBAYARAN', $month)
+                            ->where('KATEGORI', $kategori)
+                            ->sum('JUMLAH_PEMBAYARAN');
+                    }
+                }
+            } else {
+                $selectedMonth = intval($semester);
                 foreach ($kategoriLabels as $kategori) {
                     $totalPemasukanPerkategori[$kategori] += FactPemasukan::whereYear('TANGGAL_PEMBAYARAN', $year)
-                        ->whereMonth('TANGGAL_PEMBAYARAN', $month)
+                        ->whereMonth('TANGGAL_PEMBAYARAN', $selectedMonth)
                         ->where('KATEGORI', $kategori)
                         ->sum('JUMLAH_PEMBAYARAN');
                 }
@@ -106,13 +114,12 @@ class ChartController extends Controller
         $kategoriLabels = ['Inventaris', 'Maintenance', 'Gaji Guru & Staff', 'Program sekolah', 'Pengeluaran Lainnya'];
         $totalPengeluaranPerkategori = [];
         $colorsPengeluaranPerkategori = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
-
+    
         foreach ($kategoriLabels as $kategori) {
             $totalPengeluaranPerkategori[$kategori] = 0;
         }
-
+    
         if ($semester == 'Keseluruhan') {
-            // Ambil data untuk 12 bulan
             for ($month = 1; $month <= 12; $month++) {
                 foreach ($kategoriLabels as $kategori) {
                     $totalPengeluaranPerkategori[$kategori] += FactPengeluaran::whereYear('TANGGAL_PENGELUARAN', $year)
@@ -122,29 +129,38 @@ class ChartController extends Controller
                 }
             }
         } else {
-            // Ambil data sesuai semester
-            $startMonth = $semester === 'Ganjil' ? 1 : 7;
-            $endMonth = $startMonth + 5;
-
-            for ($month = $startMonth; $month <= $endMonth; $month++) {
+            if (in_array($semester, ['Ganjil', 'Genap'])) {
+                $startMonth = $semester === 'Ganjil' ? 1 : 7;
+                $endMonth = $startMonth + 5;
+    
+                for ($month = $startMonth; $month <= $endMonth; $month++) {
+                    foreach ($kategoriLabels as $kategori) {
+                        $totalPengeluaranPerkategori[$kategori] += FactPengeluaran::whereYear('TANGGAL_PENGELUARAN', $year)
+                            ->whereMonth('TANGGAL_PENGELUARAN', $month)
+                            ->where('KATEGORI', $kategori)
+                            ->sum('JUMLAH_PENGELUARAN');
+                    }
+                }
+            } else {
+                $selectedMonth = intval($semester);
                 foreach ($kategoriLabels as $kategori) {
                     $totalPengeluaranPerkategori[$kategori] += FactPengeluaran::whereYear('TANGGAL_PENGELUARAN', $year)
-                        ->whereMonth('TANGGAL_PENGELUARAN', $month)
+                        ->whereMonth('TANGGAL_PENGELUARAN', $selectedMonth)
                         ->where('KATEGORI', $kategori)
                         ->sum('JUMLAH_PENGELUARAN');
                 }
             }
         }
-
+    
         $indexedData = [
             'labels' => $kategoriLabels,
             'totalPengeluaranPerkategori' => array_values($totalPengeluaranPerkategori),
             'colors' => $colorsPengeluaranPerkategori,
         ];
-
+    
         return response()->json($indexedData);
     }
-
+    
     public function getChartDataSemester()
     {
         $labels = [];
