@@ -23,12 +23,12 @@
 
             <div class="mt-2 bg-white rounded-lg shadow-md p-6">
                 <div id="visualization" style="display: none;">
-                    <label for="selectChartType" class="text-lg font-semibold ml-4">Pilih Jenis Chart:</label>
+                    <label for="selectChartType" class="text-lg font-semibold">Pilih Jenis Chart:</label>
                     <select id="selectChartType" class="border rounded-md p-1">
                         <option value="bar">Bar Chart</option>
                         <option value="line">Line Chart</option>
                     </select>
-                    <label for="selectYear" class="text-lg font-semibold">Pilih Tahun:</label>
+                    <label for="selectYear" class="text-lg font-semibold ml-4">Pilih Tahun:</label>
                     <select id="selectYear" class="border rounded-md p-1">
                         @php
                             $currentYear = date('Y');
@@ -44,10 +44,10 @@
                         <option value="Ganjil">Semester Ganjil</option>
                         <option value="Genap">Semester Genap</option>
                     </select>
-                    <button onclick="updateChart()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
+                    <button onclick="updateChart()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md ml-4">Tampilkan</button>
 
                     <div style="overflow-x: auto;">
-                        <canvas id="chart" class="!h-[20vh]"></canvas>
+                        <canvas id="chart" class="!h-[50vh]"></canvas>
                     </div>
                 </div>
 
@@ -84,7 +84,7 @@
                             <option value="bar">Bar Chart</option>
                         </select>
 
-                        <label for="selectYear2" class="text-lg font-semibold">Pilih Tahun:</label>
+                        <label for="selectYear2" class="text-lg font-semibold ml-4">Pilih Tahun:</label>
                         <select id="selectYear2" class="border rounded-md p-1">
                             @php
                                 $currentYear = date('Y');
@@ -99,10 +99,10 @@
                             <option value="Ganjil">Semester Ganjil</option>
                             <option value="Genap">Semester Genap</option>
                         </select>
-                        <button onclick="updateChart2()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
+                        <button onclick="updateChart2()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md ml-4">Tampilkan</button>
 
                         <div style="overflow-x: auto;">
-                            <canvas id="chart2" class="!h-[20vw]"></canvas>
+                            <canvas id="chart2" class="!h-[20vw] mt-5"></canvas>
                         </div>
                     </div>
                     <div id="table2" style="display: block;">
@@ -141,7 +141,7 @@
                             <option value="bar">Bar Chart</option>
                         </select>
 
-                        <label for="selectYear3" class="text-lg font-semibold">Pilih Tahun:</label>
+                        <label for="selectYear3" class="text-lg font-semibold ml-4">Pilih Tahun:</label>
                         <select id="selectYear3" class="border rounded-md p-1">
                             @php
                                 $currentYear = date('Y');
@@ -155,9 +155,9 @@
                             <option value="Ganjil">Semester Ganjil</option>
                             <option value="Genap">Semester Genap</option>
                         </select>
-                        <button onclick="updateChart3()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md">Tampilkan</button>
+                        <button onclick="updateChart3()" class="p-1 px-2 bg-gradient-to-l from-purple-700 to-purple-500 text-white rounded-md ml-4">Tampilkan</button>
                         <div style="overflow-x: auto;">
-                            <canvas id="chart3" class="!h-[20vw]"></canvas>
+                            <canvas id="chart3" class="!h-[20vw] mt-5"></canvas>
                         </div>
                     </div>
 
@@ -207,54 +207,81 @@
         };
 
         function updateChart() {
-            var selectedYear = document.getElementById('selectYear').value;
-            var selectedSemester = document.getElementById('selectSemester').value;
-            var selectedChartType = document.getElementById('selectChartType').value;
+        var selectedYear = document.getElementById('selectYear').value;
+        var selectedSemester = document.getElementById('selectSemester').value;
+        var selectedChartType = document.getElementById('selectChartType').value;
 
-            fetch(`/getChartData/${selectedYear}/${selectedSemester}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (chart) {
-                        chart.destroy();
-                    }
+        fetch(`/getChartData/${selectedYear}/${selectedSemester}`)
+            .then(response => response.json())
+            .then(data => {
+                if (chart) {
+                    chart.destroy();
+                }
 
-                    var ctx = document.getElementById('chart').getContext('2d');
+                var ctx = document.getElementById('chart').getContext('2d');
 
-                    chart = new Chart(ctx, {
-                        type: selectedChartType, // Menggunakan tipe chart yang dipilih
-                        data: {
-                            labels: data.labels,
-                            datasets: [
-                                {
-                                    label: 'Total Pemasukan',
-                                    data: data.totalPemasukan,
-                                    backgroundColor: 'rgba(255, 99, 132)',
-                                    borderColor: 'rgba(255, 99, 132)',
-                                    fill: false, // Untuk line plot, set fill menjadi false
-                                },
-                                {
-                                    label: 'Total Pengeluaran',
-                                    data: data.totalPengeluaran,
-                                    backgroundColor: 'rgba(54, 162, 235)',
-                                    borderColor: 'rgba(54, 162, 235)',
-                                    fill: false,
-                                },
-                                {
-                                    label: 'Dana Tersisa',
-                                    data: data.sisa,
-                                    backgroundColor: 'rgba(255, 205, 86)',
-                                    borderColor: 'rgba(255, 205, 86)',
-                                    fill: false,
-                                },
-                            ],
+                chart = new Chart(ctx, {
+                    type: selectedChartType,
+                    data: {
+                        labels: data.labels,
+                        datasets: [
+                            {
+                                label: 'Total Pemasukan',
+                                data: data.totalPemasukan,
+                                backgroundColor: 'rgba(255, 99, 132)',
+                                borderColor: 'rgba(255, 99, 132)',
+                                fill: false,
+                            },
+                            {
+                                label: 'Total Pengeluaran',
+                                data: data.totalPengeluaran,
+                                backgroundColor: 'rgba(54, 162, 235)',
+                                borderColor: 'rgba(54, 162, 235)',
+                                fill: false,
+                            },
+                            {
+                                label: 'Dana Tersisa',
+                                data: data.sisa,
+                                backgroundColor: 'rgba(255, 205, 86)',
+                                borderColor: 'rgba(255, 205, 86)',
+                                fill: false,
+                            },
+                        ],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                ticks: {
+                                    callback: function (value) {
+                                        return 'Rp ' + value.toLocaleString();
+                                    }
+                                }
+                            }
                         },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                        },
-                    });
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        var label = context.dataset.label || '';
+
+                                        if (label) {
+                                            label += ': ';
+                                        }
+
+                                        label += 'Rp ' + context.formattedValue;
+
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    },
                 });
-        }
+            });
+    }
+
 
         function fetchChartData(url, callback) {
             fetch(url)
@@ -272,6 +299,7 @@
                 });
         }
 
+        // Fungsi untuk mengupdate Chart 2 (Alokasi Pemasukan Perkategori)
         function updateChart2() {
             var selectedYear2 = document.getElementById('selectYear2').value;
             var selectedSemester2 = document.getElementById('selectSemester2').value;
@@ -299,6 +327,25 @@
                             options: {
                                 responsive: true,
                                 maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'right',
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) {
+                                                var value = context.formattedValue;
+
+                                                if (context.parsed) {
+                                                    value = `Rp ${Math.round(data.totalPemasukanPerkategori[context.dataIndex]).toLocaleString()} (${(context.parsed / context.dataset.data.reduce((a, b) => a + b, 0) * 100).toFixed(2)}%)`;
+                                                }
+
+                                                return value;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         });
                     } else if (selectedVisualization2 === 'bar') {
@@ -328,6 +375,7 @@
                 });
         }
 
+        // Fungsi untuk mengupdate Chart 3 (Alokasi Pengeluaran Perkategori)
         function updateChart3() {
             var selectedYear3 = document.getElementById('selectYear3').value;
             var selectedSemester3 = document.getElementById('selectSemester3').value;
@@ -335,8 +383,8 @@
 
             // Update chart3 based on the selected visualization type
             fetch(`/getChartData3/${selectedYear3}/${selectedSemester3}`)
-            .then(response => response.json())
-            .then(data => {
+                .then(response => response.json())
+                .then(data => {
                     if (chart3) {
                         chart3.destroy();
                     }
@@ -355,6 +403,27 @@
                             options: {
                                 responsive: true,
                                 maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'right',
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) {
+                                                var value = context.formattedValue;
+
+                                                if (context.parsed && context.dataset.data.reduce((a, b) => a + b, 0) !== 0) {
+                                                    value = `Rp ${Math.round(data.totalPengeluaranPerkategori[context.dataIndex]).toLocaleString()} (${(context.parsed / context.dataset.data.reduce((a, b) => a + b, 0) * 100).toFixed(2)}%)`;
+                                                } else {
+                                                    value = `Rp ${Math.round(data.totalPengeluaranPerkategori[context.dataIndex]).toLocaleString()} (0%)`;
+                                                }
+
+                                                return value;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         });
                     } else if (selectedVisualization3 === 'bar') {
@@ -383,6 +452,7 @@
                     console.error('Error fetching data for chart 3:', error);
                 });
         }
+
         
         updateChart();
 
