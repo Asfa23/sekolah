@@ -233,7 +233,7 @@
                                 fill: false,
                             },
                             {
-                                label: 'Total Pengeluaran',
+                                label: 'Total Pengeluaran Rp',
                                 data: data.totalPengeluaran,
                                 backgroundColor: 'rgba(54, 162, 235)',
                                 borderColor: 'rgba(54, 162, 235)',
@@ -267,7 +267,7 @@
                                         var label = context.dataset.label || '';
 
                                         if (label) {
-                                            label += ': ';
+                                            label += ' ';
                                         }
 
                                         label += 'Rp ' + context.formattedValue;
@@ -338,7 +338,7 @@
                                                 var value = context.formattedValue;
 
                                                 if (context.parsed) {
-                                                    value = `Rp ${Math.round(data.totalPemasukanPerkategori[context.dataIndex]).toLocaleString()} (${(context.parsed / context.dataset.data.reduce((a, b) => a + b, 0) * 100).toFixed(2)}%)`;
+                                                    value = `Rp ${Math.round(data.totalPemasukanPerkategori[context.dataIndex]).toLocaleString().replace(/(\.\d\d)\d*$/, '$1')} (${(context.parsed / context.dataset.data.reduce((a, b) => a + b, 0) * 100).toFixed(2)}%)`;
                                                 }
 
                                                 return value;
@@ -354,7 +354,7 @@
                             data: {
                                 labels: data.labels,
                                 datasets: [{
-                                    label: 'Total Pemasukan',
+                                    label: 'Total Pemasukan Rp', // Modify the legend label here
                                     data: data.totalPemasukanPerkategori,
                                     backgroundColor: data.colors,
                                 }]
@@ -364,7 +364,30 @@
                                 maintainAspectRatio: false,
                                 scales: {
                                     x: { stacked: true },
-                                    y: { stacked: true }
+                                    y: {
+                                        stacked: true,
+                                        ticks: {
+                                            callback: function (value) {
+                                                return 'Rp ' + value.toLocaleString().replace(/(\.\d\d)\d*$/, '$1');
+                                            }
+                                        }
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false, // Hide the legend
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) {
+                                                var value = context.formattedValue;
+                                                if (context.parsed) {
+                                                    value = `Rp ${Math.round(data.totalPemasukanPerkategori[context.dataIndex]).toLocaleString().replace(/(\.\d\d)\d*$/, '$1')}`;
+                                                }
+                                                return value;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         });
@@ -414,9 +437,9 @@
                                                 var value = context.formattedValue;
 
                                                 if (context.parsed && context.dataset.data.reduce((a, b) => a + b, 0) !== 0) {
-                                                    value = `Rp ${Math.round(data.totalPengeluaranPerkategori[context.dataIndex]).toLocaleString()} (${(context.parsed / context.dataset.data.reduce((a, b) => a + b, 0) * 100).toFixed(2)}%)`;
+                                                    value = `Rp ${Math.round(data.totalPengeluaranPerkategori[context.dataIndex]).toLocaleString().replace(/(\.\d\d)\d*$/, '$1')} (${(context.parsed / context.dataset.data.reduce((a, b) => a + b, 0) * 100).toFixed(2)}%)`;
                                                 } else {
-                                                    value = `Rp ${Math.round(data.totalPengeluaranPerkategori[context.dataIndex]).toLocaleString()} (0%)`;
+                                                    value = `Rp ${Math.round(data.totalPengeluaranPerkategori[context.dataIndex]).toLocaleString().replace(/(\.\d\d)\d*$/, '$1')} (0%)`;
                                                 }
 
                                                 return value;
@@ -432,7 +455,7 @@
                             data: {
                                 labels: data.labels,
                                 datasets: [{
-                                    label: 'Total Pengeluaran',
+                                    label: 'Total Pengeluaran Rp', // Modify the legend label here
                                     data: data.totalPengeluaranPerkategori,
                                     backgroundColor: data.colors,
                                 }]
@@ -442,7 +465,32 @@
                                 maintainAspectRatio: false,
                                 scales: {
                                     x: { stacked: true },
-                                    y: { stacked: true }
+                                    y: {
+                                        stacked: true,
+                                        ticks: {
+                                            callback: function (value) {
+                                                return 'Rp ' + value.toLocaleString().replace(/(\.\d\d)\d*$/, '$1');
+                                            }
+                                        }
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false, // Hide the legend
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) {
+                                                var value = context.formattedValue;
+                                                if (context.parsed && context.dataset.data.reduce((a, b) => a + b, 0) !== 0) {
+                                                    value = `Rp ${Math.round(data.totalPengeluaranPerkategori[context.dataIndex]).toLocaleString().replace(/(\.\d\d)\d*$/, '$1')}`;
+                                                } else {
+                                                    value = `Rp ${Math.round(data.totalPengeluaranPerkategori[context.dataIndex]).toLocaleString().replace(/(\.\d\d)\d*$/, '$1')} (0%)`;
+                                                }
+                                                return value;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         });
