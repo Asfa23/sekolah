@@ -299,8 +299,8 @@
                                 {
                                     label: 'Total Pemasukan',
                                     data: data.totalPemasukan,
-                                    backgroundColor: '#4BC0C0', 
-                                    borderColor: '#4BC0C0', 
+                                    backgroundColor: '#4BC0C0',
+                                    borderColor: '#4BC0C0',
                                     fill: false,
                                 },
                                 {
@@ -327,17 +327,9 @@
                                     ticks: {
                                         callback: function (value) {
                                             return 'Rp ' + value.toLocaleString();
-                                        }
-                                    }
+                                        },
+                                    },
                                 },
-                                x: { 
-                                    ticks: {
-                                        callback: function (value, index) {
-                                            var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                                            return months[index];
-                                        }
-                                    }
-                                }
                             },
                             plugins: {
                                 tooltip: {
@@ -352,12 +344,31 @@
                                             label += 'Rp ' + context.formattedValue;
 
                                             return label;
-                                        }
-                                    }
-                                }
-                            }
+                                        },
+                                    },
+                                },
+                            },
                         },
                     });
+                })
+                .catch(error => {
+                    console.error('Error fetching data for chart:', error);
+                });
+        }
+
+        function fetchChartData(url, callback) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok, status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    callback(data);
+                })
+                .catch(error => {
+                    console.error(`Error fetching data from ${url}:`, error);
                 });
         }
 
@@ -723,7 +734,7 @@
         updateChart();
 
         var views = ['table', 'visualization-year', 'visualization-semester', 'visualization'];
-        var currentViewIndex = 0;
+        var currentViewIndex = 1;
 
         function toggleVisualization() {
             var currentView = document.getElementById(views[currentViewIndex]);
