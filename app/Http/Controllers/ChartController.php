@@ -18,7 +18,6 @@ class ChartController extends Controller
         $sisa = [];
 
         if ($semester == 'Keseluruhan') {
-            // Ambil data untuk 12 bulan
             for ($month = 1; $month <= 12; $month++) {
                 $labels[] = date("F", mktime(0, 0, 0, $month, 1));
 
@@ -33,7 +32,6 @@ class ChartController extends Controller
                 $sisa[] = $totalPemasukan[$month - 1] - $totalPengeluaran[$month - 1];
             }
         } else {
-            // Ambil data sesuai semester
             $startMonth = $semester === 'Ganjil' ? 1 : 7;
             $endMonth = $startMonth + 5;
 
@@ -59,8 +57,6 @@ class ChartController extends Controller
             'sisa' => $sisa,
         ]);
     }
-
-
     public function getChartData2($year, $semester)
     {
         $kategoriLabels = ['Pembayaran Siswa', 'Bantuan Pemerintah', 'Pemasukan Lainnya'];
@@ -71,15 +67,28 @@ class ChartController extends Controller
             $totalPemasukanPerkategori[$kategori] = 0;
         }
 
-        $startMonth = $semester === 'Ganjil' ? 1 : 7;
-        $endMonth = $startMonth + 5;
+        if ($semester == 'Keseluruhan') {
+            // Ambil data untuk 12 bulan
+            for ($month = 1; $month <= 12; $month++) {
+                foreach ($kategoriLabels as $kategori) {
+                    $totalPemasukanPerkategori[$kategori] += FactPemasukan::whereYear('TANGGAL_PEMBAYARAN', $year)
+                        ->whereMonth('TANGGAL_PEMBAYARAN', $month)
+                        ->where('KATEGORI', $kategori)
+                        ->sum('JUMLAH_PEMBAYARAN');
+                }
+            }
+        } else {
+            // Ambil data sesuai semester
+            $startMonth = $semester === 'Ganjil' ? 1 : 7;
+            $endMonth = $startMonth + 5;
 
-        for ($month = $startMonth; $month <= $endMonth; $month++) {
-            foreach ($kategoriLabels as $kategori) {
-                $totalPemasukanPerkategori[$kategori] += FactPemasukan::whereYear('TANGGAL_PEMBAYARAN', $year)
-                    ->whereMonth('TANGGAL_PEMBAYARAN', $month)
-                    ->where('KATEGORI', $kategori)
-                    ->sum('JUMLAH_PEMBAYARAN');
+            for ($month = $startMonth; $month <= $endMonth; $month++) {
+                foreach ($kategoriLabels as $kategori) {
+                    $totalPemasukanPerkategori[$kategori] += FactPemasukan::whereYear('TANGGAL_PEMBAYARAN', $year)
+                        ->whereMonth('TANGGAL_PEMBAYARAN', $month)
+                        ->where('KATEGORI', $kategori)
+                        ->sum('JUMLAH_PEMBAYARAN');
+                }
             }
         }
 
@@ -102,15 +111,28 @@ class ChartController extends Controller
             $totalPengeluaranPerkategori[$kategori] = 0;
         }
 
-        $startMonth = $semester === 'Ganjil' ? 1 : 7;
-        $endMonth = $startMonth + 5;
+        if ($semester == 'Keseluruhan') {
+            // Ambil data untuk 12 bulan
+            for ($month = 1; $month <= 12; $month++) {
+                foreach ($kategoriLabels as $kategori) {
+                    $totalPengeluaranPerkategori[$kategori] += FactPengeluaran::whereYear('TANGGAL_PENGELUARAN', $year)
+                        ->whereMonth('TANGGAL_PENGELUARAN', $month)
+                        ->where('KATEGORI', $kategori)
+                        ->sum('JUMLAH_PENGELUARAN');
+                }
+            }
+        } else {
+            // Ambil data sesuai semester
+            $startMonth = $semester === 'Ganjil' ? 1 : 7;
+            $endMonth = $startMonth + 5;
 
-        for ($month = $startMonth; $month <= $endMonth; $month++) {
-            foreach ($kategoriLabels as $kategori) {
-                $totalPengeluaranPerkategori[$kategori] += FactPengeluaran::whereYear('TANGGAL_PENGELUARAN', $year)
-                    ->whereMonth('TANGGAL_PENGELUARAN', $month)
-                    ->where('KATEGORI', $kategori)
-                    ->sum('JUMLAH_PENGELUARAN');
+            for ($month = $startMonth; $month <= $endMonth; $month++) {
+                foreach ($kategoriLabels as $kategori) {
+                    $totalPengeluaranPerkategori[$kategori] += FactPengeluaran::whereYear('TANGGAL_PENGELUARAN', $year)
+                        ->whereMonth('TANGGAL_PENGELUARAN', $month)
+                        ->where('KATEGORI', $kategori)
+                        ->sum('JUMLAH_PENGELUARAN');
+                }
             }
         }
 
@@ -121,6 +143,87 @@ class ChartController extends Controller
         ];
 
         return response()->json($indexedData);
+    }
+
+    public function getChartDataSemester()
+    {
+        $labels = [];
+        $totalPemasukan = [];
+        $totalPengeluaran = [];
+        $sisa = [];
+
+        for ($year = 2020; $year <= 2024; $year++) {
+            $labels[] = "Semester Ganjil " . $year;
+            $totalPemasukanSemester = 0;
+            $totalPengeluaranSemester = 0;
+
+            for ($month = 1; $month <= 6; $month++) {
+                $totalPemasukanSemester += FactPemasukan::whereYear('TANGGAL_PEMBAYARAN', $year)
+                    ->whereMonth('TANGGAL_PEMBAYARAN', $month)
+                    ->sum('JUMLAH_PEMBAYARAN');
+
+                $totalPengeluaranSemester += FactPengeluaran::whereYear('TANGGAL_PENGELUARAN', $year)
+                    ->whereMonth('TANGGAL_PENGELUARAN', $month)
+                    ->sum('JUMLAH_PENGELUARAN');
+            }
+
+            $totalPemasukan[] = $totalPemasukanSemester;
+            $totalPengeluaran[] = $totalPengeluaranSemester;
+
+            $sisa[] = $totalPemasukanSemester - $totalPengeluaranSemester;
+
+            $labels[] = "Semester Genap " . $year;
+            $totalPemasukanSemester = 0;
+            $totalPengeluaranSemester = 0;
+
+            for ($month = 7; $month <= 12; $month++) {
+                $totalPemasukanSemester += FactPemasukan::whereYear('TANGGAL_PEMBAYARAN', $year)
+                    ->whereMonth('TANGGAL_PEMBAYARAN', $month)
+                    ->sum('JUMLAH_PEMBAYARAN');
+
+                $totalPengeluaranSemester += FactPengeluaran::whereYear('TANGGAL_PENGELUARAN', $year)
+                    ->whereMonth('TANGGAL_PENGELUARAN', $month)
+                    ->sum('JUMLAH_PENGELUARAN');
+            }
+
+            $totalPemasukan[] = $totalPemasukanSemester;
+            $totalPengeluaran[] = $totalPengeluaranSemester;
+
+            $sisa[] = $totalPemasukanSemester - $totalPengeluaranSemester;
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'totalPemasukan' => $totalPemasukan,
+            'totalPengeluaran' => $totalPengeluaran,
+            'sisa' => $sisa,
+        ]);
+    }
+
+    public function getChartDataYear()
+    {
+        $labels = [];
+        $totalPemasukan = [];
+        $totalPengeluaran = [];
+        $sisa = [];
+
+        for ($year = 2020; $year <= 2024; $year++) {
+            $labels[] = $year;
+
+            $totalPemasukan[] = FactPemasukan::whereYear('TANGGAL_PEMBAYARAN', $year)->sum('JUMLAH_PEMBAYARAN');
+            $totalPengeluaran[] = FactPengeluaran::whereYear('TANGGAL_PENGELUARAN', $year)->sum('JUMLAH_PENGELUARAN');
+        }
+
+        for ($i = 0; $i < count($labels); $i++) {
+            $sisa[] = $totalPemasukan[$i] - $totalPengeluaran[$i];
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'totalPemasukan' => $totalPemasukan,
+            'totalPengeluaran' => $totalPengeluaran,
+            'sisa' => $sisa,
+        ]);
     }
 
 }
