@@ -46,21 +46,23 @@
                     <td class="border p-2 text-center">{{ $pengeluaran->KATEGORI }}</td>
                     <td class="border p-2 text-center">{{ $pengeluaran->KETERANGAN}}</td>
                     <td class="border p-2 text-center">{{ $pengeluaran->TANGGAL_PENGELUARAN}}</td>
-                    <td class="p-2 text-center flex flex-row justify-center items-center">
+                    <td class="border p-2 text-center">
                         @if ($pengeluaran->BUKTI_PENGELUARAN)
-                        <button class="p-1 px-1 h-[3.75vh] bg-blue-500 hover-bg-blue-600 rounded-lg" onclick="openModal('{{ asset('storage/BUKTI_PENGELUARAN/' . $pengeluaran->BUKTI_PENGELUARAN) }}')">
-                            <img src="{{ URL::asset('img/view.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
-                        </button>
-                        @endif
-                        @if (Auth::user()->role == 'superAdmin')
-                        <a href="{{ url('/dashboard/edit_pengeluaran/'.$pengeluaran->ID_PENGELUARAN) }}"
-                            class="p-1 px-1 h-[3.75vh] ml-1.5 rounded-lg transition-colors duration-300 bg-yellow-500 hover-bg-yellow-600">
-                            <img src="{{ URL::asset("img/edit.svg") }}" alt = "Edit Icon" class="w-5 h-5"/> 
-                        </a>
-                        <a href="{{ url('/dashboard/delete_confirmation_pengeluaran/'.$pengeluaran->ID_PENGELUARAN) }}"
-                            class="p-1 px-1 h-[3.75vh] rounded-lg ml-1.5 transition-colors duration-300 bg-red-500 hover-bg-red-600">
-                            <img src="{{ URL::asset('img/delete.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
-                        </a>
+                        <div class="w-full h-full flex flex-row justify-center items-center">
+                            <button class="w-7 h-7 p-1 bg-blue-500 hover-bg-blue-600 rounded-lg" onclick="openModal('{{ asset('storage/BUKTI_PENGELUARAN/' . $pengeluaran->BUKTI_PENGELUARAN) }}')">
+                                <img src="{{ URL::asset('img/view.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
+                            </button>
+                            @endif
+                            @if (Auth::user()->role == 'superAdmin')
+                            <a href="{{ url('/dashboard/edit_pengeluaran/'.$pengeluaran->ID_PENGELUARAN) }}"
+                                class="w-7 h-7 p-1 ml-1.5 rounded-lg transition-colors duration-300 bg-yellow-500 hover-bg-yellow-600">
+                                <img src="{{ URL::asset("img/edit.svg") }}" alt = "Edit Icon" class="w-5 h-5"/> 
+                            </a>
+                            <a href="{{ url('/dashboard/delete_confirmation_pengeluaran/'.$pengeluaran->ID_PENGELUARAN) }}"
+                                class="w-7 h-7 p-1 rounded-lg ml-1.5 transition-colors duration-300 bg-red-500 hover-bg-red-600">
+                                <img src="{{ URL::asset('img/delete.svg') }}" alt="Delete Icon" class="w-5 h-5"/>
+                            </a>
+                        </div>
                         @endif
                     </td>                            
                 </tr>                    

@@ -79,25 +79,19 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/dashboard/delete_confirmation_pengeluaran/{id}', [PengeluaranController::class, 'confirmDeletePengeluaran']);
     Route::delete('/dashboard/delete_pengeluaran/{id}', [PengeluaranController::class, 'deletePengeluaran']);
 
-    // MONEY REPORT
+    //  ======================================================================== MONEY REPORT
     Route::get('/calculate_totals', [TotalPerkategoriController::class, 'calculateTotals']);
     Route::get('/money_report', function () {
         $totals = TotalPengeluaran::all();
         return view('money_report', compact('totals'));
     });
 
-    // Rute untuk AJAX chart data
+    //  ======================================================================== Rute untuk AJAX chart data
     Route::get('/getChartData/{year}/{semester}', [ChartController::class, 'getChartData']);
     Route::get('/getChartData2/{year}/{semester}', [ChartController::class, 'getChartData2']);
     Route::get('/getChartData3/{year}/{semester}', [ChartController::class, 'getChartData3']);
     Route::get('/getChartDataSemester', [ChartController::class, 'getChartDataSemester']);
     Route::get('/getChartDataYear', [ChartController::class, 'getChartDataYear']);
-
-
-    // Route::get('/getChartData/{year}', [ChartController::class, 'getChartData']);
-    // Route::get('/getChartData2/{year}', [ChartController::class, 'getChartData2']);
-    // Route::get('/getChartData3/{year}', [ChartController::class, 'getChartData3']);
-
 
     // ======================================================================== MANAJEMEN USER
     Route::get('/manajemen_user', [ManajemenUserController::class, 'index'])->name('manajemen_user');

@@ -254,28 +254,12 @@
                     </div>
                 </div>
             </div>
+        </main>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         var ctx = document.getElementById('chart').getContext('2d');
         var chart;
-
-        var ctx2 = document.getElementById('chart2').getContext('2d');
-        var chart2;
-
-        var ctx3 = document.getElementById('chart3').getContext('2d');
-        var chart3;
-
-        var data2 = {
-            labels: [],
-            totalPemasukanPerkategori: [],
-            colors: [],
-        };
-
-        var data3 = {
-            labels: [],
-            totalPengeluaranPerkategori: [],
-            colors: [],
-        };
 
         function updateChart() {
             var selectedYear = document.getElementById('selectYear').value;
@@ -356,21 +340,8 @@
                 });
         }
 
-        function fetchChartData(url, callback) {
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Network response was not ok, status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    callback(data);
-                })
-                .catch(error => {
-                    console.error(`Error fetching data from ${url}:`, error);
-                });
-        }
+        var ctx2 = document.getElementById('chart2').getContext('2d');
+        var chart2;
 
         function updateChart2() {
             var selectedYear2 = document.getElementById('selectYear2').value;
@@ -468,6 +439,9 @@
                     console.error('Error fetching data for chart 2:', error);
                 });
         }
+
+        var ctx3 = document.getElementById('chart3').getContext('2d');
+        var chart3;
 
         function updateChart3() {
             var selectedYear3 = document.getElementById('selectYear3').value;
@@ -779,6 +753,4 @@
         }
 
     </script>   
-        </main>
-    </div>
 @endsection
